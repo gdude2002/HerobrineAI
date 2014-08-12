@@ -248,10 +248,6 @@ public class ConfigDB {
 			config.set("config.WalkingModeRadius.FromX", 0);
 			config.set("config.WalkingModeRadius.FromZ", 0);
 			config.set("config.BuildInterval", 72000);
-			config.set("config.BuildTemples", true);
-			config.set("config.UseArtifacts.Bow", true);
-			config.set("config.UseArtifacts.Sword", true);
-			config.set("config.UseArtifacts.Apple", true);
 			config.set("config.HerobrineHP", 300);
 			config.set("config.AttackCreative", true);
 			config.set("config.AttackOP", true);
@@ -261,8 +257,6 @@ public class ConfigDB {
 			config.set("config.SecuredArea.Signs", true);
 			config.set("config.SecuredArea.Books", true);
 			config.set("config.UseHeads", true);
-			config.set("config.UseCustomItems", false);
-			config.set("config.UseAncientSword", true);
 			config.set("config.UseNPC.Guardian", true);
 			config.set("config.UseNPC.Warrior", true);
 			config.set("config.UseNPC.Demon", true);
