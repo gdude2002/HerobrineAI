@@ -59,7 +59,6 @@ public class NPCCore {
 				}
 			}
 		}, 1L, 1L);
-		Bukkit.getServer().getPluginManager().registerEvents(new WorldL(), plugin);
 	}
 
 	public void removeAll() {
@@ -116,20 +115,6 @@ public class NPCCore {
 
 	public NetworkCore getNetworkCore() {
 		return networkCore;
-	}
-
-	private class WorldL implements Listener {
-
-		@EventHandler
-		public void onChunkUnload(final ChunkUnloadEvent event) {
-			for (final HumanNPC humannpc : npcs) {
-				if (humannpc != null) {
-					event.getChunk();
-					humannpc.getBukkitEntity().getLocation().getBlock().getChunk();
-				}
-			}
-		}
-
 	}
 
 }
