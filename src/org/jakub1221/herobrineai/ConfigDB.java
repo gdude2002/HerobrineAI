@@ -473,7 +473,6 @@ public class ConfigDB {
 				} catch (IOException e4) {
 					e4.printStackTrace();
 				}
-				log.info("[HerobrineAI] Config was updated to v" + HerobrineAI.getPluginCore().getVersionStr() + "!");
 			}
 			Reload();
 		}

@@ -24,7 +24,6 @@ public class NPCCore {
 
 	private ArrayList<HumanNPC> npcs;
 	private BServer server;
-	private int taskid;
 	private Map<World, BWorld> bworlds;
 	private NetworkCore networkCore;
 	public static JavaPlugin plugin;
@@ -41,7 +40,7 @@ public class NPCCore {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		taskid = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
+		Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
 			@Override
 			public void run() {
 				final ArrayList<HumanNPC> toRemove = new ArrayList<HumanNPC>();
@@ -75,10 +74,6 @@ public class NPCCore {
 		bworld = new BWorld(world);
 		bworlds.put(world, bworld);
 		return bworld;
-	}
-
-	public void DisableTask() {
-		Bukkit.getServer().getScheduler().cancelTask(taskid);
 	}
 
 	public HumanNPC spawnHumanNPC(final String name, final Location l) {

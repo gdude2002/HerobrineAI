@@ -33,14 +33,16 @@ import org.jakub1221.herobrineai.nms.entity.EntityManager;
 
 public class HerobrineAI extends JavaPlugin implements Listener {
 
+	public static Logger log = Bukkit.getLogger();
+
 	private static HerobrineAI pluginCore;
 	private AICore aicore;
 	private ConfigDB configdb;
 	private Support support;
 	private EntityManager entMng;
 	private PathManager pathMng;
+
 	public static boolean isNPCDisabled = false;
-	private static int pathUpdateINT = 0;
 	public static String bukkit_ver_string = "1.7.10";
 	public static int HerobrineHP = 200;
 	public static int HerobrineMaxHP = 200;
@@ -50,7 +52,6 @@ public class HerobrineAI extends JavaPlugin implements Listener {
 	public static HumanNPC HerobrineNPC;
 	public static long HerobrineEntityID;
 	public static boolean AvailableWorld = false;
-	public static Logger log = Bukkit.getLogger();
 	public Location hbSpawnData = null;
 	public boolean removeHBNextTick = false;
 
@@ -105,7 +106,7 @@ public class HerobrineAI extends JavaPlugin implements Listener {
 			nowloc.setPitch(1.0f);
 			HerobrineSpawn(nowloc);
 			HerobrineAI.HerobrineNPC.setItemInHand(configdb.ItemInHand.getItemStack());
-			HerobrineAI.pathUpdateINT = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
+			Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
 				@Override
 				public void run() {
 					if (new Random().nextBoolean() && HerobrineAI.this.getAICore().getCoreTypeNow().equals(Core.CoreType.RANDOM_POSITION)) {
@@ -126,7 +127,7 @@ public class HerobrineAI extends JavaPlugin implements Listener {
 			HerobrineAI.log.warning("[HerobrineAI] ******************ERROR******************");
 			HerobrineAI.log.warning("[HerobrineAI] This version is only compatible with bukkit version " + HerobrineAI.bukkit_ver_string);
 			HerobrineAI.log.warning("[HerobrineAI] *****************************************");
-			setEnabled(false);
+			Bukkit.getPluginManager().disablePlugin(this);
 		}
 	}
 
@@ -134,8 +135,6 @@ public class HerobrineAI extends JavaPlugin implements Listener {
 	public void onDisable() {
 		if (HerobrineAI.isInitDone) {
 			entMng.killAllMobs();
-			Bukkit.getServer().getScheduler().cancelTask(HerobrineAI.pathUpdateINT);
-			HerobrineAI.NPCman.DisableTask();
 			aicore.CancelTarget(Core.CoreType.ANY);
 			aicore.Stop_BD();
 			aicore.Stop_CG();
@@ -179,10 +178,6 @@ public class HerobrineAI extends JavaPlugin implements Listener {
 
 	public ConfigDB getConfigDB() {
 		return configdb;
-	}
-
-	public String getVersionStr() {
-		return "3.4.1";
 	}
 
 	public Support getSupport() {
