@@ -61,10 +61,9 @@ public class PlayerListener implements Listener {
 	public void onPlayerQuit(final PlayerQuitEvent event) {
 		if (event.getPlayer().getEntityId() != HerobrineAI.HerobrineEntityID) {
 			HerobrineAI.getPluginCore().getAICore();
-			if ((AICore.PlayerTarget == event.getPlayer()) && (HerobrineAI.getPluginCore().getAICore().getCoreTypeNow() == Core.CoreType.GRAVEYARD)
-					&& (event.getPlayer().getLocation().getWorld() == Bukkit.getServer().getWorld("world_herobrineai_graveyard"))) {
+			if ((AICore.PlayerTarget == event.getPlayer()) && (HerobrineAI.getPluginCore().getAICore().getCoreTypeNow() == Core.CoreType.GRAVEYARD) && (event.getPlayer().getLocation().getWorld() == Bukkit.getServer().getWorld("world_herobrineai_graveyard"))) {
 				HerobrineAI.getPluginCore().getAICore();
-				if (AICore.isTarget && new Random().nextBoolean()) {
+				if (AICore.isTarget) {
 					event.getPlayer().teleport(HerobrineAI.getPluginCore().getAICore().getGraveyard().getSavedLocation());
 				}
 			}
