@@ -43,7 +43,7 @@ public class HumanEntity extends EntityPlayer {
 	@Override
 	public CraftPlayer getBukkitEntity() {
 		if (cplayer == null) {
-			cplayer = new CraftPlayer((CraftServer) Bukkit.getServer(), player);
+			cplayer = new CraftPlayer((CraftServer) Bukkit.getServer(), this);
 		}
 		return cplayer;
 	}
