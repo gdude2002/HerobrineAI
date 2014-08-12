@@ -12,6 +12,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerBedEnterEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -94,6 +95,13 @@ public class PlayerListener implements Listener {
 				HerobrineAI.getPluginCore().getAICore().CancelTarget(Core.CoreType.RANDOM_POSITION);
 				HerobrineAI.HerobrineNPC.moveTo(new Location(Bukkit.getServer().getWorlds().get(0), 0.0, -20.0, 0.0));
 			}
+		}
+	}
+
+	@EventHandler
+	public void onPlayerCommand(final PlayerCommandPreprocessEvent event) {
+		if (event.getPlayer().getWorld() == Bukkit.getServer().getWorld("world_herobrineai_graveyard")) {
+			event.setCancelled(true);
 		}
 	}
 
