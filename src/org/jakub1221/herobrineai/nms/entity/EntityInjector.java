@@ -35,8 +35,8 @@ public class EntityInjector {
 			a.setAccessible(true);
 			a.invoke(null, CustomZombie.class, "Zombie", 54);
 			a.invoke(null, CustomSkeleton.class, "Skeleton", 51);
-		} catch (Exception e5) {
-			e5.printStackTrace();
+		} catch (Throwable t) {
+			t.printStackTrace();
 			HerobrineAI.isNPCDisabled = true;
 			HerobrineAI.log.warning("[HerobrineAI] Custom NPCs have been disabled. (Incompatibility error!)");
 		}

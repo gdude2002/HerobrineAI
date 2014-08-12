@@ -60,7 +60,7 @@ public class HerobrineAI extends JavaPlugin implements Listener {
 		boolean errorCheck = true;
 		try {
 			Class.forName(net.minecraft.server.v1_7_R4.Entity.class.getName());
-		} catch (ClassNotFoundException e) {
+		} catch (Throwable t) {
 			errorCheck = false;
 			HerobrineAI.isInitDone = false;
 		}
