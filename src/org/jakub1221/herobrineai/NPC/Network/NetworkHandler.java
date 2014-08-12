@@ -15,9 +15,14 @@ public class NetworkHandler extends PlayerConnection {
 		super(npcCore.getServer().getMCServer(), npcCore.getNetworkCore(), entityPlayer);
 	}
 
+	private CraftPlayer cplayer;
+
 	@Override
 	public CraftPlayer getPlayer() {
-		return new CraftPlayer((CraftServer) Bukkit.getServer(), player);
+		if (cplayer == null) {
+			cplayer = new CraftPlayer((CraftServer) Bukkit.getServer(), player);
+		}
+		return cplayer;
 	}
 
 	@Override
