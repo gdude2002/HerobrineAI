@@ -7,7 +7,6 @@ import net.minecraft.server.v1_7_R4.EnumGamemode;
 import net.minecraft.server.v1_7_R4.PlayerInteractManager;
 import net.minecraft.util.com.mojang.authlib.GameProfile;
 
-import org.bukkit.craftbukkit.v1_7_R4.entity.CraftEntity;
 import org.jakub1221.herobrineai.NPC.NPCCore;
 import org.jakub1221.herobrineai.NPC.NMS.BWorld;
 import org.jakub1221.herobrineai.NPC.Network.NetworkHandler;
@@ -19,10 +18,6 @@ public class HumanEntity extends EntityPlayer {
 		playerInteractManager.b(EnumGamemode.SURVIVAL);
 		playerConnection = new NetworkHandler(npcCore, this);
 		fauxSleeping = true;
-	}
-
-	public void setBukkitEntity(final org.bukkit.entity.Entity entity) {
-		bukkitEntity = (CraftEntity) entity;
 	}
 
 	@Override

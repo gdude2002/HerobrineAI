@@ -98,7 +98,7 @@ public class NPCCore {
 	public HumanNPC spawnHumanNPC(final String name, final Location l, final int id) {
 		final BWorld world = getBWorld(l.getWorld());
 		final HumanEntity humanEntity = new HumanEntity(this, world, new GameProfile(UUID.randomUUID(), name), new PlayerInteractManager(world.getWorldServer()));
-		((Entity) humanEntity).setLocation(l.getX(), l.getY(), l.getZ(), l.getYaw(), l.getPitch());
+		humanEntity.setLocation(l.getX(), l.getY(), l.getZ(), l.getYaw(), l.getPitch());
 		world.getWorldServer().addEntity(humanEntity);
 		final HumanNPC humannpc = new HumanNPC(humanEntity, id);
 		npcs.add(humannpc);

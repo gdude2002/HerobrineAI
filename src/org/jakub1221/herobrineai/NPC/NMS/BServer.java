@@ -1,6 +1,5 @@
 package org.jakub1221.herobrineai.NPC.NMS;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,11 +17,8 @@ public class BServer {
 	private MinecraftServer mcServer;
 	private CraftServer cServer;
 	private Server server;
-	private HashMap<String, BWorld> worlds;
 
 	private BServer() {
-		super();
-		worlds = new HashMap<String, BWorld>();
 		server = Bukkit.getServer();
 		try {
 			cServer = (CraftServer) server;
@@ -46,15 +42,6 @@ public class BServer {
 
 	public Server getServer() {
 		return server;
-	}
-
-	public BWorld getWorld(final String worldName) {
-		if (worlds.containsKey(worldName)) {
-			return worlds.get(worldName);
-		}
-		final BWorld w = new BWorld(this, worldName);
-		worlds.put(worldName, w);
-		return w;
 	}
 
 	public static BServer getInstance() {
