@@ -13,10 +13,8 @@ import net.minecraft.util.com.mojang.authlib.GameProfile;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.event.EventException;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jakub1221.herobrineai.NPC.Entity.HumanEntity;
@@ -33,14 +31,12 @@ public class NPCCore {
 	private Map<World, BWorld> bworlds;
 	private NetworkCore networkCore;
 	public static JavaPlugin plugin;
-	public boolean isInLoaded;
 	private int lastID;
 
 	public NPCCore(final JavaPlugin plugin) {
 		super();
 		npcs = new ArrayList<HumanNPC>();
 		bworlds = new HashMap<World, BWorld>();
-		isInLoaded = false;
 		lastID = 0;
 		server = BServer.getInstance();
 		try {
@@ -123,15 +119,6 @@ public class NPCCore {
 	}
 
 	private class WorldL implements Listener {
-
-		@EventHandler
-		public void onChunkLoad(final ChunkLoadEvent event) throws EventException {
-			for (final HumanNPC humannpc : npcs) {
-				if ((humannpc != null) && (event.getChunk() == humannpc.getBukkitEntity().getLocation().getBlock().getChunk()) && !isInLoaded) {
-					isInLoaded = true;
-				}
-			}
-		}
 
 		@EventHandler
 		public void onChunkUnload(final ChunkUnloadEvent event) {
