@@ -7,6 +7,9 @@ import net.minecraft.server.v1_7_R4.EnumGamemode;
 import net.minecraft.server.v1_7_R4.PlayerInteractManager;
 import net.minecraft.util.com.mojang.authlib.GameProfile;
 
+import org.bukkit.Bukkit;
+import org.bukkit.craftbukkit.v1_7_R4.CraftServer;
+import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
 import org.jakub1221.herobrineai.NPC.NPCCore;
 import org.jakub1221.herobrineai.NPC.NMS.BWorld;
 import org.jakub1221.herobrineai.NPC.Network.NetworkHandler;
@@ -33,6 +36,16 @@ public class HumanEntity extends EntityPlayer {
 	@Override
 	public void c(Entity entity) {
 		super.c(entity);
+	}
+
+	private CraftPlayer cplayer;
+
+	@Override
+	public CraftPlayer getBukkitEntity() {
+		if (cplayer == null) {
+			cplayer = new CraftPlayer((CraftServer) Bukkit.getServer(), player);
+		}
+		return cplayer;
 	}
 
 }
