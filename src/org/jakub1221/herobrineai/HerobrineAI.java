@@ -65,6 +65,7 @@ public class HerobrineAI extends JavaPlugin implements Listener {
 			HerobrineAI.isInitDone = false;
 		}
 		if (errorCheck) {
+			HerobrineAI.pluginCore = this;
 			getCommand("hb-ai").setExecutor(new CmdExecutor(this));
 			support = new Support();
 			getServer().getPluginManager().registerEvents(new EntityListener(), this);
@@ -73,7 +74,6 @@ public class HerobrineAI extends JavaPlugin implements Listener {
 			getServer().getPluginManager().registerEvents(new PlayerListener(), this);
 			getServer().getPluginManager().registerEvents(new WorldListener(), this);
 			HerobrineAI.isInitDone = true;
-			HerobrineAI.pluginCore = this;
 			HerobrineAI.NPCman = new NPCCore(this);
 			configdb = new ConfigDB(HerobrineAI.log);
 			pathMng = new PathManager();
