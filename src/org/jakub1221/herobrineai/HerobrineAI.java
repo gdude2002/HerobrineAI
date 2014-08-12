@@ -257,7 +257,7 @@ public class HerobrineAI extends JavaPlugin implements Listener {
 	}
 
 	public void HerobrineSpawn(final Location loc) {
-		HerobrineAI.HerobrineNPC = HerobrineAI.NPCman.spawnHumanNPC(ChatColor.WHITE + configdb.HerobrineName, loc);
+		HerobrineAI.HerobrineNPC = HerobrineAI.NPCman.spawnHumanNPC("Herobrine", loc);
 		HerobrineAI.HerobrineNPC.getBukkitEntity().setMetadata("NPC", new FixedMetadataValue(this, true));
 		HerobrineAI.HerobrineEntityID = HerobrineAI.HerobrineNPC.getBukkitEntity().getEntityId();
 	}

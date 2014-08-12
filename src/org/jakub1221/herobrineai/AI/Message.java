@@ -12,7 +12,7 @@ public class Message {
 			final int count = HerobrineAI.getPluginCore().getConfigDB().useMessages.size();
 			final Random randgen = new Random();
 			final int randmsg = randgen.nextInt(count);
-			player.sendMessage("<" + HerobrineAI.getPluginCore().getConfigDB().HerobrineName + "> " + HerobrineAI.getPluginCore().getConfigDB().useMessages.get(randmsg));
+			player.sendMessage("<Herobrine> " + HerobrineAI.getPluginCore().getConfigDB().useMessages.get(randmsg));
 		}
 	}
 

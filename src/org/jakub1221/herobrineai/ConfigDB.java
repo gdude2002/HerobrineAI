@@ -72,7 +72,6 @@ public class ConfigDB {
 	public int maxSigns;
 	public int maxHeads;
 	public boolean UseIgnorePermission;
-	public String HerobrineName;
 	public boolean UseSound;
 	private boolean isStartupDone;
 	public File configF;
@@ -134,7 +133,6 @@ public class ConfigDB {
 		maxSigns = 1;
 		maxHeads = 1;
 		UseIgnorePermission = true;
-		HerobrineName = "Herobrine";
 		UseSound = true;
 		isStartupDone = false;
 		configF = new File("plugins/HerobrineAI/config.yml");
@@ -268,7 +266,6 @@ public class ConfigDB {
 			config.set("config.Limit.Signs", 1);
 			config.set("config.Limit.Heads", 1);
 			config.set("config.UseIgnorePermission", false);
-			config.set("config.Name", "Herobrine");
 			config.set("config.UseHauntSound", true);
 			try {
 				config.save(configF);
@@ -547,7 +544,6 @@ public class ConfigDB {
 		maxSigns = config.getInt("config.Limit.Signs");
 		maxHeads = config.getInt("config.Limit.Heads");
 		UseIgnorePermission = config.getBoolean("config.UseIgnorePermission");
-		HerobrineName = config.getString("config.Name");
 		UseSound = config.getBoolean("config.UseHauntSound");
 		HerobrineAI.HerobrineMaxHP = HerobrineHP;
 		HerobrineAI.getPluginCore().getAICore().Stop_MAIN();
