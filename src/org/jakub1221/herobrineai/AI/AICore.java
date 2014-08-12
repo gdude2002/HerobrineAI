@@ -29,8 +29,8 @@ import org.jakub1221.herobrineai.AI.cores.RandomSound;
 import org.jakub1221.herobrineai.AI.cores.Signs;
 import org.jakub1221.herobrineai.AI.cores.SoundF;
 import org.jakub1221.herobrineai.AI.cores.Totem;
-import org.jakub1221.herobrineai.entity.MobType;
 import org.jakub1221.herobrineai.misc.ItemName;
+import org.jakub1221.herobrineai.nms.entity.MobType;
 
 public class AICore {
 

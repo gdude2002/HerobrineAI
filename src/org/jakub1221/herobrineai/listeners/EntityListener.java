@@ -22,7 +22,7 @@ import org.bukkit.inventory.ItemStack;
 import org.jakub1221.herobrineai.HerobrineAI;
 import org.jakub1221.herobrineai.AI.AICore;
 import org.jakub1221.herobrineai.AI.Core;
-import org.jakub1221.herobrineai.entity.MobType;
+import org.jakub1221.herobrineai.nms.entity.MobType;
 
 public class EntityListener implements Listener {
 

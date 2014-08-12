@@ -2,12 +2,12 @@ package org.jakub1221.herobrineai;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.jakub1221.herobrineai.support._Factions;
-import org.jakub1221.herobrineai.support._GriefPrevention;
-import org.jakub1221.herobrineai.support._PreciousStones;
-import org.jakub1221.herobrineai.support._Residence;
-import org.jakub1221.herobrineai.support._Towny;
-import org.jakub1221.herobrineai.support._WorldGuard;
+import org.jakub1221.herobrineai.hooks._Factions;
+import org.jakub1221.herobrineai.hooks._GriefPrevention;
+import org.jakub1221.herobrineai.hooks._PreciousStones;
+import org.jakub1221.herobrineai.hooks._Residence;
+import org.jakub1221.herobrineai.hooks._Towny;
+import org.jakub1221.herobrineai.hooks._WorldGuard;
 
 public class Support {
 	private boolean B_Residence;
