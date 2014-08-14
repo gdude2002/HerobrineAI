@@ -21,7 +21,7 @@ public class NullSocket extends Socket {
 
 		@Override
 		public int read() throws IOException {
-			return 0;
+			return -1;
 		}
 
 	}
