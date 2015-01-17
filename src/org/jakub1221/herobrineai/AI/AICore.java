@@ -30,20 +30,20 @@ import org.jakub1221.herobrineai.AI.cores.Signs;
 import org.jakub1221.herobrineai.AI.cores.SoundF;
 import org.jakub1221.herobrineai.AI.cores.Totem;
 import org.jakub1221.herobrineai.misc.ItemName;
-import org.jakub1221.herobrineai.nms.entity.MobType;
 
 public class AICore {
 
-	public static ConsoleLogger log;
-	private ArrayList<Core> AllCores;
-	private Core.CoreType CoreNow;
+	public static final ConsoleLogger log = new ConsoleLogger();
 	public static HerobrineAI plugin;
 	public static Player PlayerTarget;
-	public static boolean isTarget;
-	public static int ticksToEnd;
-	public static boolean isDiscCalled;
-	public static boolean isTotemCalled;
-	public static int _ticks;
+	public static boolean isTarget = false;
+	public static int ticksToEnd = 0;
+	public static boolean isDiscCalled = false;
+	public static boolean isTotemCalled = false;
+	public static int _ticks = 0;
+
+	private ArrayList<Core> AllCores;
+	private Core.CoreType CoreNow;
 	private ResetLimits resetLimits;
 	private boolean BuildINT;
 	private boolean MainINT;
@@ -59,15 +59,6 @@ public class AICore {
 	private int MAIN_INT;
 	private int BD_INT;
 	private int RC_INT;
-
-	static {
-		AICore.log = new ConsoleLogger();
-		AICore.isTarget = false;
-		AICore.ticksToEnd = 0;
-		AICore.isDiscCalled = false;
-		AICore.isTotemCalled = false;
-		AICore._ticks = 0;
-	}
 
 	public Core getCore(final Core.CoreType type) {
 		for (final Core c : AllCores) {
@@ -161,8 +152,6 @@ public class AICore {
 			GraveyardTeleport(player);
 		} else if (chance < 50) {
 			setHauntTarget(player);
-		} else if (HerobrineAI.getPluginCore().getConfigDB().UseNPC_Demon && !HerobrineAI.isNPCDisabled) {
-			HerobrineAI.getPluginCore().getEntityManager().spawnCustomSkeleton(player.getLocation(), MobType.DEMON);
 		}
 	}
 
@@ -170,21 +159,21 @@ public class AICore {
 		if (!HerobrineAI.getPluginCore().getConfigDB().OnlyWalkingMode && !AICore.isTarget) {
 			final int att_chance = new Random().nextInt(100);
 			AICore.log.info("[HerobrineAI] Generating find chance...");
-			if (((att_chance - (HerobrineAI.getPluginCore().getConfigDB().ShowRate * 4)) < 55) && (Bukkit.getServer().getOnlinePlayers().length > 0)) {
+			if (((att_chance - (HerobrineAI.getPluginCore().getConfigDB().ShowRate * 4)) < 55) && (Bukkit.getServer().getOnlinePlayers().size() > 0)) {
 				AICore.log.info("[HerobrineAI] Finding target...");
-				final Player[] AllOnPlayers = Bukkit.getServer().getOnlinePlayers();
-				final int player_rolled = Util.getRandomPlayerNum();
-				if (AllOnPlayers[player_rolled].getEntityId() != HerobrineAI.HerobrineEntityID) {
-					if (HerobrineAI.getPluginCore().getConfigDB().useWorlds.contains(AllOnPlayers[player_rolled].getLocation().getWorld().getName())
-							&& HerobrineAI.getPluginCore().canAttackPlayerNoMSG(AllOnPlayers[player_rolled])) {
+				final Player[] allOnPlayers = Bukkit.getServer().getOnlinePlayers().toArray(new Player[0]);
+				final int playerRolled = Util.getRandomPlayerNum(allOnPlayers);
+				if (allOnPlayers[playerRolled].getEntityId() != HerobrineAI.HerobrineEntityID) {
+					if (HerobrineAI.getPluginCore().getConfigDB().useWorlds.contains(allOnPlayers[playerRolled].getLocation().getWorld().getName())
+							&& HerobrineAI.getPluginCore().canAttackPlayerNoMSG(allOnPlayers[playerRolled])) {
 						CancelTarget(Core.CoreType.ANY);
-						AICore.PlayerTarget = AllOnPlayers[player_rolled];
+						AICore.PlayerTarget = allOnPlayers[playerRolled];
 						AICore.isTarget = true;
 						AICore.log.info("[HerobrineAI] Target founded, starting AI now! (" + AICore.PlayerTarget.getName() + ")");
 						setCoreTypeNow(Core.CoreType.START);
 						StartAI();
 					} else {
-						AICore.log.info("[HerobrineAI] Target is in the safe world! (" + AllOnPlayers[player_rolled].getLocation().getWorld().getName() + ")");
+						AICore.log.info("[HerobrineAI] Target is in the safe world! (" + allOnPlayers[playerRolled].getLocation().getWorld().getName() + ")");
 						FindPlayer();
 					}
 				}
@@ -319,24 +308,24 @@ public class AICore {
 	}
 
 	private void PyramidInterval() {
-		if (new Random().nextBoolean() && (Bukkit.getServer().getOnlinePlayers().length > 0)) {
+		if (new Random().nextBoolean() && (Bukkit.getServer().getOnlinePlayers().size() > 0)) {
 			AICore.log.info("[HerobrineAI] Finding pyramid target...");
-			final Player[] AllOnPlayers = Bukkit.getServer().getOnlinePlayers();
-			final int player_rolled = Util.getRandomPlayerNum();
-			if (HerobrineAI.getPluginCore().getConfigDB().useWorlds.contains(AllOnPlayers[player_rolled].getLocation().getWorld().getName())) {
+			final Player[] allOnPlayers = Bukkit.getServer().getOnlinePlayers().toArray(new Player[0]);
+			final int playerRolled = Util.getRandomPlayerNum(allOnPlayers);
+			if (HerobrineAI.getPluginCore().getConfigDB().useWorlds.contains(allOnPlayers[playerRolled].getLocation().getWorld().getName())) {
 				final int chance2 = new Random().nextInt(100);
 				if (chance2 < 30) {
 					if (HerobrineAI.getPluginCore().getConfigDB().BuildPyramids) {
-						final Object[] data = { AllOnPlayers[player_rolled] };
+						final Object[] data = { allOnPlayers[playerRolled] };
 						getCore(Core.CoreType.PYRAMID).RunCore(data);
 					}
 				} else if (chance2 < 70) {
 					if (HerobrineAI.getPluginCore().getConfigDB().BuryPlayers) {
-						final Object[] data = { AllOnPlayers[player_rolled] };
+						final Object[] data = { allOnPlayers[playerRolled] };
 						getCore(Core.CoreType.BURY_PLAYER).RunCore(data);
 					}
 				} else if (HerobrineAI.getPluginCore().getConfigDB().UseHeads) {
-					final Object[] data = { AllOnPlayers[player_rolled].getName() };
+					final Object[] data = { allOnPlayers[playerRolled].getName() };
 					getCore(Core.CoreType.HEADS).RunCore(data);
 				}
 			}
@@ -344,11 +333,11 @@ public class AICore {
 	}
 
 	private void BuildCave() {
-		if (HerobrineAI.getPluginCore().getConfigDB().BuildStuff && new Random().nextBoolean() && (Bukkit.getServer().getOnlinePlayers().length > 0)) {
-			final Player[] AllOnPlayers = Bukkit.getServer().getOnlinePlayers();
-			final int player_rolled = Util.getRandomPlayerNum();
-			if (HerobrineAI.getPluginCore().getConfigDB().useWorlds.contains(AllOnPlayers[player_rolled].getLocation().getWorld().getName()) && new Random().nextBoolean()) {
-				final Object[] data = { AllOnPlayers[player_rolled].getLocation() };
+		if (HerobrineAI.getPluginCore().getConfigDB().BuildStuff && new Random().nextBoolean() && (Bukkit.getServer().getOnlinePlayers().size() > 0)) {
+			final Player[] allOnPlayers = Bukkit.getServer().getOnlinePlayers().toArray(new Player[0]);
+			final int playerRolled = Util.getRandomPlayerNum(allOnPlayers);
+			if (HerobrineAI.getPluginCore().getConfigDB().useWorlds.contains(allOnPlayers[playerRolled].getLocation().getWorld().getName()) && new Random().nextBoolean()) {
+				final Object[] data = { allOnPlayers[playerRolled].getLocation() };
 				getCore(Core.CoreType.BUILD_STUFF).RunCore(data);
 			}
 		}
@@ -363,13 +352,13 @@ public class AICore {
 	}
 
 	public void RandomCoreINT() {
-		if (new Random().nextBoolean() && (Bukkit.getServer().getOnlinePlayers().length > 0)) {
-			final Player[] AllOnPlayers = Bukkit.getServer().getOnlinePlayers();
-			final int player_rolled = Util.getRandomPlayerNum();
-			if ((AllOnPlayers[player_rolled].getEntityId() != HerobrineAI.HerobrineEntityID)
-					&& HerobrineAI.getPluginCore().getConfigDB().useWorlds.contains(AllOnPlayers[player_rolled].getLocation().getWorld().getName())) {
-				final Object[] data = { AllOnPlayers[player_rolled] };
-				if (HerobrineAI.getPluginCore().canAttackPlayerNoMSG(AllOnPlayers[player_rolled])) {
+		if (new Random().nextBoolean() && (Bukkit.getServer().getOnlinePlayers().size() > 0)) {
+			final Player[] allOnPlayers = Bukkit.getServer().getOnlinePlayers().toArray(new Player[0]);
+			final int playerRolled = Util.getRandomPlayerNum(allOnPlayers);
+			if ((allOnPlayers[playerRolled].getEntityId() != HerobrineAI.HerobrineEntityID)
+					&& HerobrineAI.getPluginCore().getConfigDB().useWorlds.contains(allOnPlayers[playerRolled].getLocation().getWorld().getName())) {
+				final Object[] data = { allOnPlayers[playerRolled] };
+				if (HerobrineAI.getPluginCore().canAttackPlayerNoMSG(allOnPlayers[playerRolled])) {
 					if (new Random().nextInt(100) < 30) {
 						getCore(Core.CoreType.RANDOM_SOUND).RunCore(data);
 					} else if (new Random().nextInt(100) < 60) {

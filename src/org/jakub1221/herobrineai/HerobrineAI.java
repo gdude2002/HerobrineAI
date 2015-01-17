@@ -59,7 +59,7 @@ public class HerobrineAI extends JavaPlugin implements Listener {
 	public void onEnable() {
 		boolean errorCheck = true;
 		try {
-			Class.forName(net.minecraft.server.v1_7_R4.Entity.class.getName());
+			Class.forName(net.minecraft.server.v1_8_R1.Entity.class.getName());
 		} catch (Throwable t) {
 			errorCheck = false;
 			HerobrineAI.isInitDone = false;
@@ -165,7 +165,7 @@ public class HerobrineAI extends JavaPlugin implements Listener {
 	}
 
 	public void HerobrineSpawn(final Location loc) {
-		HerobrineAI.HerobrineNPC = HerobrineAI.NPCman.spawnHumanNPC("Herobrine", loc);
+		HerobrineAI.HerobrineNPC = HerobrineAI.NPCman.spawnHumanNPC(loc);
 		HerobrineAI.HerobrineNPC.getBukkitEntity().setMetadata("NPC", new FixedMetadataValue(this, true));
 		HerobrineAI.HerobrineEntityID = HerobrineAI.HerobrineNPC.getBukkitEntity().getEntityId();
 	}

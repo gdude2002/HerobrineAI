@@ -13,8 +13,7 @@ public class _GriefPrevention {
 	}
 
 	public boolean isSecuredArea(final Location loc) {
-		final Claim claim = GriefPrevention.instance.dataStore.getClaimAt(loc, false, (Claim) null);
-		return claim != null;
+		return GriefPrevention.instance.dataStore.getClaimAt(loc, false, (Claim) null) != null;
 	}
 
 }

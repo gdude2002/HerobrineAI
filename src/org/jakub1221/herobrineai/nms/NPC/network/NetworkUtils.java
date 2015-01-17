@@ -1,11 +1,11 @@
 package org.jakub1221.herobrineai.nms.NPC.network;
 
-import net.minecraft.server.v1_7_R4.Packet;
+import net.minecraft.server.v1_8_R1.Packet;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_8_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -18,14 +18,10 @@ public class NetworkUtils {
 	public static void sendPacketNearby(final Location location, final Packet packet, double radius) {
 		radius *= radius;
 		final World world = location.getWorld();
-		Player[] onlinePlayers;
-		for (int length = (onlinePlayers = Bukkit.getServer().getOnlinePlayers()).length, i = 0; i < length; ++i) {
-			final Player p = onlinePlayers[i];
-			if (p != null) {
-				if (world == p.getWorld()) {
-					if (location.distanceSquared(p.getLocation()) <= radius) {
-						((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
-					}
+		for (Player player : Bukkit.getOnlinePlayers()) {
+			if (world == player.getWorld()) {
+				if (location.distanceSquared(player.getLocation()) <= radius) {
+					((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
 				}
 			}
 		}

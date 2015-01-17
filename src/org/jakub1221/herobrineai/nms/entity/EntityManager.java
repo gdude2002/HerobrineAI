@@ -3,9 +3,10 @@ package org.jakub1221.herobrineai.nms.entity;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.minecraft.server.v1_8_R1.World;
+
 import org.bukkit.Location;
-import org.bukkit.World;
-import org.bukkit.craftbukkit.v1_7_R4.CraftWorld;
+import org.bukkit.craftbukkit.v1_8_R1.CraftWorld;
 
 public class EntityManager {
 
@@ -17,16 +18,14 @@ public class EntityManager {
 	}
 
 	public void spawnCustomZombie(final Location loc, final MobType mbt) {
-		final World world = loc.getWorld();
-		final net.minecraft.server.v1_7_R4.World mcWorld = ((CraftWorld) world).getHandle();
+		final World mcWorld = ((CraftWorld) loc.getWorld()).getHandle();
 		final CustomZombie zmb = new CustomZombie(mcWorld, loc, mbt);
 		mcWorld.addEntity(zmb);
 		mobList.put(new Integer(zmb.getBukkitEntity().getEntityId()), zmb);
 	}
 
 	public void spawnCustomSkeleton(final Location loc, final MobType mbt) {
-		final World world = loc.getWorld();
-		final net.minecraft.server.v1_7_R4.World mcWorld = ((CraftWorld) world).getHandle();
+		final World mcWorld = ((CraftWorld) loc.getWorld()).getHandle();
 		final CustomSkeleton zmb = new CustomSkeleton(mcWorld, loc, mbt);
 		mcWorld.addEntity(zmb);
 		mobList.put(new Integer(zmb.getBukkitEntity().getEntityId()), zmb);

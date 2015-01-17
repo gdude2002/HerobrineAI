@@ -1,9 +1,8 @@
 package org.jakub1221.herobrineai.nms.NPC.entity;
 
-import net.minecraft.server.v1_7_R4.Entity;
-import net.minecraft.server.v1_7_R4.EntityPlayer;
-import net.minecraft.server.v1_7_R4.PacketPlayInArmAnimation;
-import net.minecraft.server.v1_7_R4.WorldServer;
+import net.minecraft.server.v1_8_R1.EntityPlayer;
+import net.minecraft.server.v1_8_R1.PacketPlayInArmAnimation;
+import net.minecraft.server.v1_8_R1.WorldServer;
 
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
@@ -13,7 +12,7 @@ import org.jakub1221.herobrineai.HerobrineAI;
 
 public class HumanNPC {
 
-	private Entity entity;
+	private EntityPlayer entity;
 	private final int id;
 
 	public HumanNPC(final HumanEntity humanEntity, final int id) {
@@ -26,12 +25,12 @@ public class HumanNPC {
 		return id;
 	}
 
-	public Entity getEntity() {
+	public EntityPlayer getNMSEntity() {
 		return entity;
 	}
 
 	public void ArmSwingAnimation() {
-		((WorldServer) getEntity().world).tracker.a(getEntity(), new PacketPlayInArmAnimation());
+		((WorldServer) getNMSEntity().world).tracker.a(getNMSEntity(), new PacketPlayInArmAnimation());
 	}
 
 	public void HurtAnimation() {
@@ -41,16 +40,16 @@ public class HumanNPC {
 
 	public void setItemInHand(final ItemStack item) {
 		if (item != null) {
-			((org.bukkit.entity.HumanEntity) getEntity().getBukkitEntity()).setItemInHand(item);
+			((org.bukkit.entity.HumanEntity) getNMSEntity().getBukkitEntity()).setItemInHand(item);
 		}
 	}
 
 	public String getName() {
-		return ((HumanEntity) getEntity()).getName();
+		return ((HumanEntity) getNMSEntity()).getName();
 	}
 
 	public void setPitch(final float pitch) {
-		((HumanEntity) getEntity()).pitch = pitch;
+		((HumanEntity) getNMSEntity()).pitch = pitch;
 	}
 
 	public void moveTo(final Location loc) {
@@ -58,10 +57,10 @@ public class HumanNPC {
 	}
 
 	public void Teleport(final Location loc) {
-		if (loc.getWorld().getName().equals(getEntity().world.getWorld().getName())) {
-			getEntity().locX = loc.getX();
-			getEntity().locY = loc.getY();
-			getEntity().locZ = loc.getZ();
+		if (loc.getWorld().getName().equals(getNMSEntity().world.getWorld().getName())) {
+			getNMSEntity().locX = loc.getX();
+			getNMSEntity().locY = loc.getY();
+			getNMSEntity().locZ = loc.getZ();
 		} else {
 			HerobrineAI.getPluginCore().hbSpawnData = loc;
 			HerobrineAI.getPluginCore().removeHBNextTick = true;
@@ -69,7 +68,7 @@ public class HumanNPC {
 	}
 
 	public PlayerInventory getInventory() {
-		return ((org.bukkit.entity.HumanEntity) getEntity().getBukkitEntity()).getInventory();
+		return ((org.bukkit.entity.HumanEntity) getNMSEntity().getBukkitEntity()).getInventory();
 	}
 
 	public void removeFromWorld() {
@@ -81,16 +80,16 @@ public class HumanNPC {
 	}
 
 	public void setYaw(final float yaw) {
-		((EntityPlayer) getEntity()).yaw = yaw;
-		((EntityPlayer) getEntity()).aO = yaw;
-		((EntityPlayer) getEntity()).aP = yaw;
+		((EntityPlayer) getNMSEntity()).yaw = yaw;
+		((EntityPlayer) getNMSEntity()).aI = yaw;
+		((EntityPlayer) getNMSEntity()).aJ = yaw;
 	}
 
 	public void lookAtPoint(final Location point) {
-		if (getEntity().getBukkitEntity().getWorld() != point.getWorld()) {
+		if (getNMSEntity().getBukkitEntity().getWorld() != point.getWorld()) {
 			return;
 		}
-		final Location npcLoc = ((LivingEntity) getEntity().getBukkitEntity()).getEyeLocation();
+		final Location npcLoc = ((LivingEntity) getNMSEntity().getBukkitEntity()).getEyeLocation();
 		final double xDiff = point.getX() - npcLoc.getX();
 		final double yDiff = point.getY() - npcLoc.getY();
 		final double zDiff = point.getZ() - npcLoc.getZ();
@@ -101,10 +100,10 @@ public class HumanNPC {
 		if (zDiff < 0.0) {
 			newYaw += Math.abs(180.0 - newYaw) * 2.0;
 		}
-		((EntityPlayer) getEntity()).yaw = (float) (newYaw - 90.0);
-		((EntityPlayer) getEntity()).pitch = (float) newPitch;
-		((EntityPlayer) getEntity()).aP = (float) (newYaw - 90.0);
-		((EntityPlayer) getEntity()).aO = (float) (newYaw - 90.0);
+		((EntityPlayer) getNMSEntity()).yaw = (float) (newYaw - 90.0);
+		((EntityPlayer) getNMSEntity()).pitch = (float) newPitch;
+		((EntityPlayer) getNMSEntity()).aJ = (float) (newYaw - 90.0);
+		((EntityPlayer) getNMSEntity()).aI = (float) (newYaw - 90.0);
 	}
 
 	public org.bukkit.entity.Entity getBukkitEntity() {

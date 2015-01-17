@@ -3,6 +3,8 @@ package org.jakub1221.herobrineai.misc;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
 import org.bukkit.World;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -22,7 +24,7 @@ public class StructureLoader {
 		inp = in;
 		file = new YamlConfiguration();
 		try {
-			file.load(inp);
+			file.load(new InputStreamReader(inp, StandardCharsets.UTF_8));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e2) {

@@ -2,9 +2,9 @@ package org.jakub1221.herobrineai.nms.entity;
 
 import java.util.Random;
 
-import net.minecraft.server.v1_7_R4.EntitySkeleton;
-import net.minecraft.server.v1_7_R4.GenericAttributes;
-import net.minecraft.server.v1_7_R4.World;
+import net.minecraft.server.v1_8_R1.EntitySkeleton;
+import net.minecraft.server.v1_8_R1.GenericAttributes;
+import net.minecraft.server.v1_8_R1.World;
 
 import org.bukkit.Color;
 import org.bukkit.Location;

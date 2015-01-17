@@ -156,25 +156,21 @@ public class RandomPosition extends Core {
 	public void CheckPlayerPosition() {
 		boolean isThere = false;
 		final Location loc = HerobrineAI.HerobrineNPC.getBukkitEntity().getLocation();
-		final Player[] AllOnPlayers = Bukkit.getServer().getOnlinePlayers();
-		if (Bukkit.getServer().getOnlinePlayers().length > 0) {
-			Location ploc;
-			for (int i = 0; i <= (Bukkit.getServer().getOnlinePlayers().length - 1); ++i) {
-				if (HerobrineAI.HerobrineEntityID != AllOnPlayers[i].getEntityId()) {
-					ploc = AllOnPlayers[i].getLocation();
-					if ((ploc.getWorld() == loc.getWorld()) && ((ploc.getX() + 7.0) > loc.getX()) && ((ploc.getX() - 7.0) < loc.getX()) && ((ploc.getZ() + 7.0) > loc.getZ()) && ((ploc.getZ() - 7.0) < loc.getZ()) && ((ploc.getY() + 7.0) > loc.getY()) && ((ploc.getY() - 7.0) < loc.getY())) {
-						loc.setY(-20.0);
-						HerobrineAI.HerobrineNPC.moveTo(loc);
-						HerobrineAI.getPluginCore().getAICore().CancelTarget(CoreType.RANDOM_POSITION);
-						RandomMoveIsPlayer = false;
-						HerobrineAI.getPluginCore().getAICore().setAttackTarget(AllOnPlayers[i]);
-					} else if ((ploc.getWorld() == loc.getWorld()) && ((ploc.getX() + 15.0) > loc.getX()) && ((ploc.getX() - 15.0) < loc.getX()) && ((ploc.getZ() + 15.0) > loc.getZ())
-							&& ((ploc.getZ() - 15.0) < loc.getZ()) && ((ploc.getY() + 15.0) > loc.getY()) && ((ploc.getY() - 15.0) < loc.getY())) {
-						ploc.setY(ploc.getY() + 1.5);
-						HerobrineAI.HerobrineNPC.lookAtPoint(ploc);
-						HerobrineAI.getPluginCore().getPathManager().setPath(null);
-						isThere = true;
-					}
+		for (Player player : Bukkit.getOnlinePlayers()) {
+			if (HerobrineAI.HerobrineEntityID != player.getEntityId()) {
+				Location ploc = player.getLocation();
+				if ((ploc.getWorld() == loc.getWorld()) && ((ploc.getX() + 7.0) > loc.getX()) && ((ploc.getX() - 7.0) < loc.getX()) && ((ploc.getZ() + 7.0) > loc.getZ()) && ((ploc.getZ() - 7.0) < loc.getZ()) && ((ploc.getY() + 7.0) > loc.getY()) && ((ploc.getY() - 7.0) < loc.getY())) {
+					loc.setY(-20.0);
+					HerobrineAI.HerobrineNPC.moveTo(loc);
+					HerobrineAI.getPluginCore().getAICore().CancelTarget(CoreType.RANDOM_POSITION);
+					RandomMoveIsPlayer = false;
+					HerobrineAI.getPluginCore().getAICore().setAttackTarget(player);
+				} else if ((ploc.getWorld() == loc.getWorld()) && ((ploc.getX() + 15.0) > loc.getX()) && ((ploc.getX() - 15.0) < loc.getX()) && ((ploc.getZ() + 15.0) > loc.getZ())
+						&& ((ploc.getZ() - 15.0) < loc.getZ()) && ((ploc.getY() + 15.0) > loc.getY()) && ((ploc.getY() - 15.0) < loc.getY())) {
+					ploc.setY(ploc.getY() + 1.5);
+					HerobrineAI.HerobrineNPC.lookAtPoint(ploc);
+					HerobrineAI.getPluginCore().getPathManager().setPath(null);
+					isThere = true;
 				}
 			}
 		}

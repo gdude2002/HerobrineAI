@@ -1,8 +1,8 @@
 package org.jakub1221.herobrineai.nms.NPC.network;
 
-import net.minecraft.server.v1_7_R4.EntityPlayer;
-import net.minecraft.server.v1_7_R4.Packet;
-import net.minecraft.server.v1_7_R4.PlayerConnection;
+import net.minecraft.server.v1_8_R1.EntityPlayer;
+import net.minecraft.server.v1_8_R1.Packet;
+import net.minecraft.server.v1_8_R1.PlayerConnection;
 
 import org.jakub1221.herobrineai.nms.NPC.NPCCore;
 

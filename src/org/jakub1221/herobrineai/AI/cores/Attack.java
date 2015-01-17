@@ -141,7 +141,7 @@ public class Attack extends Core {
 						final int hitchance = new Random().nextInt(100);
 						if (hitchance < 55) {
 							AICore.PlayerTarget.playSound(AICore.PlayerTarget.getLocation(), Sound.HURT_FLESH, 0.75f, 0.75f);
-							AICore.PlayerTarget.damage(4);
+							AICore.PlayerTarget.damage(4.0F);
 						}
 					}
 				} else {

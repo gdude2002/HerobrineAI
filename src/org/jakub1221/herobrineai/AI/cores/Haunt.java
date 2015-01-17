@@ -123,17 +123,19 @@ public class Haunt extends Core {
 		if (AICore.PlayerTarget.isOnline() && AICore.isTarget && (HerobrineAI.getPluginCore().getAICore().getCoreTypeNow() == CoreType.HAUNT)) {
 			if (!AICore.PlayerTarget.isDead()) {
 				Location loc = HerobrineAI.HerobrineNPC.getBukkitEntity().getLocation();
-				final Player[] AllOnPlayers = Bukkit.getServer().getOnlinePlayers();
-				if (Bukkit.getServer().getOnlinePlayers().length > 0) {
-					int i;
-					Location ploc;
-					for (i = 0, i = 0; i <= (Bukkit.getServer().getOnlinePlayers().length - 1); ++i) {
-						if (AllOnPlayers[i].getEntityId() != HerobrineAI.HerobrineEntityID) {
-							ploc = AllOnPlayers[i].getLocation();
-							if ((ploc.getWorld() == loc.getWorld()) && ((ploc.getX() + 5.0) > loc.getX()) && ((ploc.getX() - 5.0) < loc.getX()) && ((ploc.getZ() + 5.0) > loc.getZ())
-									&& ((ploc.getZ() - 5.0) < loc.getZ()) && ((ploc.getY() + 5.0) > loc.getY()) && ((ploc.getY() - 5.0) < loc.getY())) {
-								HerobrineAI.getPluginCore().getAICore().DisappearEffect();
-							}
+				for (Player player : Bukkit.getOnlinePlayers()) {
+					if (player.getEntityId() != HerobrineAI.HerobrineEntityID) {
+						Location ploc = player.getLocation();
+						if (
+							(ploc.getWorld().equals(loc.getWorld())) &&
+							((ploc.getX() + 5.0) > loc.getX()) &&
+							((ploc.getX() - 5.0) < loc.getX()) &&
+							((ploc.getZ() + 5.0) > loc.getZ()) &&
+							((ploc.getZ() - 5.0) < loc.getZ()) &&
+							((ploc.getY() + 5.0) > loc.getY()) &&
+							((ploc.getY() - 5.0) < loc.getY())
+						) {
+							HerobrineAI.getPluginCore().getAICore().DisappearEffect();
 						}
 					}
 				}

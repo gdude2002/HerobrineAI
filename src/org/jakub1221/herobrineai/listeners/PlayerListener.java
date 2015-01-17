@@ -2,10 +2,15 @@ package org.jakub1221.herobrineai.listeners;
 
 import java.util.Random;
 
+import net.minecraft.server.v1_8_R1.EntityPlayer;
+import net.minecraft.server.v1_8_R1.EnumPlayerInfoAction;
+import net.minecraft.server.v1_8_R1.PacketPlayOutPlayerInfo;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Jukebox;
+import org.bukkit.craftbukkit.v1_8_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -14,6 +19,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -87,10 +93,10 @@ public class PlayerListener implements Listener {
 				return;
 			}
 			if ((HerobrineAI.getPluginCore().getAICore().getCoreTypeNow() == Core.CoreType.RANDOM_POSITION)
-					&& (HerobrineAI.HerobrineNPC.getEntity().getBukkitEntity().getLocation().getBlockX() > HerobrineAI.getPluginCore().getConfigDB().WalkingModeXRadius)
-					&& (HerobrineAI.HerobrineNPC.getEntity().getBukkitEntity().getLocation().getBlockX() < -HerobrineAI.getPluginCore().getConfigDB().WalkingModeXRadius)
-					&& (HerobrineAI.HerobrineNPC.getEntity().getBukkitEntity().getLocation().getBlockZ() > HerobrineAI.getPluginCore().getConfigDB().WalkingModeZRadius)
-					&& (HerobrineAI.HerobrineNPC.getEntity().getBukkitEntity().getLocation().getBlockZ() < -HerobrineAI.getPluginCore().getConfigDB().WalkingModeZRadius)) {
+					&& (HerobrineAI.HerobrineNPC.getNMSEntity().getBukkitEntity().getLocation().getBlockX() > HerobrineAI.getPluginCore().getConfigDB().WalkingModeXRadius)
+					&& (HerobrineAI.HerobrineNPC.getNMSEntity().getBukkitEntity().getLocation().getBlockX() < -HerobrineAI.getPluginCore().getConfigDB().WalkingModeXRadius)
+					&& (HerobrineAI.HerobrineNPC.getNMSEntity().getBukkitEntity().getLocation().getBlockZ() > HerobrineAI.getPluginCore().getConfigDB().WalkingModeZRadius)
+					&& (HerobrineAI.HerobrineNPC.getNMSEntity().getBukkitEntity().getLocation().getBlockZ() < -HerobrineAI.getPluginCore().getConfigDB().WalkingModeZRadius)) {
 				HerobrineAI.getPluginCore().getAICore().CancelTarget(Core.CoreType.RANDOM_POSITION);
 				HerobrineAI.HerobrineNPC.moveTo(new Location(Bukkit.getServer().getWorlds().get(0), 0.0, -20.0, 0.0));
 			}
@@ -99,7 +105,7 @@ public class PlayerListener implements Listener {
 
 	@EventHandler
 	public void onPlayerCommand(final PlayerCommandPreprocessEvent event) {
-		if (event.getPlayer().getWorld() == Bukkit.getServer().getWorld("world_herobrineai_graveyard")) {
+		if (event.getPlayer().getWorld() == Bukkit.getServer().getWorld("world_herobrineai_graveyard") && !event.getPlayer().hasPermission("hb-ai.cmdblockbypass")) {
 			event.setCancelled(true);
 		}
 	}
@@ -122,6 +128,12 @@ public class PlayerListener implements Listener {
 			final Player player = event.getPlayer();
 			player.teleport(new Location(Bukkit.getServer().getWorld("world_herobrineai_graveyard"), -2.49, 4.0, 10.69, -179.85f, 0.44999f));
 		}
+	}
+
+	@EventHandler
+	public void onJoin(PlayerJoinEvent event) {
+		EntityPlayer player = ((CraftPlayer) event.getPlayer()).getHandle();
+		player.playerConnection.sendPacket(new PacketPlayOutPlayerInfo(EnumPlayerInfoAction.ADD_PLAYER, HerobrineAI.HerobrineNPC.getNMSEntity()));
 	}
 
 }
