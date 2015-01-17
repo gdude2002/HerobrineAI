@@ -61,8 +61,10 @@ public class EntityListener implements Listener {
 	@EventHandler
 	public void EntityTargetEvent(final EntityTargetLivingEntityEvent e) {
 		final LivingEntity lv = e.getTarget();
-		if (lv.getEntityId() == HerobrineAI.HerobrineEntityID) {
-			e.setCancelled(true);
+		if (lv != null) {
+			if (lv.getEntityId() == HerobrineAI.HerobrineEntityID) {
+				e.setCancelled(true);
+			}
 		}
 	}
 
