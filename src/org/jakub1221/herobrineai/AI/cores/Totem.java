@@ -18,14 +18,14 @@ public class Totem extends Core {
 	}
 
 	@Override
-	public CoreResult CallCore(final Object[] data) {
+	public CoreResult callCore(final Object[] data) {
 		return TotemCall((Location) data[0], (String) data[1]);
 	}
 
 	public CoreResult TotemCall(final Location loc, final String caller) {
 		AICore.isTotemCalled = false;
 		loc.getWorld().strikeLightning(loc);
-		if (HerobrineAI.getPluginCore().getConfigDB().TotemExplodes) {
+		if (HerobrineAI.getPluginCore().getConfigDB().totemExplodes) {
 			loc.getWorld().createExplosion(loc, 5.0f);
 		}
 		if (Bukkit.getServer().getPlayer(caller) != null) {
@@ -42,8 +42,8 @@ public class Totem extends Core {
 						((ploc.getZ() + 10.0) > loc.getZ()) &&
 						((ploc.getZ() - 10.0) < loc.getZ())
 					) {
-						Message.SendMessage(oplayer);
-						if (HerobrineAI.getPluginCore().getConfigDB().UsePotionEffects) {
+						Message.sendMessage(oplayer);
+						if (HerobrineAI.getPluginCore().getConfigDB().usePotionEffects) {
 							oplayer.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 1000, 1));
 							oplayer.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 1000, 1));
 							oplayer.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 1000, 1));
@@ -63,14 +63,14 @@ public class Totem extends Core {
 					}
 				}
 				if (hasTarget) {
-					HerobrineAI.getPluginCore().getAICore().CancelTarget(CoreType.TOTEM);
+					HerobrineAI.getPluginCore().getAICore().cancelTarget(CoreType.TOTEM);
 					HerobrineAI.getPluginCore().getAICore().setAttackTarget(target);
 					final Player player = target;
 					for (Player oplayer : Bukkit.getOnlinePlayers()) {
 						Location ploc = oplayer.getLocation();
 						if ((oplayer.getName() != player.getName()) && ((ploc.getX() + 20.0) > loc.getX()) && ((ploc.getX() - 20.0) < loc.getX()) && ((ploc.getZ() + 20.0) > loc.getZ())
 								&& ((ploc.getZ() - 20.0) < loc.getZ())) {
-							Message.SendMessage(oplayer);
+							Message.sendMessage(oplayer);
 							oplayer.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 1000, 1));
 							oplayer.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 1000, 1));
 							oplayer.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 1000, 1));
@@ -91,15 +91,15 @@ public class Totem extends Core {
 				}
 			}
 			if (hasTarget) {
-				HerobrineAI.getPluginCore().getAICore().CancelTarget(CoreType.TOTEM);
+				HerobrineAI.getPluginCore().getAICore().cancelTarget(CoreType.TOTEM);
 				HerobrineAI.getPluginCore().getAICore().setAttackTarget(target);
 				final Player player = target;
 				for (Player oplayer : Bukkit.getOnlinePlayers()) {
-					if (oplayer.getEntityId() != HerobrineAI.HerobrineEntityID) {
+					if (oplayer.getEntityId() != HerobrineAI.herobrineEntityID) {
 						Location ploc = oplayer.getLocation();
 						if ((oplayer.getName() != player.getName()) && ((ploc.getX() + 20.0) > loc.getX()) && ((ploc.getX() - 20.0) < loc.getX()) && ((ploc.getZ() + 20.0) > loc.getZ())
 								&& ((ploc.getZ() - 20.0) < loc.getZ())) {
-							Message.SendMessage(oplayer);
+							Message.sendMessage(oplayer);
 							oplayer.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 1000, 1));
 							oplayer.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 1000, 1));
 							oplayer.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 1000, 1));

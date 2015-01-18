@@ -60,7 +60,7 @@ public class CustomZombie extends EntityZombie implements CustomEntity {
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public void Kill() {
+	public void kill() {
 		String mobS = "";
 		if (mobType == MobType.ARTIFACT_GUARDIAN) {
 			mobS = "Guardian";

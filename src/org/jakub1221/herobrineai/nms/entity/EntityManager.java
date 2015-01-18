@@ -10,12 +10,7 @@ import org.bukkit.craftbukkit.v1_8_R1.CraftWorld;
 
 public class EntityManager {
 
-	private HashMap<Integer, CustomEntity> mobList;
-
-	public EntityManager() {
-		super();
-		mobList = new HashMap<Integer, CustomEntity>();
-	}
+	private final HashMap<Integer, CustomEntity> mobList = new HashMap<Integer, CustomEntity>();
 
 	public void spawnCustomZombie(final Location loc, final MobType mbt) {
 		final World mcWorld = ((CraftWorld) loc.getWorld()).getHandle();
@@ -40,7 +35,7 @@ public class EntityManager {
 	}
 
 	public void removeMob(final int id) {
-		mobList.get(new Integer(id)).Kill();
+		mobList.get(new Integer(id)).kill();
 		mobList.remove(new Integer(id));
 	}
 
@@ -50,7 +45,7 @@ public class EntityManager {
 
 	public void killAllMobs() {
 		for (final Map.Entry<Integer, CustomEntity> s : mobList.entrySet()) {
-			s.getValue().Kill();
+			s.getValue().kill();
 		}
 		removeAllMobs();
 	}

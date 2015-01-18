@@ -4,30 +4,29 @@ import org.jakub1221.herobrineai.HerobrineAI;
 
 public abstract class Core {
 
-	private final AppearType Appear;
+	private final AppearType appear;
 	private final CoreType coreType;
+
 	private CoreResult nowData;
 
 	public Core(final CoreType cp, final AppearType ap) {
-		super();
-		nowData = null;
 		coreType = cp;
-		Appear = ap;
+		appear = ap;
 	}
 
 	public AppearType getAppear() {
-		return Appear;
+		return appear;
 	}
 
 	public CoreType getCoreType() {
 		return coreType;
 	}
 
-	protected abstract CoreResult CallCore(final Object[] p0);
+	protected abstract CoreResult callCore(final Object[] p0);
 
-	public CoreResult RunCore(final Object[] data) {
-		nowData = CallCore(data);
-		if (nowData.getResult() && (Appear == AppearType.APPEAR)) {
+	public CoreResult runCore(final Object[] data) {
+		nowData = callCore(data);
+		if (nowData.getResult() && (appear == AppearType.APPEAR)) {
 			HerobrineAI.getPluginCore().getAICore().setCoreTypeNow(coreType);
 		}
 		return nowData;
@@ -38,9 +37,10 @@ public abstract class Core {
 	}
 
 	public enum CoreType {
-		ATTACK, HAUNT, BOOK, BUILD_STUFF, BURY_PLAYER, DESTROY_TORCHES, GRAVEYARD, PYRAMID,
-		RANDOM_POSITION, SIGNS, SOUNDF, TOTEM, ANY, START, HEADS,
-		RANDOM_SOUND, RANDOM_EXPLOSION, BURN, CURSE, STARE
+		ATTACK, HAUNT, BOOK, BUILD_STUFF, BURY_PLAYER,
+		DESTROY_TORCHES, GRAVEYARD, PYRAMID,
+		SIGNS, SOUNDF, TOTEM, ANY, START, HEADS,
+		RANDOM_SOUND, RANDOM_EXPLOSION, BURN, CURSE
 	}
 
 }

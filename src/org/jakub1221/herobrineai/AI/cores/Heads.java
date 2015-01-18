@@ -26,7 +26,7 @@ public class Heads extends Core {
 	}
 
 	@Override
-	public CoreResult CallCore(final Object[] data) {
+	public CoreResult callCore(final Object[] data) {
 		if (isCalled) {
 			return new CoreResult(false, "There are already heads! Wait until they disappear.");
 		}
@@ -37,7 +37,7 @@ public class Heads extends Core {
 		if (!HerobrineAI.getPluginCore().getSupport().checkBuild(player.getLocation())) {
 			return new CoreResult(false, "Player is in secure area!");
 		}
-		if (HerobrineAI.getPluginCore().getConfigDB().UseHeads) {
+		if (HerobrineAI.getPluginCore().getConfigDB().useHeads) {
 			final Location loc = player.getLocation();
 			final int px = loc.getBlockX();
 			final int pz = loc.getBlockZ();

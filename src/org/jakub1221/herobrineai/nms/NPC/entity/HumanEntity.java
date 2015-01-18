@@ -12,11 +12,11 @@ import org.bukkit.craftbukkit.v1_8_R1.CraftServer;
 import org.bukkit.craftbukkit.v1_8_R1.entity.CraftPlayer;
 import org.jakub1221.herobrineai.nms.NPC.NPCCore;
 import org.jakub1221.herobrineai.nms.NPC.network.NetworkHandler;
-import org.jakub1221.herobrineai.nms.NPC.utils.BWorld;
+import org.jakub1221.herobrineai.nms.NPC.utils.NMSWorldAccess;
 
 public class HumanEntity extends EntityPlayer {
 
-	public HumanEntity(final NPCCore npcCore, final BWorld world, final GameProfile s, final PlayerInteractManager playerInteractManager) {
+	public HumanEntity(final NPCCore npcCore, final NMSWorldAccess world, final GameProfile s, final PlayerInteractManager playerInteractManager) {
 		super(npcCore.getServer().getMCServer(), world.getWorldServer(), s, playerInteractManager);
 		playerInteractManager.b(EnumGamemode.SURVIVAL);
 		playerConnection = new NetworkHandler(npcCore, this);

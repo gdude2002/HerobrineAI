@@ -1,6 +1,5 @@
 package org.jakub1221.herobrineai.nms.NPC;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,16 +14,16 @@ import com.mojang.authlib.properties.Property;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.plugin.java.JavaPlugin;
+import org.jakub1221.herobrineai.HerobrineAI;
 import org.jakub1221.herobrineai.nms.NPC.entity.HumanEntity;
 import org.jakub1221.herobrineai.nms.NPC.entity.HumanNPC;
 import org.jakub1221.herobrineai.nms.NPC.network.NetworkCore;
-import org.jakub1221.herobrineai.nms.NPC.utils.BServer;
-import org.jakub1221.herobrineai.nms.NPC.utils.BWorld;
+import org.jakub1221.herobrineai.nms.NPC.utils.NMSServerAccess;
+import org.jakub1221.herobrineai.nms.NPC.utils.NMSWorldAccess;
 
 public class NPCCore {
 
-	public static final GameProfile HEROBRINE_GAME_PROFILE = getHerobrineGameProfile();
+	private static final GameProfile HEROBRINE_GAME_PROFILE = getHerobrineGameProfile();
 
 	private static GameProfile getHerobrineGameProfile() {
 		GameProfile profile = new GameProfile(UUID.fromString("f84c6a79-0a4e-45e0-879b-cd49ebd4c4e2"), "Herobrine");
@@ -37,32 +36,21 @@ public class NPCCore {
 		return profile;
 	}
 
-	private ArrayList<HumanNPC> npcs;
-	private BServer server;
-	private Map<World, BWorld> bworlds;
-	private NetworkCore networkCore;
-	public static JavaPlugin plugin;
-	private int lastID;
+	private final ArrayList<HumanNPC> npcs = new ArrayList<HumanNPC>();
+	private NMSServerAccess nmsserver = NMSServerAccess.getInstance();
+	private Map<World, NMSWorldAccess> nmsworlds = new HashMap<World, NMSWorldAccess>();
+	private NetworkCore networkCore = new NetworkCore();
+	private int lastID = 0;
 
-	public NPCCore(final JavaPlugin plugin) {
-		super();
-		npcs = new ArrayList<HumanNPC>();
-		bworlds = new HashMap<World, BWorld>();
-		lastID = 0;
-		server = BServer.getInstance();
-		try {
-			networkCore = new NetworkCore();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
+	public NPCCore() {
+		Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(HerobrineAI.getPluginCore(), new Runnable() {
 			@Override
 			public void run() {
 				final ArrayList<HumanNPC> toRemove = new ArrayList<HumanNPC>();
-				for (final HumanNPC i : npcs) {
-					final Entity j = i.getNMSEntity();
-					if (j.dead) {
-						toRemove.add(i);
+				for (final HumanNPC humanNPC : npcs) {
+					final Entity entity = humanNPC.getNMSEntity();
+					if (entity.dead) {
+						toRemove.add(humanNPC);
 					}
 				}
 				for (final HumanNPC n : toRemove) {
@@ -81,13 +69,13 @@ public class NPCCore {
 		npcs.clear();
 	}
 
-	public BWorld getBWorld(final World world) {
-		BWorld bworld = bworlds.get(world);
+	public NMSWorldAccess getNMSWorldAccess(final World world) {
+		NMSWorldAccess bworld = nmsworlds.get(world);
 		if (bworld != null) {
 			return bworld;
 		}
-		bworld = new BWorld(world);
-		bworlds.put(world, bworld);
+		bworld = new NMSWorldAccess(world);
+		nmsworlds.put(world, bworld);
 		return bworld;
 	}
 
@@ -98,7 +86,7 @@ public class NPCCore {
 	}
 
 	public HumanNPC spawnHumanNPC(final Location l, final int id) {
-		final BWorld world = getBWorld(l.getWorld());
+		final NMSWorldAccess world = getNMSWorldAccess(l.getWorld());
 		final HumanEntity humanEntity = new HumanEntity(this, world, HEROBRINE_GAME_PROFILE, new PlayerInteractManager(world.getWorldServer()));
 		humanEntity.setLocation(l.getX(), l.getY(), l.getZ(), l.getYaw(), l.getPitch());
 		world.getWorldServer().addEntity(humanEntity);
@@ -116,8 +104,8 @@ public class NPCCore {
 		return null;
 	}
 
-	public BServer getServer() {
-		return server;
+	public NMSServerAccess getServer() {
+		return nmsserver;
 	}
 
 	public NetworkCore getNetworkCore() {

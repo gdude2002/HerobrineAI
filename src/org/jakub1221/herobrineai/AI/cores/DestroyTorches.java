@@ -14,22 +14,22 @@ public class DestroyTorches extends Core {
 	}
 
 	@Override
-	public CoreResult CallCore(final Object[] data) {
+	public CoreResult callCore(final Object[] data) {
 		return destroyTorches((Location) data[0]);
 	}
 
 	public CoreResult destroyTorches(final Location loc) {
-		if (HerobrineAI.getPluginCore().getConfigDB().DestroyTorches) {
+		if (HerobrineAI.getPluginCore().getConfigDB().destroyTorches) {
 			final int x = loc.getBlockX();
 			final int y = loc.getBlockY();
 			final int z = loc.getBlockZ();
 			final World world = loc.getWorld();
-			int i = -HerobrineAI.getPluginCore().getConfigDB().DestroyTorchesRadius;
-			int ii = -HerobrineAI.getPluginCore().getConfigDB().DestroyTorchesRadius;
-			int iii = -HerobrineAI.getPluginCore().getConfigDB().DestroyTorchesRadius;
-			for (i = -HerobrineAI.getPluginCore().getConfigDB().DestroyTorchesRadius; i <= HerobrineAI.getPluginCore().getConfigDB().DestroyTorchesRadius; ++i) {
-				for (ii = -HerobrineAI.getPluginCore().getConfigDB().DestroyTorchesRadius; ii <= HerobrineAI.getPluginCore().getConfigDB().DestroyTorchesRadius; ++ii) {
-					for (iii = -HerobrineAI.getPluginCore().getConfigDB().DestroyTorchesRadius; iii <= HerobrineAI.getPluginCore().getConfigDB().DestroyTorchesRadius; ++iii) {
+			int i = -HerobrineAI.getPluginCore().getConfigDB().destroyTorchesRadius;
+			int ii = -HerobrineAI.getPluginCore().getConfigDB().destroyTorchesRadius;
+			int iii = -HerobrineAI.getPluginCore().getConfigDB().destroyTorchesRadius;
+			for (i = -HerobrineAI.getPluginCore().getConfigDB().destroyTorchesRadius; i <= HerobrineAI.getPluginCore().getConfigDB().destroyTorchesRadius; ++i) {
+				for (ii = -HerobrineAI.getPluginCore().getConfigDB().destroyTorchesRadius; ii <= HerobrineAI.getPluginCore().getConfigDB().destroyTorchesRadius; ++ii) {
+					for (iii = -HerobrineAI.getPluginCore().getConfigDB().destroyTorchesRadius; iii <= HerobrineAI.getPluginCore().getConfigDB().destroyTorchesRadius; ++iii) {
 						if (world.getBlockAt(x + ii, y + i, z + iii).getType() == Material.TORCH) {
 							world.getBlockAt(x + ii, y + i, z + iii).breakNaturally();
 							return new CoreResult(true, "Torches destroyed!");

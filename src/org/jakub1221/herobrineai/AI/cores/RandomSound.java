@@ -12,12 +12,12 @@ public class RandomSound extends Core {
 	}
 
 	@Override
-	public CoreResult CallCore(final Object[] data) {
+	public CoreResult callCore(final Object[] data) {
 		for (int multip = 1; multip != 7; ++multip) {
 			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(HerobrineAI.getPluginCore(), new Runnable() {
 				@Override
 				public void run() {
-					HerobrineAI.getPluginCore().getAICore().getCore(CoreType.SOUNDF).RunCore(data);
+					HerobrineAI.getPluginCore().getAICore().getCore(CoreType.SOUNDF).runCore(data);
 				}
 			}, multip * 30L);
 		}

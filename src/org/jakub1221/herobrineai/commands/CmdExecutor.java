@@ -67,7 +67,7 @@ public class CmdExecutor implements CommandExecutor {
 								if (Bukkit.getServer().getPlayer(args[1]).isOnline()) {
 									if (P_Core.getSupport().checkBuild(Bukkit.getServer().getPlayer(args[1]).getLocation())) {
 										final Object[] data = { Bukkit.getServer().getPlayer(args[1]) };
-										if (P_Core.getAICore().getCore(Core.CoreType.PYRAMID).RunCore(data).getResult()) {
+										if (P_Core.getAICore().getCore(Core.CoreType.PYRAMID).runCore(data).getResult()) {
 											player.sendMessage(ChatColor.RED + "[HerobrineAI] Creating pyramind near " + args[1] + "!");
 										} else {
 											player.sendMessage(ChatColor.RED + "[HerobrineAI] Cannot find good place for pyramid!");
@@ -94,7 +94,7 @@ public class CmdExecutor implements CommandExecutor {
 								if (Bukkit.getServer().getPlayer(args[1]).isOnline()) {
 									if (P_Core.getSupport().checkBuild(Bukkit.getServer().getPlayer(args[1]).getLocation())) {
 										final Object[] data = { Bukkit.getServer().getPlayer(args[1]) };
-										if (P_Core.getAICore().getCore(Core.CoreType.BURY_PLAYER).RunCore(data).getResult()) {
+										if (P_Core.getAICore().getCore(Core.CoreType.BURY_PLAYER).runCore(data).getResult()) {
 											player.sendMessage(ChatColor.RED + "[HerobrineAI] Buried " + args[1] + "!");
 										} else {
 											player.sendMessage(ChatColor.RED + "[HerobrineAI] Cannot find good place!");
@@ -119,7 +119,7 @@ public class CmdExecutor implements CommandExecutor {
 						if (player.hasPermission("hb-ai.cave")) {
 							if (Bukkit.getServer().getPlayer(args[1]) != null) {
 								final Object[] data = { Bukkit.getServer().getPlayer(args[1]).getLocation(), true };
-								player.sendMessage(ChatColor.RED + "[HerobrineAI] " + P_Core.getAICore().getCore(Core.CoreType.BUILD_STUFF).RunCore(data).getResultString());
+								player.sendMessage(ChatColor.RED + "[HerobrineAI] " + P_Core.getAICore().getCore(Core.CoreType.BUILD_STUFF).runCore(data).getResultString());
 							} else {
 								player.sendMessage(ChatColor.RED + "[HerobrineAI] Player is offline.");
 							}
@@ -134,7 +134,7 @@ public class CmdExecutor implements CommandExecutor {
 						if (player.hasPermission("hb-ai.burn")) {
 							if (Bukkit.getServer().getPlayer(args[1]) != null) {
 								final Object[] data = { Bukkit.getServer().getPlayer(args[1]) };
-								player.sendMessage(ChatColor.RED + "[HerobrineAI] " + P_Core.getAICore().getCore(Core.CoreType.BURN).RunCore(data).getResultString());
+								player.sendMessage(ChatColor.RED + "[HerobrineAI] " + P_Core.getAICore().getCore(Core.CoreType.BURN).runCore(data).getResultString());
 							} else {
 								player.sendMessage(ChatColor.RED + "[HerobrineAI] Player is offline.");
 							}
@@ -149,7 +149,7 @@ public class CmdExecutor implements CommandExecutor {
 						if (player.hasPermission("hb-ai.curse")) {
 							if (Bukkit.getServer().getPlayer(args[1]) != null) {
 								final Object[] data = { Bukkit.getServer().getPlayer(args[1]) };
-								player.sendMessage(ChatColor.RED + "[HerobrineAI] " + P_Core.getAICore().getCore(Core.CoreType.CURSE).RunCore(data).getResultString());
+								player.sendMessage(ChatColor.RED + "[HerobrineAI] " + P_Core.getAICore().getCore(Core.CoreType.CURSE).runCore(data).getResultString());
 							} else {
 								player.sendMessage(ChatColor.RED + "[HerobrineAI] Player is offline.");
 							}
@@ -164,7 +164,7 @@ public class CmdExecutor implements CommandExecutor {
 						if (player.hasPermission("hb-ai.heads")) {
 							if (Bukkit.getServer().getPlayer(args[1]) != null) {
 								final Object[] data = { args[1] };
-								player.sendMessage(ChatColor.RED + "[HerobrineAI] " + P_Core.getAICore().getCore(Core.CoreType.HEADS).RunCore(data).getResultString());
+								player.sendMessage(ChatColor.RED + "[HerobrineAI] " + P_Core.getAICore().getCore(Core.CoreType.HEADS).runCore(data).getResultString());
 							} else {
 								player.sendMessage(ChatColor.RED + "[HerobrineAI] Player is offline.");
 							}
@@ -180,7 +180,7 @@ public class CmdExecutor implements CommandExecutor {
 							if (Bukkit.getServer().getPlayer(args[1]) != null) {
 								if (Bukkit.getServer().getPlayer(args[1]).isOnline()) {
 									if (!AICore.isTarget) {
-										P_Core.getAICore().GraveyardTeleport(Bukkit.getServer().getPlayer(args[1]));
+										P_Core.getAICore().graveyardTeleport(Bukkit.getServer().getPlayer(args[1]));
 										player.sendMessage(ChatColor.RED + "[HerobrineAI] " + args[1] + " is now in the Graveyard world!");
 									} else {
 										player.sendMessage(ChatColor.RED + "[HerobrineAI] Herobrine already has target! Use " + ChatColor.GREEN + "/hb-ai cancel" + ChatColor.RED
@@ -230,14 +230,14 @@ public class CmdExecutor implements CommandExecutor {
 					}
 				} else if (args[0].equalsIgnoreCase("cancel")) {
 					if (player.hasPermission("hb-ai.cancel")) {
-						P_Core.getAICore().CancelTarget(Core.CoreType.ANY);
+						P_Core.getAICore().cancelTarget(Core.CoreType.ANY);
 						player.sendMessage(ChatColor.RED + "[HerobrineAI] Target cancelled!");
 					} else {
 						player.sendMessage(ChatColor.RED + "You don?t have permissions to do that.");
 					}
 				} else if (args[0].equalsIgnoreCase("reload")) {
 					if (player.hasPermission("hb-ai.reload")) {
-						P_Core.getConfigDB().Reload();
+						P_Core.getConfigDB().reload();
 						player.sendMessage(ChatColor.RED + "[HerobrineAI] Config reloaded!");
 					} else {
 						player.sendMessage(ChatColor.RED + "You don?t have permissions to do that.");
@@ -268,17 +268,6 @@ public class CmdExecutor implements CommandExecutor {
 						HerobrineAI.getPluginCore().getConfigDB().addAllWorlds();
 						player.sendMessage(ChatColor.GREEN + "[HerobrineAI] All worlds have been added to config.");
 						player.sendMessage(ChatColor.YELLOW + "[HerobrineAI] Note: Worlds with blank spaces can cause problems!");
-					} else {
-						player.sendMessage(ChatColor.RED + "You don?t have permissions to do that.");
-					}
-				} else if (args[0].equalsIgnoreCase("position")) {
-					if (player.hasPermission("hb-ai.position")) {
-						player.sendMessage(ChatColor.RED + "[HerobrineAI] Position");
-						player.sendMessage(ChatColor.RED + "World: " + HerobrineAI.HerobrineNPC.getBukkitEntity().getLocation().getWorld().getName() + " X: "
-								+ (int) HerobrineAI.HerobrineNPC.getBukkitEntity().getLocation().getX() + " Y: " + (int) HerobrineAI.HerobrineNPC.getBukkitEntity().getLocation().getY() + " Z: "
-								+ (int) HerobrineAI.HerobrineNPC.getBukkitEntity().getLocation().getZ());
-						player.sendMessage(ChatColor.RED + "InWalkingMode: " + AICore.getStringWalkingMode());
-						player.sendMessage(ChatColor.RED + "Available World: " + HerobrineAI.getPluginCore().getAvailableWorldString());
 					} else {
 						player.sendMessage(ChatColor.RED + "You don?t have permissions to do that.");
 					}
@@ -322,7 +311,7 @@ public class CmdExecutor implements CommandExecutor {
 						if (Bukkit.getServer().getPlayer(args[1]).isOnline()) {
 							if (P_Core.getSupport().checkBuild(Bukkit.getServer().getPlayer(args[1]).getLocation())) {
 								final Object[] data2 = { Bukkit.getServer().getPlayer(args[1]) };
-								if (P_Core.getAICore().getCore(Core.CoreType.PYRAMID).RunCore(data2).getResult()) {
+								if (P_Core.getAICore().getCore(Core.CoreType.PYRAMID).runCore(data2).getResult()) {
 									log.info("[HerobrineAI] Creating pyramind near " + args[1] + "!");
 								} else {
 									log.info("[HerobrineAI] Cannot find good place for pyramid!");
@@ -345,7 +334,7 @@ public class CmdExecutor implements CommandExecutor {
 						if (Bukkit.getServer().getPlayer(args[1]).isOnline()) {
 							if (P_Core.getSupport().checkBuild(Bukkit.getServer().getPlayer(args[1]).getLocation())) {
 								final Object[] data2 = { Bukkit.getServer().getPlayer(args[1]) };
-								if (P_Core.getAICore().getCore(Core.CoreType.BURY_PLAYER).RunCore(data2).getResult()) {
+								if (P_Core.getAICore().getCore(Core.CoreType.BURY_PLAYER).runCore(data2).getResult()) {
 									log.info("[HerobrineAI] Buried " + args[1] + "!");
 								} else {
 									log.info("[HerobrineAI] Cannot find good place!");
@@ -366,7 +355,7 @@ public class CmdExecutor implements CommandExecutor {
 				if (args.length > 1) {
 					if (Bukkit.getServer().getPlayer(args[1]) != null) {
 						final Object[] data2 = { Bukkit.getServer().getPlayer(args[1]).getLocation(), true };
-						log.info(ChatColor.RED + "[HerobrineAI] " + P_Core.getAICore().getCore(Core.CoreType.BUILD_STUFF).RunCore(data2).getResultString());
+						log.info(ChatColor.RED + "[HerobrineAI] " + P_Core.getAICore().getCore(Core.CoreType.BUILD_STUFF).runCore(data2).getResultString());
 					} else {
 						log.info(ChatColor.RED + "[HerobrineAI] Player is offline.");
 					}
@@ -377,7 +366,7 @@ public class CmdExecutor implements CommandExecutor {
 				if (args.length > 1) {
 					if (Bukkit.getServer().getPlayer(args[1]) != null) {
 						final Object[] data2 = { Bukkit.getServer().getPlayer(args[1]) };
-						log.info("[HerobrineAI] " + P_Core.getAICore().getCore(Core.CoreType.BURN).RunCore(data2).getResultString());
+						log.info("[HerobrineAI] " + P_Core.getAICore().getCore(Core.CoreType.BURN).runCore(data2).getResultString());
 					} else {
 						log.info("[HerobrineAI] Player is offline.");
 					}
@@ -388,7 +377,7 @@ public class CmdExecutor implements CommandExecutor {
 				if (args.length > 1) {
 					if (Bukkit.getServer().getPlayer(args[1]) != null) {
 						final Object[] data2 = { Bukkit.getServer().getPlayer(args[1]) };
-						log.info("[HerobrineAI] " + P_Core.getAICore().getCore(Core.CoreType.CURSE).RunCore(data2).getResultString());
+						log.info("[HerobrineAI] " + P_Core.getAICore().getCore(Core.CoreType.CURSE).runCore(data2).getResultString());
 					} else {
 						log.info("[HerobrineAI] Player is offline.");
 					}
@@ -399,7 +388,7 @@ public class CmdExecutor implements CommandExecutor {
 				if (args.length > 1) {
 					if (Bukkit.getServer().getPlayer(args[1]) != null) {
 						final Object[] data2 = { args[1] };
-						log.info("[HerobrineAI] " + P_Core.getAICore().getCore(Core.CoreType.HEADS).RunCore(data2).getResultString());
+						log.info("[HerobrineAI] " + P_Core.getAICore().getCore(Core.CoreType.HEADS).runCore(data2).getResultString());
 					} else {
 						log.info("[HerobrineAI] Player is offline.");
 					}
@@ -411,7 +400,7 @@ public class CmdExecutor implements CommandExecutor {
 					if (Bukkit.getServer().getPlayer(args[1]) != null) {
 						if (Bukkit.getServer().getPlayer(args[1]).isOnline()) {
 							if (!AICore.isTarget) {
-								P_Core.getAICore().GraveyardTeleport(Bukkit.getServer().getPlayer(args[1]));
+								P_Core.getAICore().graveyardTeleport(Bukkit.getServer().getPlayer(args[1]));
 								log.info("[HerobrineAI] " + args[1] + " is now in the Graveyard world!");
 							} else {
 								log.info("[HerobrineAI] Herobrine already has target! Use " + ChatColor.GREEN + "/hb-ai cancel" + ChatColor.RED + " to cancel actual target");
@@ -451,10 +440,10 @@ public class CmdExecutor implements CommandExecutor {
 					log.info("Usage: /hb-ai haunt <player name>");
 				}
 			} else if (args[0].equalsIgnoreCase("cancel")) {
-				P_Core.getAICore().CancelTarget(Core.CoreType.ANY);
+				P_Core.getAICore().cancelTarget(Core.CoreType.ANY);
 				log.info(ChatColor.RED + "[HerobrineAI] Target cancelled!");
 			} else if (args[0].equalsIgnoreCase("reload")) {
-				P_Core.getConfigDB().Reload();
+				P_Core.getConfigDB().reload();
 				log.info("[HerobrineAI] Config reloaded!");
 			} else if (args[0].equalsIgnoreCase("help")) {
 				log.info("[HerobrineAI] Command list");
@@ -472,14 +461,7 @@ public class CmdExecutor implements CommandExecutor {
 				log.info("/hb-ai burn <player name> - burn player");
 				log.info("/hb-ai curse <player name> - curse player");
 				log.info("/hb-ai allworlds - add all worlds to config");
-			} else if (args[0].equalsIgnoreCase("position")) {
-				log.info("[HerobrineAI] Position");
-				log.info("World: " + HerobrineAI.HerobrineNPC.getBukkitEntity().getLocation().getWorld().getName() + " X: "
-						+ (int) HerobrineAI.HerobrineNPC.getBukkitEntity().getLocation().getX() + " Y: " + (int) HerobrineAI.HerobrineNPC.getBukkitEntity().getLocation().getY() + " Z: "
-						+ (int) HerobrineAI.HerobrineNPC.getBukkitEntity().getLocation().getZ());
-				log.info("InWalkingMode: " + AICore.getStringWalkingMode());
-				log.info("Available World: " + HerobrineAI.getPluginCore().getAvailableWorldString());
-			} else if (args[0].equalsIgnoreCase("allworlds")) {
+			} if (args[0].equalsIgnoreCase("allworlds")) {
 				HerobrineAI.getPluginCore().getConfigDB().addAllWorlds();
 				log.info("[HerobrineAI] All worlds have been added to config.");
 				log.info("[HerobrineAI] Note: Worlds with blank spaces can cause problems!");

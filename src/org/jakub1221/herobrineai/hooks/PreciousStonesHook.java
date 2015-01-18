@@ -6,7 +6,7 @@ import net.sacredlabyrinth.Phaed.PreciousStones.PreciousStones;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
-public class _PreciousStones {
+public class PreciousStonesHook {
 
 	public boolean Check() {
 		return Bukkit.getServer().getPluginManager().getPlugin("PreciousStones") != null;

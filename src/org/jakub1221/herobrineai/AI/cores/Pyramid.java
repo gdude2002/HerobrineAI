@@ -19,7 +19,7 @@ public class Pyramid extends Core {
 	}
 
 	@Override
-	public CoreResult CallCore(final Object[] data) {
+	public CoreResult callCore(final Object[] data) {
 		if (data[0] instanceof Player) {
 			return this.FindPlace((Player) data[0]);
 		}
@@ -27,7 +27,7 @@ public class Pyramid extends Core {
 	}
 
 	public CoreResult FindPlace(final Chunk chunk) {
-		if (HerobrineAI.getPluginCore().getConfigDB().BuildPyramids) {
+		if (HerobrineAI.getPluginCore().getConfigDB().buildPyramids) {
 			Location loc = chunk.getBlock(2, 0, 2).getLocation();
 			loc = loc.getWorld().getHighestBlockAt(loc).getLocation();
 			boolean canBuild = true;
@@ -65,7 +65,7 @@ public class Pyramid extends Core {
 	}
 
 	public CoreResult FindPlace(final Player player) {
-		if (HerobrineAI.getPluginCore().getConfigDB().BuildPyramids) {
+		if (HerobrineAI.getPluginCore().getConfigDB().buildPyramids) {
 			final Location loc = player.getLocation();
 			boolean canBuild = true;
 			int i1 = 0;

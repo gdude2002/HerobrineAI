@@ -11,7 +11,7 @@ public class Burn extends Core {
 	}
 
 	@Override
-	public CoreResult CallCore(final Object[] data) {
+	public CoreResult callCore(final Object[] data) {
 		final Player player = (Player) data[0];
 		player.setFireTicks(800);
 		return new CoreResult(true, "Player burned!");

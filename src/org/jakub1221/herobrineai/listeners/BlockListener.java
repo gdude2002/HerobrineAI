@@ -39,8 +39,8 @@ public class BlockListener implements Listener {
 						&& (block.getWorld().getBlockAt(blockloc.getBlockX(), blockloc.getBlockY(), blockloc.getBlockZ() - 1).getType() == Material.REDSTONE_TORCH_ON)
 						&& (block.getWorld().getBlockAt(blockloc.getBlockX() + 1, blockloc.getBlockY(), blockloc.getBlockZ()).getType() == Material.REDSTONE_TORCH_ON)
 						&& (block.getWorld().getBlockAt(blockloc.getBlockX() - 1, blockloc.getBlockY(), blockloc.getBlockZ()).getType() == Material.REDSTONE_TORCH_ON)
-						&& HerobrineAI.getPluginCore().getConfigDB().UseTotem && !AICore.isTotemCalled) {
-					HerobrineAI.getPluginCore().getAICore().PlayerCallTotem(event.getPlayer());
+						&& HerobrineAI.getPluginCore().getConfigDB().useTotem && !AICore.isTotemCalled) {
+					HerobrineAI.getPluginCore().getAICore().playerCallTotem(event.getPlayer());
 				}
 			}
 		}

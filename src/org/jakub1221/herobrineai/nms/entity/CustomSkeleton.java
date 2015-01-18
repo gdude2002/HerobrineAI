@@ -15,6 +15,7 @@ import org.jakub1221.herobrineai.HerobrineAI;
 import org.jakub1221.herobrineai.misc.ItemName;
 
 public class CustomSkeleton extends EntitySkeleton implements CustomEntity {
+
 	private MobType mobType;
 
 	public CustomSkeleton(final World world, final Location loc, final MobType mbt) {
@@ -46,7 +47,7 @@ public class CustomSkeleton extends EntitySkeleton implements CustomEntity {
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public void Kill() {
+	public void kill() {
 		for (int i = 1; i <= 2500; ++i) {
 			if (HerobrineAI.getPluginCore().getConfigDB().npc.contains("npc.Demon.Drops." + Integer.toString(i))) {
 				final int chance = new Random().nextInt(100);

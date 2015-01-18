@@ -8,7 +8,7 @@ import org.jakub1221.herobrineai.misc.StructureLoader;
 
 public class GraveyardWorld {
 
-	public static void Create() {
+	public static void create() {
 		final Location loc = new Location(Bukkit.getServer().getWorld("world_herobrineai_graveyard"), 0.0, 3.0, 0.0);
 		for (int x = -50; x <= 50; ++x) {
 			for (int z = -50; z <= 50; ++z) {

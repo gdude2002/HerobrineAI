@@ -9,12 +9,12 @@ import net.minecraft.server.v1_8_R1.WorldServer;
 import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_8_R1.CraftWorld;
 
-public class BWorld {
+public class NMSWorldAccess {
 
 	private CraftWorld cWorld;
 	private WorldServer wServer;
 
-	public BWorld(final World world) {
+	public NMSWorldAccess(final World world) {
 		try {
 			cWorld = (CraftWorld) world;
 			wServer = cWorld.getHandle();

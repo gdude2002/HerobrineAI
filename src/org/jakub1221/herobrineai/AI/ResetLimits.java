@@ -14,7 +14,6 @@ public class ResetLimits {
 	public int maxHeads;
 
 	public ResetLimits() {
-		super();
 		taskID = 0;
 		books = 0;
 		signs = 0;

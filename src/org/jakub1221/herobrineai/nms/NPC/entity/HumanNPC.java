@@ -16,7 +16,6 @@ public class HumanNPC {
 	private final int id;
 
 	public HumanNPC(final HumanEntity humanEntity, final int id) {
-		super();
 		entity = humanEntity;
 		this.id = id;
 	}
@@ -29,11 +28,11 @@ public class HumanNPC {
 		return entity;
 	}
 
-	public void ArmSwingAnimation() {
+	public void armSwingAnimation() {
 		((WorldServer) getNMSEntity().world).tracker.a(getNMSEntity(), new PacketPlayInArmAnimation());
 	}
 
-	public void HurtAnimation() {
+	public void hurtAnimation() {
 		((LivingEntity) entity.getBukkitEntity()).damage(0.5);
 		((LivingEntity) entity.getBukkitEntity()).setHealth(20);
 	}
@@ -48,15 +47,11 @@ public class HumanNPC {
 		return ((HumanEntity) getNMSEntity()).getName();
 	}
 
-	public void setPitch(final float pitch) {
-		((HumanEntity) getNMSEntity()).pitch = pitch;
-	}
-
 	public void moveTo(final Location loc) {
-		Teleport(loc);
+		teleport(loc);
 	}
 
-	public void Teleport(final Location loc) {
+	public void teleport(final Location loc) {
 		if (loc.getWorld().getName().equals(getNMSEntity().world.getWorld().getName())) {
 			getNMSEntity().locX = loc.getX();
 			getNMSEntity().locY = loc.getY();
@@ -77,12 +72,6 @@ public class HumanNPC {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	public void setYaw(final float yaw) {
-		((EntityPlayer) getNMSEntity()).yaw = yaw;
-		((EntityPlayer) getNMSEntity()).aI = yaw;
-		((EntityPlayer) getNMSEntity()).aJ = yaw;
 	}
 
 	public void lookAtPoint(final Location point) {

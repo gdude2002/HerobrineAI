@@ -6,7 +6,7 @@ import org.bukkit.Location;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 
-public class _WorldGuard {
+public class WorldGuardHook {
 
 	public boolean Check() {
 		return Bukkit.getServer().getPluginManager().getPlugin("WorldGuard") != null;

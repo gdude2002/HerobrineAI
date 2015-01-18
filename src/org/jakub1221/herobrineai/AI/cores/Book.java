@@ -19,14 +19,14 @@ public class Book extends Core {
 	}
 
 	@Override
-	public CoreResult CallCore(final Object[] data) {
+	public CoreResult callCore(final Object[] data) {
 		final Player player = (Player) data[0];
 		if (HerobrineAI.getPluginCore().getConfigDB().useWorlds.contains(player.getLocation().getWorld().getName())) {
-			if (!HerobrineAI.getPluginCore().getConfigDB().WriteBooks || !HerobrineAI.getPluginCore().getSupport().checkBooks(player.getLocation())) {
+			if (!HerobrineAI.getPluginCore().getConfigDB().writeBooks || !HerobrineAI.getPluginCore().getSupport().checkBooks(player.getLocation())) {
 				return new CoreResult(false, "Player is not in allowed world!");
 			}
 			final int chance = new Random().nextInt(100);
-			if (chance <= (100 - HerobrineAI.getPluginCore().getConfigDB().BookChance)) {
+			if (chance <= (100 - HerobrineAI.getPluginCore().getConfigDB().bookChance)) {
 				return new CoreResult(false, "Books are not allowed!");
 			}
 			final Inventory chest = (Inventory) data[1];

@@ -15,12 +15,12 @@ public class SoundF extends Core {
 	}
 
 	@Override
-	public CoreResult CallCore(final Object[] data) {
+	public CoreResult callCore(final Object[] data) {
 		return playRandom((Player) data[0]);
 	}
 
 	public CoreResult playRandom(final Player player) {
-		if (!HerobrineAI.getPluginCore().getConfigDB().UseSound) {
+		if (!HerobrineAI.getPluginCore().getConfigDB().useSound) {
 			return new CoreResult(false, "Sound is disabled!");
 		}
 		final Sound[] sounds = { Sound.STEP_STONE, Sound.STEP_WOOD, Sound.STEP_GRASS, Sound.STEP_SAND, Sound.STEP_GRAVEL, Sound.WITHER_HURT, Sound.WITHER_HURT, Sound.WITHER_HURT, Sound.WITHER_HURT,

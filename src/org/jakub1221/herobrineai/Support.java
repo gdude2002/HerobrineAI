@@ -2,12 +2,12 @@ package org.jakub1221.herobrineai;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.jakub1221.herobrineai.hooks._Factions;
-import org.jakub1221.herobrineai.hooks._GriefPrevention;
-import org.jakub1221.herobrineai.hooks._PreciousStones;
-import org.jakub1221.herobrineai.hooks._Residence;
-import org.jakub1221.herobrineai.hooks._Towny;
-import org.jakub1221.herobrineai.hooks._WorldGuard;
+import org.jakub1221.herobrineai.hooks.FactionsHook;
+import org.jakub1221.herobrineai.hooks.GriefPreventionHook;
+import org.jakub1221.herobrineai.hooks.PreciousStonesHook;
+import org.jakub1221.herobrineai.hooks.ResidenceHook;
+import org.jakub1221.herobrineai.hooks.TownyHook;
+import org.jakub1221.herobrineai.hooks.WorldGuardHook;
 
 public class Support {
 	private boolean B_Residence;
@@ -16,33 +16,20 @@ public class Support {
 	private boolean B_WorldGuard;
 	private boolean B_PreciousStones;
 	private boolean B_Factions;
-	private _Residence ResidenceCore;
-	private _GriefPrevention GriefPreventionCore;
-	private _Towny TownyCore;
-	private _WorldGuard WorldGuard;
-	private _PreciousStones PreciousStones;
-	private _Factions Factions;
+	private ResidenceHook ResidenceCore;
+	private GriefPreventionHook GriefPreventionCore;
+	private TownyHook TownyCore;
+	private WorldGuardHook WorldGuard;
+	private PreciousStonesHook PreciousStones;
+	private FactionsHook Factions;
 
 	public Support() {
-		super();
-		B_Residence = false;
-		B_GriefPrevention = false;
-		B_Towny = false;
-		B_WorldGuard = false;
-		B_PreciousStones = false;
-		B_Factions = false;
-		ResidenceCore = null;
-		GriefPreventionCore = null;
-		TownyCore = null;
-		WorldGuard = null;
-		PreciousStones = null;
-		Factions = null;
-		ResidenceCore = new _Residence();
-		GriefPreventionCore = new _GriefPrevention();
-		TownyCore = new _Towny();
-		WorldGuard = new _WorldGuard();
-		PreciousStones = new _PreciousStones();
-		Factions = new _Factions();
+		ResidenceCore = new ResidenceHook();
+		GriefPreventionCore = new GriefPreventionHook();
+		TownyCore = new TownyHook();
+		WorldGuard = new WorldGuardHook();
+		PreciousStones = new PreciousStonesHook();
+		Factions = new FactionsHook();
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(HerobrineAI.getPluginCore(), new Runnable() {
 			@Override
 			public void run() {
@@ -122,23 +109,23 @@ public class Support {
 	}
 
 	public boolean checkBuild(final Location loc) {
-		return HerobrineAI.getPluginCore().getConfigDB().SecuredArea_Build || !isSecuredArea(loc);
+		return HerobrineAI.getPluginCore().getConfigDB().securedAreaBuild || !isSecuredArea(loc);
 	}
 
 	public boolean checkAttack(final Location loc) {
-		return HerobrineAI.getPluginCore().getConfigDB().SecuredArea_Attack || !isSecuredArea(loc);
+		return HerobrineAI.getPluginCore().getConfigDB().securedAreaAttack || !isSecuredArea(loc);
 	}
 
 	public boolean checkHaunt(final Location loc) {
-		return HerobrineAI.getPluginCore().getConfigDB().SecuredArea_Haunt || !isSecuredArea(loc);
+		return HerobrineAI.getPluginCore().getConfigDB().securedAreaHaunt || !isSecuredArea(loc);
 	}
 
 	public boolean checkSigns(final Location loc) {
-		return HerobrineAI.getPluginCore().getConfigDB().SecuredArea_Signs || !isSecuredArea(loc);
+		return HerobrineAI.getPluginCore().getConfigDB().securedAreaSigns || !isSecuredArea(loc);
 	}
 
 	public boolean checkBooks(final Location loc) {
-		return HerobrineAI.getPluginCore().getConfigDB().SecuredArea_Books || !isSecuredArea(loc);
+		return HerobrineAI.getPluginCore().getConfigDB().securedAreaBooks || !isSecuredArea(loc);
 	}
 
 }

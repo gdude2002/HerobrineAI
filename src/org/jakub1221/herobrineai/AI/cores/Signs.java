@@ -19,7 +19,7 @@ public class Signs extends Core {
 	}
 
 	@Override
-	public CoreResult CallCore(final Object[] data) {
+	public CoreResult callCore(final Object[] data) {
 		return placeSign((Location) data[0], (Location) data[1]);
 	}
 
@@ -57,7 +57,7 @@ public class Signs extends Core {
 	public void createSign(final Location loc, final Location ploc) {
 		final Random randcgen = new Random();
 		final int chance = randcgen.nextInt(100);
-		if (chance > (100 - HerobrineAI.getPluginCore().getConfigDB().SignChance)) {
+		if (chance > (100 - HerobrineAI.getPluginCore().getConfigDB().signChance)) {
 			final Random randgen = new Random();
 			final int count = HerobrineAI.getPluginCore().getConfigDB().useSignMessages.size();
 			final int randmsg = randgen.nextInt(count);

@@ -22,7 +22,7 @@ public class BuryPlayer extends Core {
 	}
 
 	@Override
-	public CoreResult CallCore(final Object[] data) {
+	public CoreResult callCore(final Object[] data) {
 		return FindPlace((Player) data[0]);
 	}
 

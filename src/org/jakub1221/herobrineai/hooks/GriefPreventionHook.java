@@ -6,7 +6,7 @@ import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
-public class _GriefPrevention {
+public class GriefPreventionHook {
 
 	public boolean Check() {
 		return Bukkit.getServer().getPluginManager().getPlugin("GriefPrevention") != null;

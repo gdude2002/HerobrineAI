@@ -5,7 +5,7 @@ import net.t00thpick1.residence.api.ResidenceAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
-public class _Residence {
+public class ResidenceHook {
 
 	public boolean Check() {
 		return Bukkit.getServer().getPluginManager().getPlugin("Residence") != null;

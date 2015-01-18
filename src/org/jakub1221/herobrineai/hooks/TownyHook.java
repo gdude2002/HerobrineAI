@@ -5,7 +5,7 @@ import org.bukkit.Location;
 
 import com.palmergames.bukkit.towny.object.TownyUniverse;
 
-public class _Towny {
+public class TownyHook {
 
 	public boolean Check() {
 		return Bukkit.getServer().getPluginManager().getPlugin("Towny") != null;

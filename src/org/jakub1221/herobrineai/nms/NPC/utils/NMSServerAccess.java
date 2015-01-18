@@ -1,7 +1,6 @@
 package org.jakub1221.herobrineai.nms.NPC.utils;
 
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import net.minecraft.server.v1_8_R1.MinecraftServer;
@@ -11,22 +10,17 @@ import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.craftbukkit.v1_8_R1.CraftServer;
 
-public class BServer {
+public class NMSServerAccess {
 
-	private static BServer ins;
-	private MinecraftServer mcServer;
-	private CraftServer cServer;
-	private Server server;
+	private static final NMSServerAccess ins = new NMSServerAccess();
 
-	private BServer() {
-		server = Bukkit.getServer();
-		try {
-			cServer = (CraftServer) server;
-			mcServer = cServer.getServer();
-		} catch (Exception ex) {
-			Logger.getLogger("Minecraft").log(Level.SEVERE, null, ex);
-		}
+	public static NMSServerAccess getInstance() {
+		return ins;
 	}
+
+	private Server server = Bukkit.getServer();
+	private CraftServer cServer = (CraftServer) server;
+	private MinecraftServer mcServer = cServer.getServer();
 
 	public void stop() {
 		mcServer.safeShutdown();
@@ -42,13 +36,6 @@ public class BServer {
 
 	public Server getServer() {
 		return server;
-	}
-
-	public static BServer getInstance() {
-		if (BServer.ins == null) {
-			BServer.ins = new BServer();
-		}
-		return BServer.ins;
 	}
 
 	public MinecraftServer getMCServer() {

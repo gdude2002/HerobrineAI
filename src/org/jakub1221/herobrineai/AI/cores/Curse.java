@@ -16,7 +16,7 @@ public class Curse extends Core {
 	}
 
 	@Override
-	public CoreResult CallCore(final Object[] data) {
+	public CoreResult callCore(final Object[] data) {
 		final Player player = (Player) data[0];
 		player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 1000, 1));
 		player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 1000, 1));

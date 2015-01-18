@@ -6,7 +6,7 @@ import org.bukkit.Location;
 import com.massivecraft.factions.entity.BoardColl;
 import com.massivecraft.massivecore.ps.PS;
 
-public class _Factions {
+public class FactionsHook {
 
 	public boolean Check() {
 		return Bukkit.getServer().getPluginManager().getPlugin("Factions") != null;

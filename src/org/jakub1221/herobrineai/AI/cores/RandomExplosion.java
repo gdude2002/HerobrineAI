@@ -15,9 +15,9 @@ public class RandomExplosion extends Core {
 	}
 
 	@Override
-	public CoreResult CallCore(final Object[] data) {
+	public CoreResult callCore(final Object[] data) {
 		final Player player = (Player) data[0];
-		if (!HerobrineAI.getPluginCore().getConfigDB().Explosions) {
+		if (!HerobrineAI.getPluginCore().getConfigDB().explosions) {
 			return new CoreResult(true, "Explosions are not allowed!");
 		}
 		if (HerobrineAI.getPluginCore().getSupport().checkBuild(player.getLocation())) {

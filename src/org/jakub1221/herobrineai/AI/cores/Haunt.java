@@ -35,7 +35,7 @@ public class Haunt extends Core {
 	}
 
 	@Override
-	public CoreResult CallCore(final Object[] data) {
+	public CoreResult callCore(final Object[] data) {
 		return setHauntTarget((Player) data[0]);
 	}
 
@@ -53,9 +53,9 @@ public class Haunt extends Core {
 		AICore.isTarget = true;
 		AICore.PlayerTarget = player;
 		AICore.log.info("[HerobrineAI] Hauntig player!");
-		final Location loc = HerobrineAI.HerobrineNPC.getBukkitEntity().getLocation();
+		final Location loc = HerobrineAI.herobrineNPC.getBukkitEntity().getLocation();
 		loc.setY(-20.0);
-		HerobrineAI.HerobrineNPC.moveTo(loc);
+		HerobrineAI.herobrineNPC.moveTo(loc);
 		StartHandler();
 		return new CoreResult(true, "Herobrine haunts " + player.getName() + "!");
 	}
@@ -64,27 +64,27 @@ public class Haunt extends Core {
 		if (AICore.PlayerTarget.isOnline() && AICore.isTarget && (HerobrineAI.getPluginCore().getAICore().getCoreTypeNow() == CoreType.HAUNT)) {
 			if (!AICore.PlayerTarget.isDead()) {
 				if (_ticks > 290) {
-					HerobrineAI.getPluginCore().getAICore().CancelTarget(CoreType.HAUNT);
+					HerobrineAI.getPluginCore().getAICore().cancelTarget(CoreType.HAUNT);
 				} else {
 					final Object[] data = { AICore.PlayerTarget };
-					HerobrineAI.getPluginCore().getAICore().getCore(CoreType.SOUNDF).RunCore(data);
+					HerobrineAI.getPluginCore().getAICore().getCore(CoreType.SOUNDF).runCore(data);
 					final Location ploc = AICore.PlayerTarget.getLocation();
 					final Random randxgen = new Random();
 					final int randx = randxgen.nextInt(100);
 					if (randx >= 70) {
 						if ((randx < 80) && (spawnedBats < 2)) {
-							if (HerobrineAI.getPluginCore().getConfigDB().SpawnBats) {
+							if (HerobrineAI.getPluginCore().getConfigDB().spawnBats) {
 								ploc.getWorld().spawnEntity(ploc, EntityType.BAT);
 								++spawnedBats;
 							}
-						} else if ((randx < 90) && (spawnedWolves < 1) && HerobrineAI.getPluginCore().getConfigDB().SpawnWolves) {
+						} else if ((randx < 90) && (spawnedWolves < 1) && HerobrineAI.getPluginCore().getConfigDB().spawnWolves) {
 							final Wolf wolf = (Wolf) ploc.getWorld().spawnEntity(ploc, EntityType.WOLF);
 							wolf.setAdult();
 							wolf.setAngry(true);
 							++spawnedWolves;
 						}
 					}
-					if (HerobrineAI.getPluginCore().getConfigDB().Lighting) {
+					if (HerobrineAI.getPluginCore().getConfigDB().lighting) {
 						final int lchance = new Random().nextInt(100);
 						if (lchance > 75) {
 							final Location newloc = ploc;
@@ -107,24 +107,24 @@ public class Haunt extends Core {
 					}
 					if (isFirst) {
 						final Object[] data2 = { AICore.PlayerTarget.getLocation() };
-						HerobrineAI.getPluginCore().getAICore().getCore(CoreType.BUILD_STUFF).RunCore(data2);
+						HerobrineAI.getPluginCore().getAICore().getCore(CoreType.BUILD_STUFF).runCore(data2);
 					}
 					isFirst = false;
 				}
 			} else {
-				HerobrineAI.getPluginCore().getAICore().CancelTarget(CoreType.HAUNT);
+				HerobrineAI.getPluginCore().getAICore().cancelTarget(CoreType.HAUNT);
 			}
 		} else {
-			HerobrineAI.getPluginCore().getAICore().CancelTarget(CoreType.HAUNT);
+			HerobrineAI.getPluginCore().getAICore().cancelTarget(CoreType.HAUNT);
 		}
 	}
 
 	public void KeepLookingHaunt() {
 		if (AICore.PlayerTarget.isOnline() && AICore.isTarget && (HerobrineAI.getPluginCore().getAICore().getCoreTypeNow() == CoreType.HAUNT)) {
 			if (!AICore.PlayerTarget.isDead()) {
-				Location loc = HerobrineAI.HerobrineNPC.getBukkitEntity().getLocation();
+				Location loc = HerobrineAI.herobrineNPC.getBukkitEntity().getLocation();
 				for (Player player : Bukkit.getOnlinePlayers()) {
-					if (player.getEntityId() != HerobrineAI.HerobrineEntityID) {
+					if (player.getEntityId() != HerobrineAI.herobrineEntityID) {
 						Location ploc = player.getLocation();
 						if (
 							(ploc.getWorld().equals(loc.getWorld())) &&
@@ -135,14 +135,14 @@ public class Haunt extends Core {
 							((ploc.getY() + 5.0) > loc.getY()) &&
 							((ploc.getY() - 5.0) < loc.getY())
 						) {
-							HerobrineAI.getPluginCore().getAICore().DisappearEffect();
+							HerobrineAI.getPluginCore().getAICore().disappearEffect();
 						}
 					}
 				}
 				HerobrineAI.HerobrineHP = HerobrineAI.HerobrineMaxHP;
 				loc = AICore.PlayerTarget.getLocation();
 				loc.setY(loc.getY() + 1.5);
-				HerobrineAI.HerobrineNPC.lookAtPoint(loc);
+				HerobrineAI.herobrineNPC.lookAtPoint(loc);
 				++_ticks;
 				final AICore _aicore = HerobrineAI.getPluginCore().getAICore();
 				switch (_ticks) {
@@ -151,7 +151,7 @@ public class Haunt extends Core {
 						break;
 					}
 					case 20: {
-						_aicore.DisappearEffect();
+						_aicore.disappearEffect();
 						break;
 					}
 					case 30: {
@@ -159,7 +159,7 @@ public class Haunt extends Core {
 						break;
 					}
 					case 50: {
-						_aicore.DisappearEffect();
+						_aicore.disappearEffect();
 						break;
 					}
 					case 60: {
@@ -167,7 +167,7 @@ public class Haunt extends Core {
 						break;
 					}
 					case 80: {
-						_aicore.DisappearEffect();
+						_aicore.disappearEffect();
 						break;
 					}
 					case 90: {
@@ -175,7 +175,7 @@ public class Haunt extends Core {
 						break;
 					}
 					case 110: {
-						_aicore.DisappearEffect();
+						_aicore.disappearEffect();
 						break;
 					}
 					case 120: {
@@ -183,7 +183,7 @@ public class Haunt extends Core {
 						break;
 					}
 					case 140: {
-						_aicore.DisappearEffect();
+						_aicore.disappearEffect();
 						break;
 					}
 					case 150: {
@@ -191,7 +191,7 @@ public class Haunt extends Core {
 						break;
 					}
 					case 170: {
-						_aicore.DisappearEffect();
+						_aicore.disappearEffect();
 						break;
 					}
 					case 180: {
@@ -199,7 +199,7 @@ public class Haunt extends Core {
 						break;
 					}
 					case 200: {
-						_aicore.DisappearEffect();
+						_aicore.disappearEffect();
 						break;
 					}
 					case 210: {
@@ -207,7 +207,7 @@ public class Haunt extends Core {
 						break;
 					}
 					case 230: {
-						_aicore.DisappearEffect();
+						_aicore.disappearEffect();
 						break;
 					}
 					case 240: {
@@ -215,7 +215,7 @@ public class Haunt extends Core {
 						break;
 					}
 					case 260: {
-						_aicore.DisappearEffect();
+						_aicore.disappearEffect();
 						break;
 					}
 					case 270: {
@@ -223,15 +223,15 @@ public class Haunt extends Core {
 						break;
 					}
 					case 290: {
-						_aicore.DisappearEffect();
+						_aicore.disappearEffect();
 						break;
 					}
 				}
 			} else {
-				HerobrineAI.getPluginCore().getAICore().CancelTarget(CoreType.HAUNT);
+				HerobrineAI.getPluginCore().getAICore().cancelTarget(CoreType.HAUNT);
 			}
 		} else {
-			HerobrineAI.getPluginCore().getAICore().CancelTarget(CoreType.HAUNT);
+			HerobrineAI.getPluginCore().getAICore().cancelTarget(CoreType.HAUNT);
 		}
 	}
 
@@ -242,15 +242,15 @@ public class Haunt extends Core {
 					FindPlace(AICore.PlayerTarget);
 					final Location ploc = AICore.PlayerTarget.getLocation();
 					ploc.setY(ploc.getY() + 1.5);
-					HerobrineAI.HerobrineNPC.lookAtPoint(ploc);
+					HerobrineAI.herobrineNPC.lookAtPoint(ploc);
 				} else {
-					HerobrineAI.getPluginCore().getAICore().CancelTarget(CoreType.HAUNT);
+					HerobrineAI.getPluginCore().getAICore().cancelTarget(CoreType.HAUNT);
 				}
 			} else {
-				HerobrineAI.getPluginCore().getAICore().CancelTarget(CoreType.HAUNT);
+				HerobrineAI.getPluginCore().getAICore().cancelTarget(CoreType.HAUNT);
 			}
 		} else {
-			HerobrineAI.getPluginCore().getAICore().CancelTarget(CoreType.HAUNT);
+			HerobrineAI.getPluginCore().getAICore().cancelTarget(CoreType.HAUNT);
 		}
 	}
 
@@ -297,12 +297,12 @@ public class Haunt extends Core {
 	}
 
 	public void Teleport(final World world, final int X, final int Y, final int Z) {
-		final Location loc = HerobrineAI.HerobrineNPC.getBukkitEntity().getLocation();
+		final Location loc = HerobrineAI.herobrineNPC.getBukkitEntity().getLocation();
 		loc.setWorld(world);
 		loc.setX(X);
 		loc.setY(Y);
 		loc.setZ(Z);
-		HerobrineAI.HerobrineNPC.moveTo(loc);
+		HerobrineAI.herobrineNPC.moveTo(loc);
 	}
 
 	public void StartHandler() {

@@ -4,55 +4,39 @@ import org.bukkit.inventory.ItemStack;
 
 public class CustomID {
 
-	private int ID;
-	private int DATA;
+	private int id = 0;
+	private int data = 0;
 
 	public CustomID(final String _data) {
-		super();
-		if (_data != null) {
-			if (!_data.equals("0")) {
-				if ((_data != null) && (_data.length() > 0)) {
-					final String[] both = _data.split(":");
-					ID = Integer.parseInt(both[0]);
-					if (both.length > 1) {
-						DATA = Integer.parseInt(both[1]);
-					} else {
-						DATA = 0;
-					}
-				} else {
-					ID = 0;
-					DATA = 0;
-				}
-			} else {
-				ID = 0;
-				DATA = 0;
+		if (_data != null && !_data.equals("0") && (_data != null) && (_data.length() > 0)) {
+			final String[] both = _data.split("[:]");
+			id = Integer.parseInt(both[0]);
+			if (both.length > 1) {
+				data = Integer.parseInt(both[1]);
 			}
-		} else {
-			ID = 0;
-			DATA = 0;
 		}
 	}
 
-	public int getID() {
-		return ID;
+	public int getId() {
+		return id;
 	}
 
-	public int getDATA() {
-		return DATA;
+	public int getData() {
+		return data;
 	}
 
-	public boolean isData() {
-		return DATA > 0;
+	public boolean hasData() {
+		return data > 0;
 	}
 
 	@SuppressWarnings("deprecation")
 	public ItemStack getItemStack() {
 		ItemStack item = null;
-		if (ID != 0) {
-			if (DATA > 0) {
-				item = new ItemStack(ID, 1, (byte) DATA);
+		if (id != 0) {
+			if (data > 0) {
+				item = new ItemStack(id, 1, (byte) data);
 			} else {
-				item = new ItemStack(ID);
+				item = new ItemStack(id);
 			}
 		}
 		return item;

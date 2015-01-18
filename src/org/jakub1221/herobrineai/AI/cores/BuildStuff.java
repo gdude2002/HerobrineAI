@@ -19,7 +19,7 @@ public class BuildStuff extends Core {
 	}
 
 	@Override
-	public CoreResult CallCore(final Object[] data) {
+	public CoreResult callCore(final Object[] data) {
 		if (data.length == 2) {
 			return this.BuildCave((Location) data[0], true);
 		}
@@ -27,7 +27,7 @@ public class BuildStuff extends Core {
 	}
 
 	public CoreResult BuildCave(final Location loc) {
-		if (!HerobrineAI.getPluginCore().getConfigDB().BuildStuff) {
+		if (!HerobrineAI.getPluginCore().getConfigDB().buildStuff) {
 			return new CoreResult(false, "Player is in secure location.");
 		}
 		if (!HerobrineAI.getPluginCore().getSupport().checkBuild(loc)) {
@@ -37,7 +37,7 @@ public class BuildStuff extends Core {
 			return new CoreResult(false, "Location must be under 60 of Y.");
 		}
 		final int chance = new Random().nextInt(100);
-		if (chance > (100 - HerobrineAI.getPluginCore().getConfigDB().CaveChance)) {
+		if (chance > (100 - HerobrineAI.getPluginCore().getConfigDB().caveChance)) {
 			AICore.log.info("Creating cave...");
 			GenerateCave(loc);
 			return new CoreResult(false, "Cave created!");
