@@ -15,7 +15,6 @@ import org.jakub1221.herobrineai.misc.CustomID;
 public class ConfigDB {
 
 	public YamlConfiguration config = new YamlConfiguration();
-	public YamlConfiguration npc = new YamlConfiguration();
 
 	public int showRate = 2;
 	public boolean hitPlayer = true;
@@ -54,9 +53,6 @@ public class ConfigDB {
 	public int herobrineHP = 150;
 	public int buildInterval = 72000;
 	public boolean useHeads = true;
-	public boolean useNPCGuardian = true;
-	public boolean useNPCWarrior = true;
-	public boolean useNPCDemon = true;
 	public CustomID itemInHand = null;
 	public boolean explosions = true;
 	public boolean burn = true;
@@ -67,12 +63,10 @@ public class ConfigDB {
 	public boolean useIgnorePermission = true;
 	public boolean useSound = true;
 	public File configF = new File("plugins/HerobrineAI/config.yml");
-	public File npcF = new File("plugins/HerobrineAI/npc.yml");
 
 	public void reload() {
 		try {
 			config.load(configF);
-			npc.load(npcF);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -113,9 +107,6 @@ public class ConfigDB {
 		securedAreaSigns = config.getBoolean("config.SecuredArea.Signs", securedAreaSigns);
 		securedAreaBooks = config.getBoolean("config.SecuredArea.Books", securedAreaBooks);
 		useHeads = config.getBoolean("config.UseHeads", useHeads);
-		useNPCGuardian = config.getBoolean("config.UseNPC.Guardian", useNPCGuardian);
-		useNPCWarrior = config.getBoolean("config.UseNPC.Warrior", useNPCWarrior);
-		useNPCDemon = config.getBoolean("config.UseNPC.Demon", useNPCDemon);
 		itemInHand = new CustomID(config.getString("config.ItemInHand"));
 		explosions = config.getBoolean("config.Explosions", explosions);
 		burn = config.getBoolean("config.Burn", burn);

@@ -4,10 +4,13 @@ import net.minecraft.server.v1_8_R1.EntityPlayer;
 import net.minecraft.server.v1_8_R1.PacketPlayInArmAnimation;
 import net.minecraft.server.v1_8_R1.WorldServer;
 
+import org.bukkit.craftbukkit.v1_8_R1.entity.CraftBat;
 import org.bukkit.Location;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.potion.PotionEffectType;
 import org.jakub1221.herobrineai.HerobrineAI;
 
 public class HumanNPC {
@@ -53,9 +56,20 @@ public class HumanNPC {
 
 	public void teleport(final Location loc) {
 		if (loc.getWorld().getName().equals(getNMSEntity().world.getWorld().getName())) {
+			LivingEntity bat = (LivingEntity) getBukkitEntity().getPassenger();
+			if (bat != null) {
+				bat.leaveVehicle();
+			}
 			getNMSEntity().locX = loc.getX();
 			getNMSEntity().locY = loc.getY();
 			getNMSEntity().locZ = loc.getZ();
+			if (bat != null) {
+				bat.teleport(getBukkitEntity());
+			} else {
+				bat = (LivingEntity) loc.getWorld().spawnEntity(loc, EntityType.BAT);
+			}
+			bat.addPotionEffect(PotionEffectType.INVISIBILITY.createEffect(Integer.MAX_VALUE, 0));
+			((CraftBat) bat).getHandle().mount(getNMSEntity());
 		} else {
 			HerobrineAI.getPluginCore().hbSpawnData = loc;
 			HerobrineAI.getPluginCore().removeHBNextTick = true;

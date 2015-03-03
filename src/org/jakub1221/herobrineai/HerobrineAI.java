@@ -10,6 +10,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.WorldCreator;
 import org.bukkit.WorldType;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -25,8 +26,6 @@ import org.jakub1221.herobrineai.listeners.PlayerListener;
 import org.jakub1221.herobrineai.listeners.WorldListener;
 import org.jakub1221.herobrineai.nms.NPC.NPCCore;
 import org.jakub1221.herobrineai.nms.NPC.entity.HumanNPC;
-import org.jakub1221.herobrineai.nms.entity.EntityInjector;
-import org.jakub1221.herobrineai.nms.entity.EntityManager;
 
 public class HerobrineAI extends JavaPlugin implements Listener {
 
@@ -41,7 +40,6 @@ public class HerobrineAI extends JavaPlugin implements Listener {
 	private AICore aicore;
 	private ConfigDB configdb;
 	private Support support;
-	private EntityManager entMng;
 	private NPCCore NPCCore;
 
 	public static HumanNPC herobrineNPC;
@@ -60,7 +58,6 @@ public class HerobrineAI extends JavaPlugin implements Listener {
 		configdb = new ConfigDB();
 		aicore = new AICore();
 		support = new Support();
-		entMng = new EntityManager();
 		NPCCore = new NPCCore();
 		configdb.reload();
 		getCommand("hb-ai").setExecutor(new CmdExecutor(this));
@@ -97,12 +94,10 @@ public class HerobrineAI extends JavaPlugin implements Listener {
 		nowloc.setPitch(1.0f);
 		spawnHerobrine(nowloc);
 		HerobrineAI.herobrineNPC.setItemInHand(configdb.itemInHand.getItemStack());
-		EntityInjector.inject();
 	}
 
 	@Override
 	public void onDisable() {
-		entMng.killAllMobs();
 		aicore.cancelTarget(Core.CoreType.ANY);
 		aicore.stopBD();
 		aicore.stopMAIN();
@@ -116,10 +111,6 @@ public class HerobrineAI extends JavaPlugin implements Listener {
 
 	public AICore getAICore() {
 		return aicore;
-	}
-
-	public EntityManager getEntityManager() {
-		return entMng;
 	}
 
 	public ConfigDB getConfigDB() {
@@ -142,6 +133,11 @@ public class HerobrineAI extends JavaPlugin implements Listener {
 	}
 
 	public void removeHerobrine() {
+		Entity bat = HerobrineAI.herobrineNPC.getBukkitEntity().getPassenger();
+		if (bat != null) {
+			bat.leaveVehicle();
+			bat.remove();
+		}
 		HerobrineAI.herobrineEntityID = 0L;
 		HerobrineAI.herobrineNPC = null;
 		NPCCore.removeAll();

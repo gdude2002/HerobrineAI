@@ -60,7 +60,7 @@ public class Haunt extends Core {
 		return new CoreResult(true, "Herobrine haunts " + player.getName() + "!");
 	}
 
-	public void PlaySounds() {
+	public void playSounds() {
 		if (AICore.PlayerTarget.isOnline() && AICore.isTarget && (HerobrineAI.getPluginCore().getAICore().getCoreTypeNow() == CoreType.HAUNT)) {
 			if (!AICore.PlayerTarget.isDead()) {
 				if (_ticks > 290) {
@@ -119,7 +119,7 @@ public class Haunt extends Core {
 		}
 	}
 
-	public void KeepLookingHaunt() {
+	public void keepLookingHaunt() {
 		if (AICore.PlayerTarget.isOnline() && AICore.isTarget && (HerobrineAI.getPluginCore().getAICore().getCoreTypeNow() == CoreType.HAUNT)) {
 			if (!AICore.PlayerTarget.isDead()) {
 				Location loc = HerobrineAI.herobrineNPC.getBukkitEntity().getLocation();
@@ -147,7 +147,7 @@ public class Haunt extends Core {
 				final AICore _aicore = HerobrineAI.getPluginCore().getAICore();
 				switch (_ticks) {
 					case 0: {
-						HauntTP();
+						hauntTP();
 						break;
 					}
 					case 20: {
@@ -155,7 +155,7 @@ public class Haunt extends Core {
 						break;
 					}
 					case 30: {
-						HauntTP();
+						hauntTP();
 						break;
 					}
 					case 50: {
@@ -163,7 +163,7 @@ public class Haunt extends Core {
 						break;
 					}
 					case 60: {
-						HauntTP();
+						hauntTP();
 						break;
 					}
 					case 80: {
@@ -171,7 +171,7 @@ public class Haunt extends Core {
 						break;
 					}
 					case 90: {
-						HauntTP();
+						hauntTP();
 						break;
 					}
 					case 110: {
@@ -179,7 +179,7 @@ public class Haunt extends Core {
 						break;
 					}
 					case 120: {
-						HauntTP();
+						hauntTP();
 						break;
 					}
 					case 140: {
@@ -187,7 +187,7 @@ public class Haunt extends Core {
 						break;
 					}
 					case 150: {
-						HauntTP();
+						hauntTP();
 						break;
 					}
 					case 170: {
@@ -195,7 +195,7 @@ public class Haunt extends Core {
 						break;
 					}
 					case 180: {
-						HauntTP();
+						hauntTP();
 						break;
 					}
 					case 200: {
@@ -203,7 +203,7 @@ public class Haunt extends Core {
 						break;
 					}
 					case 210: {
-						HauntTP();
+						hauntTP();
 						break;
 					}
 					case 230: {
@@ -211,7 +211,7 @@ public class Haunt extends Core {
 						break;
 					}
 					case 240: {
-						HauntTP();
+						hauntTP();
 						break;
 					}
 					case 260: {
@@ -219,7 +219,7 @@ public class Haunt extends Core {
 						break;
 					}
 					case 270: {
-						HauntTP();
+						hauntTP();
 						break;
 					}
 					case 290: {
@@ -235,11 +235,11 @@ public class Haunt extends Core {
 		}
 	}
 
-	public void HauntTP() {
+	public void hauntTP() {
 		if (AICore.PlayerTarget.isOnline() && AICore.isTarget && (HerobrineAI.getPluginCore().getAICore().getCoreTypeNow() == CoreType.HAUNT)) {
 			if (!AICore.PlayerTarget.isDead()) {
 				if (HerobrineAI.getPluginCore().getConfigDB().useWorlds.contains(AICore.PlayerTarget.getWorld().getName())) {
-					FindPlace(AICore.PlayerTarget);
+					findPlace(AICore.PlayerTarget);
 					final Location ploc = AICore.PlayerTarget.getLocation();
 					ploc.setY(ploc.getY() + 1.5);
 					HerobrineAI.herobrineNPC.lookAtPoint(ploc);
@@ -254,7 +254,7 @@ public class Haunt extends Core {
 		}
 	}
 
-	public boolean FindPlace(final Player player) {
+	public boolean findPlace(final Player player) {
 		final Location loc = player.getLocation();
 		int x = 0;
 		int z = 0;
@@ -286,7 +286,7 @@ public class Haunt extends Core {
 					if (((x < -4) || (x > 4) || (z < -4) || (z > 4)) && HerobrineAI.isSolidBlock(loc.getWorld().getBlockAt(x + loc.getBlockX(), (y + loc.getBlockY()) - 1, z + loc.getBlockZ()).getType())
 							&& HerobrineAI.isAllowedBlock(loc.getWorld().getBlockAt(x + loc.getBlockX(), y + loc.getBlockY(), z + loc.getBlockZ()).getType())
 							&& HerobrineAI.isAllowedBlock(loc.getWorld().getBlockAt(x + loc.getBlockX(), y + loc.getBlockY() + 1, z + loc.getBlockZ()).getType())) {
-						Teleport(loc.getWorld(), x + loc.getBlockX(), y + loc.getBlockY(), z + loc.getBlockZ());
+						teleport(loc.getWorld(), x + loc.getBlockX(), y + loc.getBlockY(), z + loc.getBlockZ());
 					}
 					z += ((zMax <= 0) ? -1 : 1);
 				}
@@ -296,7 +296,7 @@ public class Haunt extends Core {
 		return false;
 	}
 
-	public void Teleport(final World world, final int X, final int Y, final int Z) {
+	public void teleport(final World world, final int X, final int Y, final int Z) {
 		final Location loc = HerobrineAI.herobrineNPC.getBukkitEntity().getLocation();
 		loc.setWorld(world);
 		loc.setX(X);
@@ -310,13 +310,13 @@ public class Haunt extends Core {
 		KL_INT = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(AICore.plugin, new Runnable() {
 			@Override
 			public void run() {
-				Haunt.this.KeepLookingHaunt();
+				Haunt.this.keepLookingHaunt();
 			}
 		}, 5L, 5L);
 		PS_INT = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(AICore.plugin, new Runnable() {
 			@Override
 			public void run() {
-				Haunt.this.PlaySounds();
+				Haunt.this.playSounds();
 			}
 		}, 35L, 35L);
 	}
