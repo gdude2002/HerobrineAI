@@ -18,7 +18,7 @@ public class GraveyardWorld {
 		final int MainX = -10;
 		final int MainY = 3;
 		final int MainZ = -10;
-		new StructureLoader(HerobrineAI.getPluginCore().getInputStreamData("/res/graveyard_world.yml")).Build(loc.getWorld(), MainX, MainY, MainZ);
+		new StructureLoader(HerobrineAI.getPlugin().getInputStreamData("/res/graveyard_world.yml")).Build(loc.getWorld(), MainX, MainY, MainZ);
 	}
 
 }

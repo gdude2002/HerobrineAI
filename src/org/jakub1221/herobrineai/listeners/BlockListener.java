@@ -39,8 +39,8 @@ public class BlockListener implements Listener {
 						&& (block.getWorld().getBlockAt(blockloc.getBlockX(), blockloc.getBlockY(), blockloc.getBlockZ() - 1).getType() == Material.REDSTONE_TORCH_ON)
 						&& (block.getWorld().getBlockAt(blockloc.getBlockX() + 1, blockloc.getBlockY(), blockloc.getBlockZ()).getType() == Material.REDSTONE_TORCH_ON)
 						&& (block.getWorld().getBlockAt(blockloc.getBlockX() - 1, blockloc.getBlockY(), blockloc.getBlockZ()).getType() == Material.REDSTONE_TORCH_ON)
-						&& HerobrineAI.getPluginCore().getConfigDB().useTotem && !AICore.isTotemCalled) {
-					HerobrineAI.getPluginCore().getAICore().playerCallTotem(event.getPlayer());
+						&& HerobrineAI.getPlugin().getConfigDB().useTotem && !AICore.isTotemCalled) {
+					HerobrineAI.getPlugin().getAICore().playerCallTotem(event.getPlayer());
 				}
 			}
 		}
@@ -55,7 +55,7 @@ public class BlockListener implements Listener {
 			event.setCancelled(true);
 			return;
 		}
-		final Heads h = (Heads) HerobrineAI.getPluginCore().getAICore().getCore(Core.CoreType.HEADS);
+		final Heads h = (Heads) HerobrineAI.getPlugin().getAICore().getCore(Core.CoreType.HEADS);
 		final ArrayList<Block> list = h.getHeadList();
 		if (list.contains(event.getBlock())) {
 			event.setCancelled(true);

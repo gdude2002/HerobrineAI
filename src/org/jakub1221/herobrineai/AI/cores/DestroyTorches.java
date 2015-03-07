@@ -19,17 +19,17 @@ public class DestroyTorches extends Core {
 	}
 
 	public CoreResult destroyTorches(final Location loc) {
-		if (HerobrineAI.getPluginCore().getConfigDB().destroyTorches) {
+		if (HerobrineAI.getPlugin().getConfigDB().destroyTorches) {
 			final int x = loc.getBlockX();
 			final int y = loc.getBlockY();
 			final int z = loc.getBlockZ();
 			final World world = loc.getWorld();
-			int i = -HerobrineAI.getPluginCore().getConfigDB().destroyTorchesRadius;
-			int ii = -HerobrineAI.getPluginCore().getConfigDB().destroyTorchesRadius;
-			int iii = -HerobrineAI.getPluginCore().getConfigDB().destroyTorchesRadius;
-			for (i = -HerobrineAI.getPluginCore().getConfigDB().destroyTorchesRadius; i <= HerobrineAI.getPluginCore().getConfigDB().destroyTorchesRadius; ++i) {
-				for (ii = -HerobrineAI.getPluginCore().getConfigDB().destroyTorchesRadius; ii <= HerobrineAI.getPluginCore().getConfigDB().destroyTorchesRadius; ++ii) {
-					for (iii = -HerobrineAI.getPluginCore().getConfigDB().destroyTorchesRadius; iii <= HerobrineAI.getPluginCore().getConfigDB().destroyTorchesRadius; ++iii) {
+			int i = -HerobrineAI.getPlugin().getConfigDB().destroyTorchesRadius;
+			int ii = -HerobrineAI.getPlugin().getConfigDB().destroyTorchesRadius;
+			int iii = -HerobrineAI.getPlugin().getConfigDB().destroyTorchesRadius;
+			for (i = -HerobrineAI.getPlugin().getConfigDB().destroyTorchesRadius; i <= HerobrineAI.getPlugin().getConfigDB().destroyTorchesRadius; ++i) {
+				for (ii = -HerobrineAI.getPlugin().getConfigDB().destroyTorchesRadius; ii <= HerobrineAI.getPlugin().getConfigDB().destroyTorchesRadius; ++ii) {
+					for (iii = -HerobrineAI.getPlugin().getConfigDB().destroyTorchesRadius; iii <= HerobrineAI.getPlugin().getConfigDB().destroyTorchesRadius; ++iii) {
 						if (world.getBlockAt(x + ii, y + i, z + iii).getType() == Material.TORCH) {
 							world.getBlockAt(x + ii, y + i, z + iii).breakNaturally();
 							return new CoreResult(true, "Torches destroyed!");

@@ -11,14 +11,14 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.potion.PotionEffectType;
-import org.jakub1221.herobrineai.HerobrineAI;
+import org.jakub1221.herobrineai.nms.NPC.HerobrineCore;
 
-public class HumanNPC {
+public class Herobrine {
 
 	private EntityPlayer entity;
 	private final int id;
 
-	public HumanNPC(final HumanEntity humanEntity, final int id) {
+	public Herobrine(final HumanEntity humanEntity, final int id) {
 		entity = humanEntity;
 		this.id = id;
 	}
@@ -71,8 +71,8 @@ public class HumanNPC {
 			bat.addPotionEffect(PotionEffectType.INVISIBILITY.createEffect(Integer.MAX_VALUE, 0));
 			((CraftBat) bat).getHandle().mount(getNMSEntity());
 		} else {
-			HerobrineAI.getPluginCore().hbSpawnData = loc;
-			HerobrineAI.getPluginCore().removeHBNextTick = true;
+			HerobrineCore.getInstance().hbSpawnData = loc;
+			HerobrineCore.getInstance().removeHBNextTick = true;
 		}
 	}
 

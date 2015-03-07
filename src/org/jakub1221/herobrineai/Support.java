@@ -30,7 +30,7 @@ public class Support {
 		WorldGuard = new WorldGuardHook();
 		PreciousStones = new PreciousStonesHook();
 		Factions = new FactionsHook();
-		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(HerobrineAI.getPluginCore(), new Runnable() {
+		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(HerobrineAI.getPlugin(), new Runnable() {
 			@Override
 			public void run() {
 				Support.this.CheckForPlugins();
@@ -109,23 +109,23 @@ public class Support {
 	}
 
 	public boolean checkBuild(final Location loc) {
-		return HerobrineAI.getPluginCore().getConfigDB().securedAreaBuild || !isSecuredArea(loc);
+		return HerobrineAI.getPlugin().getConfigDB().securedAreaBuild || !isSecuredArea(loc);
 	}
 
 	public boolean checkAttack(final Location loc) {
-		return HerobrineAI.getPluginCore().getConfigDB().securedAreaAttack || !isSecuredArea(loc);
+		return HerobrineAI.getPlugin().getConfigDB().securedAreaAttack || !isSecuredArea(loc);
 	}
 
 	public boolean checkHaunt(final Location loc) {
-		return HerobrineAI.getPluginCore().getConfigDB().securedAreaHaunt || !isSecuredArea(loc);
+		return HerobrineAI.getPlugin().getConfigDB().securedAreaHaunt || !isSecuredArea(loc);
 	}
 
 	public boolean checkSigns(final Location loc) {
-		return HerobrineAI.getPluginCore().getConfigDB().securedAreaSigns || !isSecuredArea(loc);
+		return HerobrineAI.getPlugin().getConfigDB().securedAreaSigns || !isSecuredArea(loc);
 	}
 
 	public boolean checkBooks(final Location loc) {
-		return HerobrineAI.getPluginCore().getConfigDB().securedAreaBooks || !isSecuredArea(loc);
+		return HerobrineAI.getPlugin().getConfigDB().securedAreaBooks || !isSecuredArea(loc);
 	}
 
 }

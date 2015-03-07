@@ -24,9 +24,9 @@ public class InventoryListener implements Listener {
 	public void onInventoryClose(final InventoryCloseEvent event) {
 		if (event.getInventory().getType() == InventoryType.CHEST) {
 			final Object[] data = { event.getPlayer(), event.getInventory() };
-			HerobrineAI.getPluginCore().getAICore().getCore(Core.CoreType.BOOK).runCore(data);
-			if ((new Random().nextInt(100) > 97) && HerobrineAI.getPluginCore().getConfigDB().useHeads && (event.getInventory().firstEmpty() != -1)
-					&& HerobrineAI.getPluginCore().getAICore().getResetLimits().isHead()) {
+			HerobrineAI.getPlugin().getAICore().getCore(Core.CoreType.BOOK).runCore(data);
+			if ((new Random().nextInt(100) > 97) && HerobrineAI.getPlugin().getConfigDB().useHeads && (event.getInventory().firstEmpty() != -1)
+					&& HerobrineAI.getPlugin().getAICore().getResetLimits().isHead()) {
 				event.getInventory().setItem(event.getInventory().firstEmpty(), ItemName.CreateSkull(event.getPlayer().getName()));
 			}
 		}
@@ -35,10 +35,10 @@ public class InventoryListener implements Listener {
 	@EventHandler
 	public void onInventoryOpen(final InventoryOpenEvent event) {
 		if (((event.getInventory().getType() == InventoryType.CHEST) || (event.getInventory().getType() == InventoryType.FURNACE) || (event.getInventory().getType() == InventoryType.WORKBENCH))
-				&& HerobrineAI.getPluginCore().getConfigDB().useWorlds.contains(event.getPlayer().getLocation().getWorld().getName()) && HerobrineAI.getPluginCore().getConfigDB().placeSigns
-				&& HerobrineAI.getPluginCore().getSupport().checkSigns(event.getPlayer().getLocation()) && HerobrineAI.getPluginCore().getAICore().getResetLimits().isSign()) {
+				&& HerobrineAI.getPlugin().getConfigDB().useWorlds.contains(event.getPlayer().getLocation().getWorld().getName()) && HerobrineAI.getPlugin().getConfigDB().placeSigns
+				&& HerobrineAI.getPlugin().getSupport().checkSigns(event.getPlayer().getLocation()) && HerobrineAI.getPlugin().getAICore().getResetLimits().isSign()) {
 			final Object[] data = { event.getPlayer().getLocation(), event.getPlayer().getLocation() };
-			HerobrineAI.getPluginCore().getAICore().getCore(Core.CoreType.SIGNS).runCore(data);
+			HerobrineAI.getPlugin().getAICore().getCore(Core.CoreType.SIGNS).runCore(data);
 		}
 	}
 }

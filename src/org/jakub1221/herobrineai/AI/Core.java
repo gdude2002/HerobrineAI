@@ -27,7 +27,7 @@ public abstract class Core {
 	public CoreResult runCore(final Object[] data) {
 		nowData = callCore(data);
 		if (nowData.getResult() && (appear == AppearType.APPEAR)) {
-			HerobrineAI.getPluginCore().getAICore().setCoreTypeNow(coreType);
+			HerobrineAI.getPlugin().getAICore().setCoreTypeNow(coreType);
 		}
 		return nowData;
 	}

@@ -15,10 +15,10 @@ public class WorldListener implements Listener {
 	public void onChunkLoad(final ChunkLoadEvent event) {
 		if (event.isNewChunk()) {
 			final World world = event.getWorld();
-			if (HerobrineAI.getPluginCore().getConfigDB().useWorlds.contains(world.getName())) {
-				if (HerobrineAI.getPluginCore().getConfigDB().buildPyramids && (new Random().nextInt(15) == 1)) {
+			if (HerobrineAI.getPlugin().getConfigDB().useWorlds.contains(world.getName())) {
+				if (HerobrineAI.getPlugin().getConfigDB().buildPyramids && (new Random().nextInt(15) == 1)) {
 					final Object[] data = { event.getChunk() };
-					HerobrineAI.getPluginCore().getAICore().getCore(Core.CoreType.PYRAMID).runCore(data);
+					HerobrineAI.getPlugin().getAICore().getCore(Core.CoreType.PYRAMID).runCore(data);
 				}
 			}
 		}

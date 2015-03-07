@@ -1,6 +1,7 @@
 package org.jakub1221.herobrineai.nms.NPC.network;
 
 import net.minecraft.server.v1_8_R1.EntityPlayer;
+import net.minecraft.server.v1_8_R1.MinecraftServer;
 import net.minecraft.server.v1_8_R1.Packet;
 import net.minecraft.server.v1_8_R1.PlayerConnection;
 
@@ -9,7 +10,7 @@ import org.jakub1221.herobrineai.nms.NPC.NPCCore;
 public class NetworkHandler extends PlayerConnection {
 
 	public NetworkHandler(final NPCCore npcCore, final EntityPlayer entityPlayer) {
-		super(npcCore.getServer().getMCServer(), npcCore.getNetworkCore(), entityPlayer);
+		super(MinecraftServer.getServer(), new NetworkCore(), entityPlayer);
 	}
 
 	@Override

@@ -16,6 +16,7 @@ import org.jakub1221.herobrineai.AI.Core;
 import org.jakub1221.herobrineai.AI.CoreResult;
 import org.jakub1221.herobrineai.AI.Message;
 import org.jakub1221.herobrineai.AI.extensions.Position;
+import org.jakub1221.herobrineai.nms.NPC.HerobrineCore;
 
 public class Attack extends Core {
 	private int ticksToEnd;
@@ -35,22 +36,22 @@ public class Attack extends Core {
 	}
 
 	public CoreResult setAttackTarget(final Player player) {
-		if (HerobrineAI.getPluginCore().getSupport().checkAttack(player.getLocation())) {
-			HerobrineAI.HerobrineHP = HerobrineAI.HerobrineMaxHP;
+		if (HerobrineAI.getPlugin().getSupport().checkAttack(player.getLocation())) {
+			HerobrineCore.getInstance().HerobrineHP = HerobrineCore.getInstance().HerobrineMaxHP;
 			ticksToEnd = 0;
 			AICore.PlayerTarget = player;
 			AICore.isTarget = true;
 			AICore.log.info("[HerobrineAI] Teleporting to target. (" + AICore.PlayerTarget.getName() + ")");
 			final Location ploc = AICore.PlayerTarget.getLocation();
 			final Object[] data = { ploc };
-			HerobrineAI.getPluginCore().getAICore().getCore(CoreType.DESTROY_TORCHES).runCore(data);
-			if (HerobrineAI.getPluginCore().getConfigDB().usePotionEffects) {
+			HerobrineAI.getPlugin().getAICore().getCore(CoreType.DESTROY_TORCHES).runCore(data);
+			if (HerobrineAI.getPlugin().getConfigDB().usePotionEffects) {
 				AICore.PlayerTarget.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 1000, 1));
 				AICore.PlayerTarget.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 1000, 1));
 				AICore.PlayerTarget.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 1000, 1));
 			}
 			final Location tploc = Position.getTeleportPosition(ploc);
-			HerobrineAI.herobrineNPC.moveTo(tploc);
+			HerobrineCore.getInstance().herobrineNPC.moveTo(tploc);
 			Message.sendMessage(AICore.PlayerTarget);
 			StartHandler();
 			return new CoreResult(true, "Herobrine attacks " + player.getName() + "!");
@@ -86,16 +87,16 @@ public class Attack extends Core {
 	}
 
 	public void KeepLooking() {
-		if (AICore.PlayerTarget.isOnline() && AICore.isTarget && (HerobrineAI.getPluginCore().getAICore().getCoreTypeNow() == CoreType.ATTACK)) {
+		if (AICore.PlayerTarget.isOnline() && AICore.isTarget && (HerobrineAI.getPlugin().getAICore().getCoreTypeNow() == CoreType.ATTACK)) {
 			if (!AICore.PlayerTarget.isDead()) {
 				if (ticksToEnd == 160) {
-					HerobrineAI.getPluginCore().getAICore().cancelTarget(CoreType.ATTACK);
+					HerobrineAI.getPlugin().getAICore().cancelTarget(CoreType.ATTACK);
 				} else {
 					++ticksToEnd;
 					final Location ploc = AICore.PlayerTarget.getLocation();
 					ploc.setY(ploc.getY() + 1.5);
-					HerobrineAI.herobrineNPC.lookAtPoint(ploc);
-					if (HerobrineAI.getPluginCore().getConfigDB().lighting) {
+					HerobrineCore.getInstance().herobrineNPC.lookAtPoint(ploc);
+					if (HerobrineAI.getPlugin().getConfigDB().lighting) {
 						final int lchance = new Random().nextInt(100);
 						if (lchance > 75) {
 							final Location newloc = ploc;
@@ -117,24 +118,24 @@ public class Attack extends Core {
 					}
 				}
 			} else {
-				HerobrineAI.getPluginCore().getAICore().cancelTarget(CoreType.ATTACK);
+				HerobrineAI.getPlugin().getAICore().cancelTarget(CoreType.ATTACK);
 			}
 		} else {
-			HerobrineAI.getPluginCore().getAICore().cancelTarget(CoreType.ATTACK);
+			HerobrineAI.getPlugin().getAICore().cancelTarget(CoreType.ATTACK);
 		}
 	}
 
 	public void Follow() {
-		if (AICore.PlayerTarget.isOnline() && AICore.isTarget && (HerobrineAI.getPluginCore().getAICore().getCoreTypeNow() == CoreType.ATTACK)) {
+		if (AICore.PlayerTarget.isOnline() && AICore.isTarget && (HerobrineAI.getPlugin().getAICore().getCoreTypeNow() == CoreType.ATTACK)) {
 			if (!AICore.PlayerTarget.isDead()) {
-				if (HerobrineAI.getPluginCore().getConfigDB().useWorlds.contains(AICore.PlayerTarget.getWorld().getName())
-						&& HerobrineAI.getPluginCore().getSupport().checkAttack(AICore.PlayerTarget.getLocation())) {
-					HerobrineAI.herobrineNPC.moveTo(Position.getTeleportPosition(AICore.PlayerTarget.getLocation()));
+				if (HerobrineAI.getPlugin().getConfigDB().useWorlds.contains(AICore.PlayerTarget.getWorld().getName())
+						&& HerobrineAI.getPlugin().getSupport().checkAttack(AICore.PlayerTarget.getLocation())) {
+					HerobrineCore.getInstance().herobrineNPC.moveTo(Position.getTeleportPosition(AICore.PlayerTarget.getLocation()));
 					final Location ploc = AICore.PlayerTarget.getLocation();
 					ploc.setY(ploc.getY() + 1.5);
-					HerobrineAI.herobrineNPC.lookAtPoint(ploc);
+					HerobrineCore.getInstance().herobrineNPC.lookAtPoint(ploc);
 					AICore.PlayerTarget.playSound(AICore.PlayerTarget.getLocation(), Sound.WITHER_HURT, 0.75f, 0.75f);
-					if (HerobrineAI.getPluginCore().getConfigDB().hitPlayer) {
+					if (HerobrineAI.getPlugin().getConfigDB().hitPlayer) {
 						final int hitchance = new Random().nextInt(100);
 						if (hitchance < 55) {
 							AICore.PlayerTarget.playSound(AICore.PlayerTarget.getLocation(), Sound.HURT_FLESH, 0.75f, 0.75f);
@@ -142,28 +143,28 @@ public class Attack extends Core {
 						}
 					}
 				} else {
-					HerobrineAI.getPluginCore().getAICore().cancelTarget(CoreType.ATTACK);
+					HerobrineAI.getPlugin().getAICore().cancelTarget(CoreType.ATTACK);
 				}
 			} else {
-				HerobrineAI.getPluginCore().getAICore().cancelTarget(CoreType.ATTACK);
+				HerobrineAI.getPlugin().getAICore().cancelTarget(CoreType.ATTACK);
 			}
 		} else {
-			HerobrineAI.getPluginCore().getAICore().cancelTarget(CoreType.ATTACK);
+			HerobrineAI.getPlugin().getAICore().cancelTarget(CoreType.ATTACK);
 		}
 	}
 
 	public void Hide() {
-		if (AICore.PlayerTarget.isOnline() && AICore.isTarget && (HerobrineAI.getPluginCore().getAICore().getCoreTypeNow() == CoreType.ATTACK)) {
+		if (AICore.PlayerTarget.isOnline() && AICore.isTarget && (HerobrineAI.getPlugin().getAICore().getCoreTypeNow() == CoreType.ATTACK)) {
 			if (!AICore.PlayerTarget.isDead()) {
 				final Location ploc = AICore.PlayerTarget.getLocation();
 				ploc.setY(-20.0);
-				final Location hbloc1 = HerobrineAI.herobrineNPC.getBukkitEntity().getLocation();
+				final Location hbloc1 = HerobrineCore.getInstance().herobrineNPC.getBukkitEntity().getLocation();
 				hbloc1.setY(hbloc1.getY() + 1.0);
-				final Location hbloc2 = HerobrineAI.herobrineNPC.getBukkitEntity().getLocation();
+				final Location hbloc2 = HerobrineCore.getInstance().herobrineNPC.getBukkitEntity().getLocation();
 				hbloc2.setY(hbloc2.getY() + 0.0);
-				final Location hbloc3 = HerobrineAI.herobrineNPC.getBukkitEntity().getLocation();
+				final Location hbloc3 = HerobrineCore.getInstance().herobrineNPC.getBukkitEntity().getLocation();
 				hbloc3.setY(hbloc3.getY() + 0.5);
-				final Location hbloc4 = HerobrineAI.herobrineNPC.getBukkitEntity().getLocation();
+				final Location hbloc4 = HerobrineCore.getInstance().herobrineNPC.getBukkitEntity().getLocation();
 				hbloc4.setY(hbloc4.getY() + 1.5);
 				ploc.getWorld().playEffect(hbloc1, Effect.SMOKE, 80);
 				ploc.getWorld().playEffect(hbloc2, Effect.SMOKE, 80);
@@ -193,7 +194,7 @@ public class Attack extends Core {
 				ploc.getWorld().playEffect(hbloc2, Effect.SMOKE, 80);
 				ploc.getWorld().playEffect(hbloc3, Effect.SMOKE, 80);
 				ploc.getWorld().playEffect(hbloc4, Effect.SMOKE, 80);
-				if (HerobrineAI.getPluginCore().getConfigDB().spawnBats) {
+				if (HerobrineAI.getPlugin().getConfigDB().spawnBats) {
 					final int cc = new Random().nextInt(3);
 					if (cc == 0) {
 						ploc.getWorld().spawnEntity(hbloc1, EntityType.BAT);
@@ -202,17 +203,17 @@ public class Attack extends Core {
 						ploc.getWorld().spawnEntity(hbloc1, EntityType.BAT);
 					}
 				}
-				HerobrineAI.herobrineNPC.moveTo(ploc);
+				HerobrineCore.getInstance().herobrineNPC.moveTo(ploc);
 			} else {
-				HerobrineAI.getPluginCore().getAICore().cancelTarget(CoreType.ATTACK);
+				HerobrineAI.getPlugin().getAICore().cancelTarget(CoreType.ATTACK);
 			}
 		} else {
-			HerobrineAI.getPluginCore().getAICore().cancelTarget(CoreType.ATTACK);
+			HerobrineAI.getPlugin().getAICore().cancelTarget(CoreType.ATTACK);
 		}
 	}
 
 	public void FollowHideRepeat() {
-		if (AICore.PlayerTarget.isOnline() && AICore.isTarget && (HerobrineAI.getPluginCore().getAICore().getCoreTypeNow() == CoreType.ATTACK)) {
+		if (AICore.PlayerTarget.isOnline() && AICore.isTarget && (HerobrineAI.getPlugin().getAICore().getCoreTypeNow() == CoreType.ATTACK)) {
 			if (!AICore.PlayerTarget.isDead()) {
 				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(AICore.plugin, new Runnable() {
 					@Override
@@ -227,10 +228,10 @@ public class Attack extends Core {
 					}
 				}, 45L);
 			} else {
-				HerobrineAI.getPluginCore().getAICore().cancelTarget(CoreType.ATTACK);
+				HerobrineAI.getPlugin().getAICore().cancelTarget(CoreType.ATTACK);
 			}
 		} else {
-			HerobrineAI.getPluginCore().getAICore().cancelTarget(CoreType.ATTACK);
+			HerobrineAI.getPlugin().getAICore().cancelTarget(CoreType.ATTACK);
 		}
 	}
 

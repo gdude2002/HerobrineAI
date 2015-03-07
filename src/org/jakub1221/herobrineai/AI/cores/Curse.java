@@ -26,7 +26,7 @@ public class Curse extends Core {
 		int i = 0;
 		while (i != 3) {
 			++i;
-			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(HerobrineAI.getPluginCore(), new Runnable() {
+			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(HerobrineAI.getPlugin(), new Runnable() {
 				@Override
 				public void run() {
 					player.getLocation().getWorld()

@@ -21,7 +21,7 @@ public class ResetLimits {
 		maxBooks = 1;
 		maxSigns = 1;
 		maxHeads = 1;
-		taskID = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(HerobrineAI.getPluginCore(), new Runnable() {
+		taskID = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(HerobrineAI.getPlugin(), new Runnable() {
 			@Override
 			public void run() {
 				ResetLimits.this.resetAll();
@@ -64,9 +64,9 @@ public class ResetLimits {
 	}
 
 	public void updateFromConfig() {
-		maxBooks = HerobrineAI.getPluginCore().getConfigDB().maxBooks;
-		maxSigns = HerobrineAI.getPluginCore().getConfigDB().maxSigns;
-		maxHeads = HerobrineAI.getPluginCore().getConfigDB().maxHeads;
+		maxBooks = HerobrineAI.getPlugin().getConfigDB().maxBooks;
+		maxSigns = HerobrineAI.getPlugin().getConfigDB().maxSigns;
+		maxHeads = HerobrineAI.getPlugin().getConfigDB().maxHeads;
 	}
 
 }

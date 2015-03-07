@@ -13,6 +13,7 @@ import org.jakub1221.herobrineai.AI.AICore;
 import org.jakub1221.herobrineai.AI.Core;
 import org.jakub1221.herobrineai.AI.CoreResult;
 import org.jakub1221.herobrineai.misc.BlockChanger;
+import org.jakub1221.herobrineai.nms.NPC.HerobrineCore;
 
 public class Heads extends Core {
 
@@ -34,10 +35,10 @@ public class Heads extends Core {
 			return new CoreResult(false, "Player is offline.");
 		}
 		final Player player = Bukkit.getServer().getPlayer((String) data[0]);
-		if (!HerobrineAI.getPluginCore().getSupport().checkBuild(player.getLocation())) {
+		if (!HerobrineAI.getPlugin().getSupport().checkBuild(player.getLocation())) {
 			return new CoreResult(false, "Player is in secure area!");
 		}
-		if (HerobrineAI.getPluginCore().getConfigDB().useHeads) {
+		if (HerobrineAI.getPlugin().getConfigDB().useHeads) {
 			final Location loc = player.getLocation();
 			final int px = loc.getBlockX();
 			final int pz = loc.getBlockZ();
@@ -47,7 +48,7 @@ public class Heads extends Core {
 			for (x = -7; x <= 7; ++x) {
 				for (z = -7; z <= 7; ++z) {
 					if (new Random().nextInt(7) == new Random().nextInt(7)) {
-						if (HerobrineAI.isAllowedBlock(loc.getWorld().getHighestBlockAt(px + x, pz + z).getType())) {
+						if (HerobrineCore.isAllowedBlock(loc.getWorld().getHighestBlockAt(px + x, pz + z).getType())) {
 							y = loc.getWorld().getHighestBlockYAt(px + x, pz + z);
 						} else {
 							y = loc.getWorld().getHighestBlockYAt(px + x, pz + z) + 1;

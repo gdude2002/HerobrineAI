@@ -21,19 +21,19 @@ public class Book extends Core {
 	@Override
 	public CoreResult callCore(final Object[] data) {
 		final Player player = (Player) data[0];
-		if (HerobrineAI.getPluginCore().getConfigDB().useWorlds.contains(player.getLocation().getWorld().getName())) {
-			if (!HerobrineAI.getPluginCore().getConfigDB().writeBooks || !HerobrineAI.getPluginCore().getSupport().checkBooks(player.getLocation())) {
+		if (HerobrineAI.getPlugin().getConfigDB().useWorlds.contains(player.getLocation().getWorld().getName())) {
+			if (!HerobrineAI.getPlugin().getConfigDB().writeBooks || !HerobrineAI.getPlugin().getSupport().checkBooks(player.getLocation())) {
 				return new CoreResult(false, "Player is not in allowed world!");
 			}
 			final int chance = new Random().nextInt(100);
-			if (chance <= (100 - HerobrineAI.getPluginCore().getConfigDB().bookChance)) {
+			if (chance <= (100 - HerobrineAI.getPlugin().getConfigDB().bookChance)) {
 				return new CoreResult(false, "Books are not allowed!");
 			}
 			final Inventory chest = (Inventory) data[1];
 			if (chest.firstEmpty() == -1) {
 				return new CoreResult(false, "Book create failed!");
 			}
-			if (HerobrineAI.getPluginCore().getAICore().getResetLimits().isBook()) {
+			if (HerobrineAI.getPlugin().getAICore().getResetLimits().isBook()) {
 				chest.setItem(chest.firstEmpty(), newBook());
 				return new CoreResult(true, "Book created!");
 			}
@@ -42,14 +42,14 @@ public class Book extends Core {
 	}
 
 	public ItemStack newBook() {
-		final int count = HerobrineAI.getPluginCore().getConfigDB().useBookMessages.size();
+		final int count = HerobrineAI.getPlugin().getConfigDB().useBookMessages.size();
 		final int chance = new Random().nextInt(count);
 		final ItemStack book = new ItemStack(Material.WRITTEN_BOOK);
 		final BookMeta meta = (BookMeta) book.getItemMeta();
 		final ArrayList<String> list = new ArrayList<String>();
 		meta.setTitle("");
 		meta.setAuthor("");
-		list.add(0, HerobrineAI.getPluginCore().getConfigDB().useBookMessages.get(chance));
+		list.add(0, HerobrineAI.getPlugin().getConfigDB().useBookMessages.get(chance));
 		meta.setPages(list);
 		book.setItemMeta(meta);
 		return book;

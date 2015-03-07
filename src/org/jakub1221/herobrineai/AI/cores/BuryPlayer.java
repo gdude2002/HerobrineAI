@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.jakub1221.herobrineai.HerobrineAI;
 import org.jakub1221.herobrineai.AI.Core;
 import org.jakub1221.herobrineai.AI.CoreResult;
+import org.jakub1221.herobrineai.nms.NPC.HerobrineCore;
 
 public class BuryPlayer extends Core {
 
@@ -27,18 +28,18 @@ public class BuryPlayer extends Core {
 	}
 
 	public CoreResult FindPlace(final Player player) {
-		if (HerobrineAI.getPluginCore().getSupport().checkBuild(player.getLocation())) {
+		if (HerobrineAI.getPlugin().getSupport().checkBuild(player.getLocation())) {
 			final Location loc = player.getLocation();
-			if (HerobrineAI.isSolidBlock(loc.getWorld().getBlockAt(loc.getBlockX(), loc.getBlockY() - 1, loc.getBlockZ()).getType())
-					&& HerobrineAI.isSolidBlock(loc.getWorld().getBlockAt(loc.getBlockX(), loc.getBlockY() - 2, loc.getBlockZ()).getType())
-					&& HerobrineAI.isSolidBlock(loc.getWorld().getBlockAt(loc.getBlockX(), loc.getBlockY() - 1, loc.getBlockZ() - 1).getType())
-					&& HerobrineAI.isSolidBlock(loc.getWorld().getBlockAt(loc.getBlockX(), loc.getBlockY() - 2, loc.getBlockZ() - 1).getType())
-					&& HerobrineAI.isSolidBlock(loc.getWorld().getBlockAt(loc.getBlockX(), loc.getBlockY() - 3, loc.getBlockZ()).getType())
-					&& HerobrineAI.isSolidBlock(loc.getWorld().getBlockAt(loc.getBlockX(), loc.getBlockY() - 3, loc.getBlockZ() - 1).getType())
-					&& HerobrineAI.isSolidBlock(loc.getWorld().getBlockAt(loc.getBlockX(), loc.getBlockY() - 1, loc.getBlockZ() - 1).getType())
-					&& HerobrineAI.isSolidBlock(loc.getWorld().getBlockAt(loc.getBlockX(), loc.getBlockY() - 2, loc.getBlockZ() - 1).getType())
-					&& HerobrineAI.isSolidBlock(loc.getWorld().getBlockAt(loc.getBlockX(), loc.getBlockY() - 1, loc.getBlockZ() - 2).getType())
-					&& !HerobrineAI.isAllowedBlock(loc.getWorld().getBlockAt(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ() - 2).getType())) {
+			if (HerobrineCore.isSolidBlock(loc.getWorld().getBlockAt(loc.getBlockX(), loc.getBlockY() - 1, loc.getBlockZ()).getType())
+					&& HerobrineCore.isSolidBlock(loc.getWorld().getBlockAt(loc.getBlockX(), loc.getBlockY() - 2, loc.getBlockZ()).getType())
+					&& HerobrineCore.isSolidBlock(loc.getWorld().getBlockAt(loc.getBlockX(), loc.getBlockY() - 1, loc.getBlockZ() - 1).getType())
+					&& HerobrineCore.isSolidBlock(loc.getWorld().getBlockAt(loc.getBlockX(), loc.getBlockY() - 2, loc.getBlockZ() - 1).getType())
+					&& HerobrineCore.isSolidBlock(loc.getWorld().getBlockAt(loc.getBlockX(), loc.getBlockY() - 3, loc.getBlockZ()).getType())
+					&& HerobrineCore.isSolidBlock(loc.getWorld().getBlockAt(loc.getBlockX(), loc.getBlockY() - 3, loc.getBlockZ() - 1).getType())
+					&& HerobrineCore.isSolidBlock(loc.getWorld().getBlockAt(loc.getBlockX(), loc.getBlockY() - 1, loc.getBlockZ() - 1).getType())
+					&& HerobrineCore.isSolidBlock(loc.getWorld().getBlockAt(loc.getBlockX(), loc.getBlockY() - 2, loc.getBlockZ() - 1).getType())
+					&& HerobrineCore.isSolidBlock(loc.getWorld().getBlockAt(loc.getBlockX(), loc.getBlockY() - 1, loc.getBlockZ() - 2).getType())
+					&& !HerobrineCore.isAllowedBlock(loc.getWorld().getBlockAt(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ() - 2).getType())) {
 				Bury(loc.getWorld(), loc.getBlockX(), loc.getBlockY(), loc.getBlockZ(), player);
 				return new CoreResult(true, "Player buried!");
 			}

@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.jakub1221.herobrineai.HerobrineAI;
 import org.jakub1221.herobrineai.AI.AICore;
 import org.jakub1221.herobrineai.AI.Core;
+import org.jakub1221.herobrineai.nms.NPC.HerobrineCore;
 
 public class CmdExecutor implements CommandExecutor {
 
@@ -18,9 +19,6 @@ public class CmdExecutor implements CommandExecutor {
 	private Logger log;
 
 	public CmdExecutor(final HerobrineAI i) {
-		super();
-		P_Core = null;
-		log = null;
 		P_Core = i;
 		log = HerobrineAI.log;
 	}
@@ -36,7 +34,7 @@ public class CmdExecutor implements CommandExecutor {
 							if (Bukkit.getServer().getPlayer(args[1]) != null) {
 								if (Bukkit.getServer().getPlayer(args[1]).isOnline()) {
 									if (P_Core.getSupport().checkAttack(Bukkit.getServer().getPlayer(args[1]).getLocation())) {
-										if (P_Core.canAttackPlayer(Bukkit.getServer().getPlayer(args[1]), player)) {
+										if (HerobrineCore.getInstance().canAttackPlayer(Bukkit.getServer().getPlayer(args[1]), player)) {
 											if (!AICore.isTarget) {
 												P_Core.getAICore().setAttackTarget(Bukkit.getServer().getPlayer(args[1]));
 												player.sendMessage(ChatColor.RED + "[HerobrineAI] Herobrine is now attacking the " + args[1] + "!");
@@ -204,7 +202,7 @@ public class CmdExecutor implements CommandExecutor {
 							if (Bukkit.getServer().getPlayer(args[1]) != null) {
 								if (Bukkit.getServer().getPlayer(args[1]).isOnline()) {
 									if (P_Core.getSupport().checkHaunt(Bukkit.getServer().getPlayer(args[1]).getLocation())) {
-										if (P_Core.canAttackPlayer(Bukkit.getServer().getPlayer(args[1]), player)) {
+										if (HerobrineCore.getInstance().canAttackPlayer(Bukkit.getServer().getPlayer(args[1]), player)) {
 											if (!AICore.isTarget) {
 												P_Core.getAICore().setHauntTarget(Bukkit.getServer().getPlayer(args[1]));
 												player.sendMessage(ChatColor.RED + "[HerobrineAI] Herobrine now haunts the " + args[1] + "!");
@@ -265,7 +263,7 @@ public class CmdExecutor implements CommandExecutor {
 					}
 				} else if (args[0].equalsIgnoreCase("allworlds")) {
 					if (player.hasPermission("hb-ai.allworlds")) {
-						HerobrineAI.getPluginCore().getConfigDB().addAllWorlds();
+						HerobrineAI.getPlugin().getConfigDB().addAllWorlds();
 						player.sendMessage(ChatColor.GREEN + "[HerobrineAI] All worlds have been added to config.");
 						player.sendMessage(ChatColor.YELLOW + "[HerobrineAI] Note: Worlds with blank spaces can cause problems!");
 					} else {
@@ -285,7 +283,7 @@ public class CmdExecutor implements CommandExecutor {
 					if (Bukkit.getServer().getPlayer(args[1]) != null) {
 						if (Bukkit.getServer().getPlayer(args[1]).isOnline()) {
 							if (P_Core.getSupport().checkAttack(Bukkit.getServer().getPlayer(args[1]).getLocation())) {
-								if (P_Core.canAttackPlayerConsole(Bukkit.getServer().getPlayer(args[1]))) {
+								if (HerobrineCore.getInstance().canAttackPlayerConsole(Bukkit.getServer().getPlayer(args[1]))) {
 									if (!AICore.isTarget) {
 										P_Core.getAICore().setAttackTarget(Bukkit.getServer().getPlayer(args[1]));
 										log.info("[HerobrineAI] Herobrine is now attacking the " + args[1] + "!");
@@ -419,7 +417,7 @@ public class CmdExecutor implements CommandExecutor {
 					if (Bukkit.getServer().getPlayer(args[1]) != null) {
 						if (Bukkit.getServer().getPlayer(args[1]).isOnline()) {
 							if (P_Core.getSupport().checkHaunt(Bukkit.getServer().getPlayer(args[1]).getLocation())) {
-								if (P_Core.canAttackPlayerConsole(Bukkit.getServer().getPlayer(args[1]))) {
+								if (HerobrineCore.getInstance().canAttackPlayerConsole(Bukkit.getServer().getPlayer(args[1]))) {
 									if (!AICore.isTarget) {
 										P_Core.getAICore().setHauntTarget(Bukkit.getServer().getPlayer(args[1]));
 										log.info("[HerobrineAI] Herobrine now haunts the " + args[1] + "!");
@@ -462,7 +460,7 @@ public class CmdExecutor implements CommandExecutor {
 				log.info("/hb-ai curse <player name> - curse player");
 				log.info("/hb-ai allworlds - add all worlds to config");
 			} if (args[0].equalsIgnoreCase("allworlds")) {
-				HerobrineAI.getPluginCore().getConfigDB().addAllWorlds();
+				HerobrineAI.getPlugin().getConfigDB().addAllWorlds();
 				log.info("[HerobrineAI] All worlds have been added to config.");
 				log.info("[HerobrineAI] Note: Worlds with blank spaces can cause problems!");
 			} else {

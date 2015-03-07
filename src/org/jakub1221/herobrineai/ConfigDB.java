@@ -11,6 +11,7 @@ import org.bukkit.World;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jakub1221.herobrineai.misc.CustomID;
+import org.jakub1221.herobrineai.nms.NPC.HerobrineCore;
 
 public class ConfigDB {
 
@@ -116,18 +117,15 @@ public class ConfigDB {
 		maxHeads = config.getInt("config.Limit.Heads", maxHeads);
 		useIgnorePermission = config.getBoolean("config.UseIgnorePermission", useIgnorePermission);
 		useSound = config.getBoolean("config.UseHauntSound", useSound);
-		HerobrineAI.HerobrineMaxHP = herobrineHP;
-		HerobrineAI.getPluginCore().getAICore().stopMAIN();
-		HerobrineAI.getPluginCore().getAICore().startMAIN();
-		HerobrineAI.getPluginCore().getAICore().stopBD();
-		HerobrineAI.getPluginCore().getAICore().tartBD();
-		HerobrineAI.getPluginCore().getAICore().stopRC();
-		HerobrineAI.getPluginCore().getAICore().startRC();
-		HerobrineAI.availableWorld = false;
-		HerobrineAI.getPluginCore().getAICore().getResetLimits().updateFromConfig();
-		if (HerobrineAI.herobrineNPC != null) {
-			HerobrineAI.herobrineNPC.setItemInHand(itemInHand.getItemStack());
-		}
+		HerobrineCore.getInstance().HerobrineMaxHP = herobrineHP;
+		HerobrineAI.getPlugin().getAICore().stopMAIN();
+		HerobrineAI.getPlugin().getAICore().startMAIN();
+		HerobrineAI.getPlugin().getAICore().stopBD();
+		HerobrineAI.getPlugin().getAICore().tartBD();
+		HerobrineAI.getPlugin().getAICore().stopRC();
+		HerobrineAI.getPlugin().getAICore().startRC();
+		HerobrineCore.getInstance().availableWorld = false;
+		HerobrineAI.getPlugin().getAICore().getResetLimits().updateFromConfig();
 	}
 
 	public void addAllWorlds() {

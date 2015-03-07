@@ -27,17 +27,17 @@ public class BuildStuff extends Core {
 	}
 
 	public CoreResult BuildCave(final Location loc) {
-		if (!HerobrineAI.getPluginCore().getConfigDB().buildStuff) {
+		if (!HerobrineAI.getPlugin().getConfigDB().buildStuff) {
 			return new CoreResult(false, "Player is in secure location.");
 		}
-		if (!HerobrineAI.getPluginCore().getSupport().checkBuild(loc)) {
+		if (!HerobrineAI.getPlugin().getSupport().checkBuild(loc)) {
 			return new CoreResult(false, "Cannot build stuff.");
 		}
 		if (loc.getBlockY() >= 60) {
 			return new CoreResult(false, "Location must be under 60 of Y.");
 		}
 		final int chance = new Random().nextInt(100);
-		if (chance > (100 - HerobrineAI.getPluginCore().getConfigDB().caveChance)) {
+		if (chance > (100 - HerobrineAI.getPlugin().getConfigDB().caveChance)) {
 			AICore.log.info("Creating cave...");
 			GenerateCave(loc);
 			return new CoreResult(false, "Cave created!");
@@ -46,7 +46,7 @@ public class BuildStuff extends Core {
 	}
 
 	public CoreResult BuildCave(final Location loc, final boolean cmd) {
-		if (!HerobrineAI.getPluginCore().getSupport().checkBuild(loc)) {
+		if (!HerobrineAI.getPlugin().getSupport().checkBuild(loc)) {
 			return new CoreResult(false, "Player is in secure location.");
 		}
 		if (loc.getBlockY() < 60) {
@@ -58,7 +58,7 @@ public class BuildStuff extends Core {
 	}
 
 	public void GenerateCave(final Location loc) {
-		if (HerobrineAI.getPluginCore().getSupport().checkBuild(loc)) {
+		if (HerobrineAI.getPlugin().getSupport().checkBuild(loc)) {
 			final ArrayList<Location> redstoneTorchList = new ArrayList<Location>();
 			boolean goByX = new Random().nextBoolean();
 			boolean goNegative = new Random().nextBoolean();

@@ -11,6 +11,7 @@ import org.jakub1221.herobrineai.AI.AICore;
 import org.jakub1221.herobrineai.AI.Core;
 import org.jakub1221.herobrineai.AI.CoreResult;
 import org.jakub1221.herobrineai.misc.BlockChanger;
+import org.jakub1221.herobrineai.nms.NPC.HerobrineCore;
 
 public class Signs extends Core {
 
@@ -57,16 +58,16 @@ public class Signs extends Core {
 	public void createSign(final Location loc, final Location ploc) {
 		final Random randcgen = new Random();
 		final int chance = randcgen.nextInt(100);
-		if (chance > (100 - HerobrineAI.getPluginCore().getConfigDB().signChance)) {
+		if (chance > (100 - HerobrineAI.getPlugin().getConfigDB().signChance)) {
 			final Random randgen = new Random();
-			final int count = HerobrineAI.getPluginCore().getConfigDB().useSignMessages.size();
+			final int count = HerobrineAI.getPlugin().getConfigDB().useSignMessages.size();
 			final int randmsg = randgen.nextInt(count);
 			final Block signblock = loc.add(0.0, 0.0, 0.0).getBlock();
 			final Block undersignblock = signblock.getLocation().subtract(0.0, 1.0, 0.0).getBlock();
-			if (HerobrineAI.isAllowedBlock(signblock.getType()) && !HerobrineAI.isAllowedBlock(undersignblock.getType())) {
+			if (HerobrineCore.isAllowedBlock(signblock.getType()) && !HerobrineCore.isAllowedBlock(undersignblock.getType())) {
 				signblock.setType(Material.SIGN_POST);
 				final Sign sign = (Sign) signblock.getState();
-				sign.setLine(1, HerobrineAI.getPluginCore().getConfigDB().useSignMessages.get(randmsg));
+				sign.setLine(1, HerobrineAI.getPlugin().getConfigDB().useSignMessages.get(randmsg));
 				sign.setRawData((byte) BlockChanger.getPlayerBlockFace(ploc).ordinal());
 				sign.update();
 			}

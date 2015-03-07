@@ -11,6 +11,7 @@ import org.jakub1221.herobrineai.HerobrineAI;
 import org.jakub1221.herobrineai.AI.AICore;
 import org.jakub1221.herobrineai.AI.Core;
 import org.jakub1221.herobrineai.AI.CoreResult;
+import org.jakub1221.herobrineai.nms.NPC.HerobrineCore;
 
 public class Pyramid extends Core {
 
@@ -27,7 +28,7 @@ public class Pyramid extends Core {
 	}
 
 	public CoreResult FindPlace(final Chunk chunk) {
-		if (HerobrineAI.getPluginCore().getConfigDB().buildPyramids) {
+		if (HerobrineAI.getPlugin().getConfigDB().buildPyramids) {
 			Location loc = chunk.getBlock(2, 0, 2).getLocation();
 			loc = loc.getWorld().getHighestBlockAt(loc).getLocation();
 			boolean canBuild = true;
@@ -47,10 +48,10 @@ public class Pyramid extends Core {
 							}
 							if (i4 == -1) {
 								if (canBuild) {
-									canBuild = HerobrineAI.isSolidBlock(loc.getWorld().getBlockAt(i2 + i5 + loc.getBlockX(), i1 + i4 + loc.getBlockY(), i3 + i6 + loc.getBlockZ()).getType());
+									canBuild = HerobrineCore.isSolidBlock(loc.getWorld().getBlockAt(i2 + i5 + loc.getBlockX(), i1 + i4 + loc.getBlockY(), i3 + i6 + loc.getBlockZ()).getType());
 								}
 							} else if (canBuild) {
-								canBuild = HerobrineAI.isAllowedBlock(loc.getWorld().getBlockAt(i2 + i5 + loc.getBlockX(), i1 + i4 + loc.getBlockY(), i3 + i6 + loc.getBlockZ()).getType());
+								canBuild = HerobrineCore.isAllowedBlock(loc.getWorld().getBlockAt(i2 + i5 + loc.getBlockX(), i1 + i4 + loc.getBlockY(), i3 + i6 + loc.getBlockZ()).getType());
 							}
 						}
 					}
@@ -65,7 +66,7 @@ public class Pyramid extends Core {
 	}
 
 	public CoreResult FindPlace(final Player player) {
-		if (HerobrineAI.getPluginCore().getConfigDB().buildPyramids) {
+		if (HerobrineAI.getPlugin().getConfigDB().buildPyramids) {
 			final Location loc = player.getLocation();
 			boolean canBuild = true;
 			int i1 = 0;
@@ -89,10 +90,10 @@ public class Pyramid extends Core {
 									}
 									if (i4 == -1) {
 										if (canBuild) {
-											canBuild = HerobrineAI.isSolidBlock(loc.getWorld().getBlockAt(i2 + i5 + loc.getBlockX(), i1 + i4 + loc.getBlockY(), i3 + i6 + loc.getBlockZ()).getType());
+											canBuild = HerobrineCore.isSolidBlock(loc.getWorld().getBlockAt(i2 + i5 + loc.getBlockX(), i1 + i4 + loc.getBlockY(), i3 + i6 + loc.getBlockZ()).getType());
 										}
 									} else if (canBuild) {
-										canBuild = HerobrineAI.isAllowedBlock(loc.getWorld().getBlockAt(i2 + i5 + loc.getBlockX(), i1 + i4 + loc.getBlockY(), i3 + i6 + loc.getBlockZ()).getType());
+										canBuild = HerobrineCore.isAllowedBlock(loc.getWorld().getBlockAt(i2 + i5 + loc.getBlockX(), i1 + i4 + loc.getBlockY(), i3 + i6 + loc.getBlockZ()).getType());
 									}
 								}
 							}
@@ -109,7 +110,7 @@ public class Pyramid extends Core {
 	}
 
 	public void BuildPyramid(final World world, final int X, final int Y, final int Z) {
-		if (HerobrineAI.getPluginCore().getSupport().checkBuild(new Location(world, X, Y, Z))) {
+		if (HerobrineAI.getPlugin().getSupport().checkBuild(new Location(world, X, Y, Z))) {
 			AICore.log.info("Creating pyramid at " + X + "," + Y + "," + Z);
 			final Material mainMat = Material.SANDSTONE;
 			world.getBlockAt(X, Y, Z).setType(mainMat);

@@ -12,6 +12,7 @@ import org.jakub1221.herobrineai.HerobrineAI;
 import org.jakub1221.herobrineai.AI.AICore;
 import org.jakub1221.herobrineai.AI.Core;
 import org.jakub1221.herobrineai.AI.CoreResult;
+import org.jakub1221.herobrineai.nms.NPC.HerobrineCore;
 
 public class Haunt extends Core {
 
@@ -40,10 +41,10 @@ public class Haunt extends Core {
 	}
 
 	public CoreResult setHauntTarget(final Player player) {
-		if (!HerobrineAI.getPluginCore().getSupport().checkHaunt(player.getLocation())) {
+		if (!HerobrineAI.getPlugin().getSupport().checkHaunt(player.getLocation())) {
 			return new CoreResult(false, "Player is in secure area!");
 		}
-		if (!HerobrineAI.getPluginCore().canAttackPlayerNoMSG(player)) {
+		if (!HerobrineCore.getInstance().canAttackPlayerNoMSG(player)) {
 			return new CoreResult(false, "This player is protected.");
 		}
 		spawnedWolves = 0;
@@ -53,38 +54,38 @@ public class Haunt extends Core {
 		AICore.isTarget = true;
 		AICore.PlayerTarget = player;
 		AICore.log.info("[HerobrineAI] Hauntig player!");
-		final Location loc = HerobrineAI.herobrineNPC.getBukkitEntity().getLocation();
+		final Location loc = HerobrineCore.getInstance().herobrineNPC.getBukkitEntity().getLocation();
 		loc.setY(-20.0);
-		HerobrineAI.herobrineNPC.moveTo(loc);
+		HerobrineCore.getInstance().herobrineNPC.moveTo(loc);
 		StartHandler();
 		return new CoreResult(true, "Herobrine haunts " + player.getName() + "!");
 	}
 
 	public void playSounds() {
-		if (AICore.PlayerTarget.isOnline() && AICore.isTarget && (HerobrineAI.getPluginCore().getAICore().getCoreTypeNow() == CoreType.HAUNT)) {
+		if (AICore.PlayerTarget.isOnline() && AICore.isTarget && (HerobrineAI.getPlugin().getAICore().getCoreTypeNow() == CoreType.HAUNT)) {
 			if (!AICore.PlayerTarget.isDead()) {
 				if (_ticks > 290) {
-					HerobrineAI.getPluginCore().getAICore().cancelTarget(CoreType.HAUNT);
+					HerobrineAI.getPlugin().getAICore().cancelTarget(CoreType.HAUNT);
 				} else {
 					final Object[] data = { AICore.PlayerTarget };
-					HerobrineAI.getPluginCore().getAICore().getCore(CoreType.SOUNDF).runCore(data);
+					HerobrineAI.getPlugin().getAICore().getCore(CoreType.SOUNDF).runCore(data);
 					final Location ploc = AICore.PlayerTarget.getLocation();
 					final Random randxgen = new Random();
 					final int randx = randxgen.nextInt(100);
 					if (randx >= 70) {
 						if ((randx < 80) && (spawnedBats < 2)) {
-							if (HerobrineAI.getPluginCore().getConfigDB().spawnBats) {
+							if (HerobrineAI.getPlugin().getConfigDB().spawnBats) {
 								ploc.getWorld().spawnEntity(ploc, EntityType.BAT);
 								++spawnedBats;
 							}
-						} else if ((randx < 90) && (spawnedWolves < 1) && HerobrineAI.getPluginCore().getConfigDB().spawnWolves) {
+						} else if ((randx < 90) && (spawnedWolves < 1) && HerobrineAI.getPlugin().getConfigDB().spawnWolves) {
 							final Wolf wolf = (Wolf) ploc.getWorld().spawnEntity(ploc, EntityType.WOLF);
 							wolf.setAdult();
 							wolf.setAngry(true);
 							++spawnedWolves;
 						}
 					}
-					if (HerobrineAI.getPluginCore().getConfigDB().lighting) {
+					if (HerobrineAI.getPlugin().getConfigDB().lighting) {
 						final int lchance = new Random().nextInt(100);
 						if (lchance > 75) {
 							final Location newloc = ploc;
@@ -107,24 +108,24 @@ public class Haunt extends Core {
 					}
 					if (isFirst) {
 						final Object[] data2 = { AICore.PlayerTarget.getLocation() };
-						HerobrineAI.getPluginCore().getAICore().getCore(CoreType.BUILD_STUFF).runCore(data2);
+						HerobrineAI.getPlugin().getAICore().getCore(CoreType.BUILD_STUFF).runCore(data2);
 					}
 					isFirst = false;
 				}
 			} else {
-				HerobrineAI.getPluginCore().getAICore().cancelTarget(CoreType.HAUNT);
+				HerobrineAI.getPlugin().getAICore().cancelTarget(CoreType.HAUNT);
 			}
 		} else {
-			HerobrineAI.getPluginCore().getAICore().cancelTarget(CoreType.HAUNT);
+			HerobrineAI.getPlugin().getAICore().cancelTarget(CoreType.HAUNT);
 		}
 	}
 
 	public void keepLookingHaunt() {
-		if (AICore.PlayerTarget.isOnline() && AICore.isTarget && (HerobrineAI.getPluginCore().getAICore().getCoreTypeNow() == CoreType.HAUNT)) {
+		if (AICore.PlayerTarget.isOnline() && AICore.isTarget && (HerobrineAI.getPlugin().getAICore().getCoreTypeNow() == CoreType.HAUNT)) {
 			if (!AICore.PlayerTarget.isDead()) {
-				Location loc = HerobrineAI.herobrineNPC.getBukkitEntity().getLocation();
+				Location loc = HerobrineCore.getInstance().herobrineNPC.getBukkitEntity().getLocation();
 				for (Player player : Bukkit.getOnlinePlayers()) {
-					if (player.getEntityId() != HerobrineAI.herobrineEntityID) {
+					if (player.getEntityId() != HerobrineCore.getInstance().herobrineEntityID) {
 						Location ploc = player.getLocation();
 						if (
 							(ploc.getWorld().equals(loc.getWorld())) &&
@@ -135,16 +136,16 @@ public class Haunt extends Core {
 							((ploc.getY() + 5.0) > loc.getY()) &&
 							((ploc.getY() - 5.0) < loc.getY())
 						) {
-							HerobrineAI.getPluginCore().getAICore().disappearEffect();
+							HerobrineAI.getPlugin().getAICore().disappearEffect();
 						}
 					}
 				}
-				HerobrineAI.HerobrineHP = HerobrineAI.HerobrineMaxHP;
+				HerobrineCore.getInstance().HerobrineHP = HerobrineCore.getInstance().HerobrineMaxHP;
 				loc = AICore.PlayerTarget.getLocation();
 				loc.setY(loc.getY() + 1.5);
-				HerobrineAI.herobrineNPC.lookAtPoint(loc);
+				HerobrineCore.getInstance().herobrineNPC.lookAtPoint(loc);
 				++_ticks;
-				final AICore _aicore = HerobrineAI.getPluginCore().getAICore();
+				final AICore _aicore = HerobrineAI.getPlugin().getAICore();
 				switch (_ticks) {
 					case 0: {
 						hauntTP();
@@ -228,29 +229,29 @@ public class Haunt extends Core {
 					}
 				}
 			} else {
-				HerobrineAI.getPluginCore().getAICore().cancelTarget(CoreType.HAUNT);
+				HerobrineAI.getPlugin().getAICore().cancelTarget(CoreType.HAUNT);
 			}
 		} else {
-			HerobrineAI.getPluginCore().getAICore().cancelTarget(CoreType.HAUNT);
+			HerobrineAI.getPlugin().getAICore().cancelTarget(CoreType.HAUNT);
 		}
 	}
 
 	public void hauntTP() {
-		if (AICore.PlayerTarget.isOnline() && AICore.isTarget && (HerobrineAI.getPluginCore().getAICore().getCoreTypeNow() == CoreType.HAUNT)) {
+		if (AICore.PlayerTarget.isOnline() && AICore.isTarget && (HerobrineAI.getPlugin().getAICore().getCoreTypeNow() == CoreType.HAUNT)) {
 			if (!AICore.PlayerTarget.isDead()) {
-				if (HerobrineAI.getPluginCore().getConfigDB().useWorlds.contains(AICore.PlayerTarget.getWorld().getName())) {
+				if (HerobrineAI.getPlugin().getConfigDB().useWorlds.contains(AICore.PlayerTarget.getWorld().getName())) {
 					findPlace(AICore.PlayerTarget);
 					final Location ploc = AICore.PlayerTarget.getLocation();
 					ploc.setY(ploc.getY() + 1.5);
-					HerobrineAI.herobrineNPC.lookAtPoint(ploc);
+					HerobrineCore.getInstance().herobrineNPC.lookAtPoint(ploc);
 				} else {
-					HerobrineAI.getPluginCore().getAICore().cancelTarget(CoreType.HAUNT);
+					HerobrineAI.getPlugin().getAICore().cancelTarget(CoreType.HAUNT);
 				}
 			} else {
-				HerobrineAI.getPluginCore().getAICore().cancelTarget(CoreType.HAUNT);
+				HerobrineAI.getPlugin().getAICore().cancelTarget(CoreType.HAUNT);
 			}
 		} else {
-			HerobrineAI.getPluginCore().getAICore().cancelTarget(CoreType.HAUNT);
+			HerobrineAI.getPlugin().getAICore().cancelTarget(CoreType.HAUNT);
 		}
 	}
 
@@ -283,9 +284,9 @@ public class Haunt extends Core {
 					} else if (z > zMax) {
 						break;
 					}
-					if (((x < -4) || (x > 4) || (z < -4) || (z > 4)) && HerobrineAI.isSolidBlock(loc.getWorld().getBlockAt(x + loc.getBlockX(), (y + loc.getBlockY()) - 1, z + loc.getBlockZ()).getType())
-							&& HerobrineAI.isAllowedBlock(loc.getWorld().getBlockAt(x + loc.getBlockX(), y + loc.getBlockY(), z + loc.getBlockZ()).getType())
-							&& HerobrineAI.isAllowedBlock(loc.getWorld().getBlockAt(x + loc.getBlockX(), y + loc.getBlockY() + 1, z + loc.getBlockZ()).getType())) {
+					if (((x < -4) || (x > 4) || (z < -4) || (z > 4)) && HerobrineCore.isSolidBlock(loc.getWorld().getBlockAt(x + loc.getBlockX(), (y + loc.getBlockY()) - 1, z + loc.getBlockZ()).getType())
+							&& HerobrineCore.isAllowedBlock(loc.getWorld().getBlockAt(x + loc.getBlockX(), y + loc.getBlockY(), z + loc.getBlockZ()).getType())
+							&& HerobrineCore.isAllowedBlock(loc.getWorld().getBlockAt(x + loc.getBlockX(), y + loc.getBlockY() + 1, z + loc.getBlockZ()).getType())) {
 						teleport(loc.getWorld(), x + loc.getBlockX(), y + loc.getBlockY(), z + loc.getBlockZ());
 					}
 					z += ((zMax <= 0) ? -1 : 1);
@@ -297,12 +298,12 @@ public class Haunt extends Core {
 	}
 
 	public void teleport(final World world, final int X, final int Y, final int Z) {
-		final Location loc = HerobrineAI.herobrineNPC.getBukkitEntity().getLocation();
+		final Location loc = HerobrineCore.getInstance().herobrineNPC.getBukkitEntity().getLocation();
 		loc.setWorld(world);
 		loc.setX(X);
 		loc.setY(Y);
 		loc.setZ(Z);
-		HerobrineAI.herobrineNPC.moveTo(loc);
+		HerobrineCore.getInstance().herobrineNPC.moveTo(loc);
 	}
 
 	public void StartHandler() {

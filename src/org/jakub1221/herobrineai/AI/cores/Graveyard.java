@@ -12,6 +12,7 @@ import org.jakub1221.herobrineai.HerobrineAI;
 import org.jakub1221.herobrineai.AI.AICore;
 import org.jakub1221.herobrineai.AI.Core;
 import org.jakub1221.herobrineai.AI.CoreResult;
+import org.jakub1221.herobrineai.nms.NPC.HerobrineCore;
 
 public class Graveyard extends Core {
 
@@ -39,17 +40,17 @@ public class Graveyard extends Core {
 	}
 
 	public CoreResult Teleport(final Player player) {
-		if (!HerobrineAI.getPluginCore().getConfigDB().useGraveyardWorld) {
+		if (!HerobrineAI.getPlugin().getConfigDB().useGraveyardWorld) {
 			return new CoreResult(false, "Graveyard world is not allowed!");
 		}
 		LivingEntities = Bukkit.getServer().getWorld("world_herobrineai_graveyard").getLivingEntities();
 		for (int i = 0; i <= (LivingEntities.size() - 1); ++i) {
-			if (!(LivingEntities.get(i) instanceof Player) && (LivingEntities.get(i).getEntityId() != HerobrineAI.herobrineEntityID)) {
+			if (!(LivingEntities.get(i) instanceof Player) && (LivingEntities.get(i).getEntityId() != HerobrineCore.getInstance().herobrineEntityID)) {
 				LivingEntities.get(i).remove();
 			}
 		}
 		Bukkit.getServer().getWorld("world_herobrineai_graveyard").setTime(15000L);
-		HerobrineAI.getPluginCore().getAICore();
+		HerobrineAI.getPlugin().getAICore();
 		AICore.PlayerTarget = player;
 		final Location loc = player.getLocation();
 		savedX = loc.getX();
@@ -65,7 +66,7 @@ public class Graveyard extends Core {
 		loc.setPitch(0.44999f);
 		player.teleport(loc);
 		Start();
-		HerobrineAI.getPluginCore().getAICore();
+		HerobrineAI.getPlugin().getAICore();
 		AICore.isTarget = true;
 		Bukkit.getServer().getWorld("world_herobrineai_graveyard").setStorm(false);
 		return new CoreResult(true, "Player successfully teleported!");
@@ -73,7 +74,7 @@ public class Graveyard extends Core {
 
 	public void Start() {
 		ticks = 0;
-		HerobrineAI.herobrineNPC.moveTo(new Location(Bukkit.getServer().getWorld("world_herobrineai_graveyard"), -2.49, 4.0, -4.12));
+		HerobrineCore.getInstance().herobrineNPC.moveTo(new Location(Bukkit.getServer().getWorld("world_herobrineai_graveyard"), -2.49, 4.0, -4.12));
 		HandlerInterval();
 	}
 
@@ -89,24 +90,24 @@ public class Graveyard extends Core {
 	public void Handler() {
 		LivingEntities = Bukkit.getServer().getWorld("world_herobrineai_graveyard").getLivingEntities();
 		for (int i = 0; i <= (LivingEntities.size() - 1); ++i) {
-			if (!(LivingEntities.get(i) instanceof Player) && (LivingEntities.get(i).getEntityId() != HerobrineAI.herobrineEntityID)) {
+			if (!(LivingEntities.get(i) instanceof Player) && (LivingEntities.get(i).getEntityId() != HerobrineCore.getInstance().herobrineEntityID)) {
 				LivingEntities.get(i).remove();
 			}
 		}
 		if (!savedPlayer.isDead() && savedPlayer.isOnline() && (savedPlayer.getLocation().getWorld() == Bukkit.getServer().getWorld("world_herobrineai_graveyard")) && (ticks != 90)) {
-			HerobrineAI.getPluginCore().getAICore();
+			HerobrineAI.getPlugin().getAICore();
 			if (AICore.isTarget) {
 				final Location ploc = savedPlayer.getLocation();
 				ploc.setY(ploc.getY() + 1.5);
-				HerobrineAI.herobrineNPC.lookAtPoint(ploc);
+				HerobrineCore.getInstance().herobrineNPC.lookAtPoint(ploc);
 				if (ticks == 1) {
-					HerobrineAI.herobrineNPC.moveTo(new Location(Bukkit.getServer().getWorld("world_herobrineai_graveyard"), -2.49, 4.0, -4.12));
+					HerobrineCore.getInstance().herobrineNPC.moveTo(new Location(Bukkit.getServer().getWorld("world_herobrineai_graveyard"), -2.49, 4.0, -4.12));
 				} else if (ticks == 40) {
-					HerobrineAI.herobrineNPC.moveTo(new Location(Bukkit.getServer().getWorld("world_herobrineai_graveyard"), -2.49, 4.0, -0.5));
+					HerobrineCore.getInstance().herobrineNPC.moveTo(new Location(Bukkit.getServer().getWorld("world_herobrineai_graveyard"), -2.49, 4.0, -0.5));
 				} else if (ticks == 60) {
-					HerobrineAI.herobrineNPC.moveTo(new Location(Bukkit.getServer().getWorld("world_herobrineai_graveyard"), -2.49, 4.0, 5.1));
+					HerobrineCore.getInstance().herobrineNPC.moveTo(new Location(Bukkit.getServer().getWorld("world_herobrineai_graveyard"), -2.49, 4.0, 5.1));
 				} else if (ticks == 84) {
-					HerobrineAI.herobrineNPC.moveTo(new Location(Bukkit.getServer().getWorld("world_herobrineai_graveyard"), -2.49, 4.0, 7.5));
+					HerobrineCore.getInstance().herobrineNPC.moveTo(new Location(Bukkit.getServer().getWorld("world_herobrineai_graveyard"), -2.49, 4.0, 7.5));
 				}
 				if (new Random().nextInt(4) == 1) {
 					final Location newloc = new Location(Bukkit.getServer().getWorld("world_herobrineai_graveyard"), new Random().nextInt(400), new Random().nextInt(20) + 20.0,
@@ -118,9 +119,9 @@ public class Graveyard extends Core {
 				return;
 			}
 		}
-		HerobrineAI.getPluginCore().getAICore();
+		HerobrineAI.getPlugin().getAICore();
 		if (AICore.PlayerTarget == savedPlayer) {
-			HerobrineAI.getPluginCore().getAICore().cancelTarget(CoreType.GRAVEYARD);
+			HerobrineAI.getPlugin().getAICore().cancelTarget(CoreType.GRAVEYARD);
 		}
 		savedPlayer.teleport(new Location(savedWorld, savedX, savedY, savedZ));
 	}

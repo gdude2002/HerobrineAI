@@ -17,10 +17,10 @@ public class RandomExplosion extends Core {
 	@Override
 	public CoreResult callCore(final Object[] data) {
 		final Player player = (Player) data[0];
-		if (!HerobrineAI.getPluginCore().getConfigDB().explosions) {
+		if (!HerobrineAI.getPlugin().getConfigDB().explosions) {
 			return new CoreResult(true, "Explosions are not allowed!");
 		}
-		if (HerobrineAI.getPluginCore().getSupport().checkBuild(player.getLocation())) {
+		if (HerobrineAI.getPlugin().getSupport().checkBuild(player.getLocation())) {
 			final Location loc = player.getLocation();
 			final int x = loc.getBlockX() + (new Random().nextInt(16) - 8);
 			final int y = loc.getBlockY();
