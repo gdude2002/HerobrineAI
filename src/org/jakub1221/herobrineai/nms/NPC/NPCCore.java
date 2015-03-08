@@ -1,14 +1,14 @@
 package org.jakub1221.herobrineai.nms.NPC;
 
-import net.minecraft.server.v1_8_R1.PlayerInteractManager;
-import net.minecraft.server.v1_8_R1.WorldServer;
+import net.minecraft.server.v1_8_R2.PlayerInteractManager;
+import net.minecraft.server.v1_8_R2.WorldServer;
 
 import com.mojang.authlib.GameProfile;
 
 import org.bukkit.Location;
 import org.bukkit.World;
 
-import org.bukkit.craftbukkit.v1_8_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_8_R2.CraftWorld;
 
 import org.jakub1221.herobrineai.nms.NPC.entity.HumanEntity;
 import org.jakub1221.herobrineai.nms.NPC.entity.Herobrine;

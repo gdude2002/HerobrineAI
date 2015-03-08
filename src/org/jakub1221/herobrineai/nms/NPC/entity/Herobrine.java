@@ -1,10 +1,10 @@
 package org.jakub1221.herobrineai.nms.NPC.entity;
 
-import net.minecraft.server.v1_8_R1.EntityPlayer;
-import net.minecraft.server.v1_8_R1.PacketPlayInArmAnimation;
-import net.minecraft.server.v1_8_R1.WorldServer;
+import net.minecraft.server.v1_8_R2.EntityPlayer;
+import net.minecraft.server.v1_8_R2.PacketPlayInArmAnimation;
+import net.minecraft.server.v1_8_R2.WorldServer;
 
-import org.bukkit.craftbukkit.v1_8_R1.entity.CraftBat;
+import org.bukkit.craftbukkit.v1_8_R2.entity.CraftBat;
 import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -105,8 +105,8 @@ public class Herobrine {
 		}
 		((EntityPlayer) getNMSEntity()).yaw = (float) (newYaw - 90.0);
 		((EntityPlayer) getNMSEntity()).pitch = (float) newPitch;
-		((EntityPlayer) getNMSEntity()).aJ = (float) (newYaw - 90.0);
-		((EntityPlayer) getNMSEntity()).aI = (float) (newYaw - 90.0);
+		((EntityPlayer) getNMSEntity()).aL = (float) (newYaw - 90.0);
+		((EntityPlayer) getNMSEntity()).aK = (float) (newYaw - 90.0);
 	}
 
 	public org.bukkit.entity.Entity getBukkitEntity() {
