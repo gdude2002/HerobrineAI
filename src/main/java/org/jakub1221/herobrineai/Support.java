@@ -6,19 +6,16 @@ import org.jakub1221.herobrineai.hooks.FactionsHook;
 import org.jakub1221.herobrineai.hooks.GriefPreventionHook;
 import org.jakub1221.herobrineai.hooks.PreciousStonesHook;
 import org.jakub1221.herobrineai.hooks.ResidenceHook;
-import org.jakub1221.herobrineai.hooks.TownyHook;
 import org.jakub1221.herobrineai.hooks.WorldGuardHook;
 
 public class Support {
 	private boolean B_Residence;
 	private boolean B_GriefPrevention;
-	private boolean B_Towny;
 	private boolean B_WorldGuard;
 	private boolean B_PreciousStones;
 	private boolean B_Factions;
 	private ResidenceHook ResidenceCore;
 	private GriefPreventionHook GriefPreventionCore;
-	private TownyHook TownyCore;
 	private WorldGuardHook WorldGuard;
 	private PreciousStonesHook PreciousStones;
 	private FactionsHook Factions;
@@ -26,7 +23,6 @@ public class Support {
 	public Support() {
 		ResidenceCore = new ResidenceHook();
 		GriefPreventionCore = new GriefPreventionHook();
-		TownyCore = new TownyHook();
 		WorldGuard = new WorldGuardHook();
 		PreciousStones = new PreciousStonesHook();
 		Factions = new FactionsHook();
@@ -54,10 +50,6 @@ public class Support {
 		return B_GriefPrevention;
 	}
 
-	public boolean isTowny() {
-		return B_Towny;
-	}
-
 	public boolean isFactions() {
 		return B_Factions;
 	}
@@ -70,10 +62,6 @@ public class Support {
 		if (GriefPreventionCore.Check()) {
 			B_GriefPrevention = true;
 			HerobrineAI.log.info("[HerobrineAI] GriefPrevention plugin detected!");
-		}
-		if (TownyCore.Check()) {
-			B_Towny = true;
-			HerobrineAI.log.info("[HerobrineAI] Towny plugin detected!");
 		}
 		if (WorldGuard.Check()) {
 			B_WorldGuard = true;
@@ -95,9 +83,6 @@ public class Support {
 		}
 		if (B_GriefPrevention) {
 			return GriefPreventionCore.isSecuredArea(loc);
-		}
-		if (B_Towny) {
-			return TownyCore.isSecuredArea(loc);
 		}
 		if (B_WorldGuard) {
 			return WorldGuard.isSecuredArea(loc);

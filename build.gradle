@@ -1,0 +1,123 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'de.undercouch:gradle-download-task:1.2'
+        classpath 'eu.appsatori:gradle-fatjar-plugin:0.3'
+    }
+}
+
+plugins {
+    id 'java'
+    id 'de.undercouch.download' version '1.2'
+    id 'eu.appsatori.fatjar' version '0.3'
+}
+
+sourceCompatibility = 1.7
+version = '4.0'
+group = "org.jakub1221.herobrineai"
+
+download {
+    src 'https://hub.spigotmc.org/jenkins/job/BuildTools/lastBuild/artifact/target/BuildTools.jar'
+    dest 'lib/BuildTools.jar'
+}
+
+download {
+    src 'http://ci.drtshock.net/job/Residence/lastSuccessfulBuild/artifact/target/Residence.jar'
+    dest 'lib/plugins/Residence.jar'
+}
+
+download {
+    src 'http://dev.bukkit.org/media/files/867/704/GriefPrevention.jar'
+    dest 'lib/plugins/GriefPrevention.jar'
+}
+
+download {
+    src 'http://dev.bukkit.org/media/files/842/227/PreciousStones.jar'
+    dest 'lib/plugins/PreciousStones.jar'
+}
+
+download {
+    src 'http://dev.bukkit.org/media/files/840/549/Factions.jar'
+    dest 'lib/plugins/Factions.jar'
+}
+
+download {
+    src 'http://dev.bukkit.org/media/files/840/547/MassiveCore.jar'
+    dest 'lib/plugins/MassiveCore.jar'
+}
+
+task buildCraftBukkit(type: Exec) {
+    workingDir "lib"
+
+    commandLine 'java', '-jar', 'BuildTools.jar'
+}
+
+defaultTasks 'clean', 'buildCraftBukkit', 'fatJar'
+
+repositories {
+    // Bukkit
+    maven {
+        url 'https://hub.spigotmc.org/nexus/content/groups/public/'
+    }
+
+    // Mojang's AuthLib
+    maven {
+        url 'http://repo.visualillusionsent.net/repository/public/'
+    }
+
+    // WorldGuard
+    maven {
+        url "http://maven.sk89q.com/artifactory/repo/"
+        name "sk89q"
+    }
+}
+
+jar {
+    archiveName = "HerobrineAI-${version}.jar"
+}
+
+dependencies {
+    compile 'com.mojang:authlib:1.5.13'
+    compile "com.sk89q:worldguard:6.0.0-SNAPSHOT", {
+        ext {
+            fatJarExclude = true
+        }
+    }
+    compile files('lib/craftbukkit-1.8.3.jar'), {
+        ext {
+            fatJarExclude = true
+        }
+    }
+    compile files('lib/plugins/Residence.jar'), {
+        ext {
+            fatJarExclude = true
+        }
+    }
+    compile files('lib/plugins/GriefPrevention.jar'), {
+        ext {
+            fatJarExclude = true
+        }
+    }
+    compile files('lib/plugins/PreciousStones.jar'), {
+        ext {
+            fatJarExclude = true
+        }
+    }
+    compile files('lib/plugins/Factions.jar'), {
+        ext {
+            fatJarExclude = true
+        }
+    }
+    compile files('lib/plugins/MassiveCore.jar'), {
+        ext {
+            fatJarExclude = true
+        }
+    }
+}
+
+fatJar {
+
+}

@@ -1,9 +1,14 @@
 # Build Folders #
 bin/
 build/
+lib/
 target/
 .externalToolBuilders/
+.gradle/
  # Eclipse Files #
 *.project
 *.classpath
 *.prefs
+ # IDEA Files #
+.idea/
+*.iml
